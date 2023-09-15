@@ -20,7 +20,7 @@
 		select = false;
 
 	const dispatch = createEventDispatcher();
-	$: console.log(post.selected,  post.id)
+	$: console.log(post.selected, post.id)
 </script>
 
 <div on:click on:keydown={() => dispatch('click')} class="post">
