@@ -1,7 +1,8 @@
 <script lang="ts">
-	import PostsPagination from '$lib/components/PostsPagination.svelte';
+	// import PostsPagination from '$lib/components/PostsPagination.svelte';
 	import { Column, Row } from 'carbon-components-svelte';
 	import type { PageData } from './$types';
+	import { to_html } from '$lib/util/markdown/parse';
 
 	export let data: PageData;
 </script>
@@ -9,8 +10,13 @@
 <Row>
 	<Column>
 		<div class="all">
-			<p>All posts by {data.user}</p>
-			<PostsPagination {...data} />
+			<p>{data.name}</p>
+
+			{#if data.text}
+				<p>{@html to_html(data.text.toString())}</p>
+			{/if}
+			<!-- <p>All posts by {data.user}</p>
+			<PostsPagination {...data} /> -->
 			<!-- <Tabs>
 				<Tab label="Most Recent" />
 				<Tab label="Search" />

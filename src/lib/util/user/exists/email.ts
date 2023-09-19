@@ -1,0 +1,8 @@
+import { user_index } from "$lib/constants"
+import type { EscapedEmail } from "$lib/types"
+import { client } from "$lib/util/redis"
+
+export const email = async (email: EscapedEmail) => {
+    const res = await client.ft.search(user_index, `@email:${email.value}`)
+    return res.total
+}

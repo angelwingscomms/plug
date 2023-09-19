@@ -14,7 +14,7 @@
 	import Moon from 'carbon-icons-svelte/lib/Moon.svelte';
 	import { theme } from '$lib/theme_store';
 	import { signIn, signOut } from '@auth/sveltekit/client';
-	import LogoGithub from 'carbon-icons-svelte/lib/LogoGithub.svelte';
+	// import LogoGithub from 'carbon-icons-svelte/lib/LogoGithub.svelte';
 	import UserAvatarFilledAlt from 'carbon-icons-svelte/lib/UserAvatarFilledAlt.svelte';
 
 	$: isOpen = false;
@@ -23,7 +23,7 @@
 
 <Header
 	persistentHamburgerMenu={true}
-	platformName="Articles"
+	platformName="Techbros"
 	bind:isSideNavOpen={$isSideNavOpen}
 	href="/"
 >
@@ -34,14 +34,6 @@
 		<SkipToContent />
 	</svelte:fragment>
 	<HeaderUtilities>
-		<a
-			href={$page.data.github_repo}
-			rel="noopener noreferrer"
-			target="_blank"
-			class="bx--header__action logo"
-		>
-			<LogoGithub size={20} />
-		</a>
 		<HeaderAction
 			on:click={(e) => {
 				$theme = $theme === 'g100' ? 'white' : 'g100';

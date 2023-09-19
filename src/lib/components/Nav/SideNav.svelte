@@ -10,10 +10,14 @@
 
 <SideNav bind:isOpen={$isSideNavOpen}>
 	<SideNavItems>
-		<SideNavLink text="Create an article" href="/post/add" />
+		{#if $page.data.session?.user?.email}
+			<SideNavLink text="View your profile" href="/user/{$page.data.session?.user?.email}" />
+			<SideNavLink text="Edit profile" href="/edit" />
+		{/if}
+		<!-- <SideNavLink text="Create an article" href="/post/add" />
 		{#if $page.data.session?.user}
 			<SideNavLink text="View your articles" href="/post/user/{$page.data.session?.user.email}" />
-		{/if}
+		{/if} -->
 		<A2HsLink />
 	</SideNavItems>
 </SideNav>

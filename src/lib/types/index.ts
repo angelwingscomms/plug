@@ -23,7 +23,7 @@ export type Email = string;
 export class EscapedEmail {
 	value: string;
 	constructor(email: string) {
-		this.value = 'user:' + escape_email(email);
+		this.value = escape_email(email);
 	}
 }
 
@@ -39,4 +39,5 @@ export type {
 	PostSearchDocument,
 	PostItem,
 	Edit
-} from './Post';
+} from './post';
+export type {SearchDocument} from './SearchResponse'

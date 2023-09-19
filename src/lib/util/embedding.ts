@@ -3,11 +3,12 @@ import { openai } from "$lib/util/openai";
 
 export const embedding = (input: string) =>
 	openai
-		.createEmbedding({ model: embedding_model, input })
+		.embeddings.create({ model: embedding_model, input })
 		.then((r) => {
-			return r.data.data[0].embedding;
+			return r.data[0].embedding;
 		})
 		.catch((e) => {
-			const error = e.response.status === 429 ? "We experienced a rate limit error. Please try again in a few moments" : e.response.data
+			console.error(e)
+			const error = e.status === 429 ? "We experienced an error. Please try again in a few moments" : e.response.data
 			throw new Error(`createEmbedding error, ${error}`);
 		});

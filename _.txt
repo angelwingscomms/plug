@@ -24,6 +24,7 @@ _learn
     goto previous page in component
     javascript disabled
 todo
+    user edit loading
     push notifications
     allowed for children
     show search results count and if none found

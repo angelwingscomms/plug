@@ -1,16 +1,20 @@
 <script lang="ts">
-	import Add from 'carbon-icons-svelte/lib/Add.svelte';
+	import Edit from 'carbon-icons-svelte/lib/Edit.svelte';
 	import { Button, Row, Column } from 'carbon-components-svelte';
-	import type { PageData } from './$types';
-	import Context from '$lib/components/Context.svelte';
-	export let data: PageData;
+	import { page } from '$app/stores';
+	import { signIn } from '@auth/sveltekit/client';
+	import Search from '$lib/components/User/Search.svelte';
 </script>
 
 <Row>
 	<Column>
 		<div class="all">
-			<Button href="/post/add" icon={Add}>Create an article</Button>
-			<Context totalItems={data.total} posts={data.documents} />
+			{#if $page.data.session?.user}
+				<Button href="/edit/{$page.data.session.user.email}" icon={Edit}>Edit Profile</Button>
+			{:else}
+				<Button on:click={() => signIn('google')}>Login</Button>
+			{/if}
+			<Search />
 		</div>
 	</Column>
 </Row>
