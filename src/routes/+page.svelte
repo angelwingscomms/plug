@@ -10,7 +10,7 @@
 	<Column>
 		<div class="all">
 			{#if $page.data.session?.user}
-				<Button href="/edit/{$page.data.session.user.email}" icon={Edit}>Edit Profile</Button>
+				<Button href="/edit" icon={Edit}>Edit Profile</Button>
 			{:else}
 				<Button on:click={() => signIn('google')}>Login</Button>
 			{/if}

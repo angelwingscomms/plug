@@ -71,7 +71,7 @@
 			{:else if banks.length}
 				<Select labelText="Select the bank" bind:selected={bank}>
 					{#each banks as b}
-						<Select value={b} />
+						<SelectItem value={b} />
 					{/each}
 				</Select>
 			{/if}

@@ -1,11 +1,12 @@
 <script lang="ts">
 	import type {
-		PostSearchDocument, SearchDocument
+		PostSearchDocument,
+		SearchDocument
 
 		// RedisKey
 	} from '$lib/types';
 	import {
-	Button,
+		Button,
 		//  Button,
 		Link
 	} from 'carbon-components-svelte';
@@ -17,8 +18,8 @@
 	import { createEventDispatcher } from 'svelte';
 	// import { client_delete } from '$lib/util/client_del';
 
-	export let result: SearchDocument<{name: string}>,
-		select = false;
+	export let result: SearchDocument<{ name: string; email: string }>;
+		// select = false
 
 	const dispatch = createEventDispatcher();
 	// $: console.log(result.selected, result.id)

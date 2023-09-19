@@ -56,11 +56,3 @@
 		</HeaderAction>
 	</HeaderUtilities>
 </Header>
-
-<style lang="sass">
-	.logo
-		display: flex
-		align-items: center
-		justify-content: center
-		padding-bottom: 2px
-</style>

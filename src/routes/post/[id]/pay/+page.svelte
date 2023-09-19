@@ -23,7 +23,7 @@
 		: `'s ${data.replies_description}'`}
 </p>
 
-{#if metadata}
+{#if metadata && data.currency}
 	<Paystack
 		{metadata}
 		amount={data.cost || 0}

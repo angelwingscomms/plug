@@ -6,6 +6,7 @@ export const notify = (message: string | ToastNotificationProps) => {
 	if (browser) {
 		const n: ToastNotificationProps = typeof message === 'string' ? { title: message } : message;
 		n.caption = new Date().toLocaleString();
+		if (!n.kind) n.kind = 'success'
 		if (!n.timeout) n.timeout = 3700
 		n.lowContrast = true
 		notifications.update((ns) => [...ns, n]);

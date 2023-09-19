@@ -1,5 +1,4 @@
-import type { RedisKey } from '.';
-import type { Document } from './SearchResponse';
+import type { RedisKey, SearchDocument } from '.';
 
 export interface Payment {
 	required: boolean;
@@ -52,7 +51,7 @@ export interface Post {
 	body: string;
 }
 
-export type PostSearchDocument = Document<PostItem> & Pick<Post, 'selected'>;
+export type PostSearchDocument = SearchDocument<PostItem> & Pick<Post, 'selected'>;
 export type PostItem = Pick<Post, 'name'>;
 
 export interface Edit {

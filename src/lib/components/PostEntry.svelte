@@ -4,7 +4,7 @@
 		// RedisKey
 	} from '$lib/types';
 	import {
-	Button,
+		Button,
 		//  Button,
 		Link
 	} from 'carbon-components-svelte';
@@ -20,16 +20,16 @@
 		select = false;
 
 	const dispatch = createEventDispatcher();
-	$: console.log(post.selected, post.id)
+	$: console.log(post.selected, post.id);
 </script>
 
-<div on:click on:keydown={() => dispatch('click')} class="post">
+<div role="button" tabindex="0" on:click on:keydown={() => dispatch('click')} class="post">
 	{#if select}
 		<Button
-			size='small'
-			kind='ghost'
+			size="small"
+			kind="ghost"
 			icon={post.selected ? CheckboxChecked : Checkbox}
-			on:click={() => post.selected = !post.selected}
+			on:click={() => (post.selected = !post.selected)}
 		/>
 	{/if}
 	<div class="name">

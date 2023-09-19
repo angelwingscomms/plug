@@ -37,7 +37,7 @@
 	import TrashCan from 'carbon-icons-svelte/lib/TrashCan.svelte';
 	import { createEventDispatcher } from 'svelte';
 	import OnEnter from '$lib/components/OnEnter.svelte';
-	import type { EditablePost } from '$lib/types/Post';
+	import type { EditablePost } from '$lib/types/post';
 	import { parse } from '$lib/util/markdown/parse/web';
 	import { sanitize_string, sanitize_object } from '$lib/util/sanitize';
 

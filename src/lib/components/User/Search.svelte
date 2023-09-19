@@ -27,7 +27,7 @@
 		searched = true;
 		loading = true;
 		try {
-			const r = await axios.post('/user/search', { search, page });
+			const r = await axios.post('/user/search', { query: search, page });
 			({ total: totalItems, documents: results } = r.data);
 		} catch (e: any) {
 			notify({ title: `User search error`, subtitle: e.response.data, kind: 'error' });

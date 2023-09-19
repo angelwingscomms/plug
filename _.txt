@@ -24,31 +24,6 @@ _learn
     goto previous page in component
     javascript disabled
 todo
-    user edit loading
+    type user session to custom session
     push notifications
-    allowed for children
-    show search results count and if none found
-    tests
-        add
-        edit
-        search
-        reply
-        replies
-    copy replies as replied
-    notify function... with action?
-    migrate
-    markdown admonition styles
-    creator in PostSearchDocument return from search
-    vite-pwa
-    PaystackPop window type
-    auth page
-        load function checks if logged in, if logged in, redirects to previous page
-        button to go previous page if logged in
-    users
-        add_users
-    members
-        automatically make member upon payment?
-        return false from allowed() if not member
-    article type
-        article
     pay with paypal

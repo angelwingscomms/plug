@@ -1,1 +1,1 @@
-export const unescape_email = (input: string) => input.replaceAll('_at_', '@');
+export const unescape_email = (input: string) => input.replaceAll('\\', '');

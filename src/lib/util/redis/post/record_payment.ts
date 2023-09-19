@@ -1,7 +1,7 @@
 import { get } from '$lib/util/redis/get';
 import { client } from '$lib/util/redis';
 import { get_root_id } from './get_root_id';
-import type { UserPayment } from '$lib/types/Post';
+import type { UserPayment } from '$lib/types/post';
 import type { EscapedEmail } from '$lib/types';
 import { transfer } from '$lib/util/paystack/transfer';
 import type { Currency } from '$lib/util/paystack/currencies';

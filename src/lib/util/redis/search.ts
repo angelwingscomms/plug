@@ -12,11 +12,12 @@ export interface SearchParams {
 	page: number | null;
 	filters?: Filters;
 	count?: boolean;
+	query?: string,
 	RETURN?: string[];
 	search?: string | number[];
 }
 
-export const search = async ({ index, page, filters, count, search, RETURN }: SearchParams) => {
+export const search = async ({ index, page, filters, count, search, RETURN, query = '' }: SearchParams) => {
 	const options: SearchOptions = {
 		RETURN,
 		DIALECT: 3
@@ -28,7 +29,6 @@ export const search = async ({ index, page, filters, count, search, RETURN }: Se
 	// 		: { from: page > 1 ? (page - 1) * items_per_page : 0, size: items_per_page };
 	// }
 
-	let query = '';
 	let extra_args = ''; // ' HYBRID_POLICY ADHOC_BF';
 
 	console.log(filters)
@@ -70,10 +70,10 @@ export const search = async ({ index, page, filters, count, search, RETURN }: Se
 			DIRECTION: 'ASC'
 		};
 	} else {
-		options.SORTBY = {
-			BY: 'created',
-			DIRECTION: 'DESC'
-		};
+		// options.SORTBY = {
+		// 	BY: 'created',
+		// 	DIRECTION: 'DESC'
+		// };
 	}
 
 	console.log(query);

@@ -28,7 +28,7 @@
 {#if loading}
 	<Loading />
 {:else}
-	<Results on:select-click on:select on:deselect {select} {results} />
+	<Results on:select-click on:select on:deselect {results} />
 {/if}
 
 <Pagination on:update pageSizeInputDisabled pageSize={7} {totalItems} {page} />
