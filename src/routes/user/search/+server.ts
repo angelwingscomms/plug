@@ -8,8 +8,15 @@ import type { RequestHandler } from './$types';
 export const POST: RequestHandler = async ({ request }) => {
 	try {
 		const { page, query } = await request.json();
+		const res = await search({
+			index: user_index,
+			query,
+			RETURN: ['name', 'email'],
+			page,
+			OPTIONS: { WITHSORTKEYS: true }
+		});
 		return json(
-			await search({index: user_index, query, RETURN: ['name', 'email'], page})
+			res
 			// await client.ft.search(user_index, query, {
 			// 	RETURN: ['name', 'email'],
 			// 	DIALECT: 3,

@@ -12,26 +12,36 @@ export interface SearchParams {
 	page: number | null;
 	filters?: Filters;
 	count?: boolean;
-	query?: string,
+	query?: string;
 	RETURN?: string[];
+	OPTIONS?: SearchOptions;
 	search?: string | number[];
 }
 
-export const search = async ({ index, page, filters, count, search, RETURN, query = '' }: SearchParams) => {
+export const search = async ({
+	index,
+	page,
+	filters,
+	count,
+	search,
+	RETURN,
+	OPTIONS,
+	query = ''
+}: SearchParams) => {
 	const options: SearchOptions = {
 		RETURN,
 		DIALECT: 3
 	};
 
-	// if (page) {
-	// 	options.LIMIT = count
-	// 		? { from: 0, size: 0 }
-	// 		: { from: page > 1 ? (page - 1) * items_per_page : 0, size: items_per_page };
-	// }
+	if (count) {
+		options.LIMIT = { from: 0, size: 0 };
+	} else if (page) {
+		options.LIMIT = { from: page > 1 ? (page - 1) * items_per_page : 0, size: items_per_page };
+	}
 
 	let extra_args = ''; // ' HYBRID_POLICY ADHOC_BF';
 
-	console.log(filters)
+	console.log(filters);
 	if (filters && filters.length) {
 		filters.forEach((filter) => {
 			switch (filter.type) {
@@ -55,7 +65,7 @@ export const search = async ({ index, page, filters, count, search, RETURN, quer
 		query = '*';
 	}
 
-	console.log(query)
+	console.log(query);
 
 	if (search) {
 		query += `=>[KNN 7 @${embedding_field_name} $BLOB${extra_args}]`;
@@ -77,7 +87,7 @@ export const search = async ({ index, page, filters, count, search, RETURN, quer
 	}
 
 	console.log(query);
-	return client.ft.search(index, query, options).then((res) => {
+	return client.ft.search(index, query, { ...options, ...OPTIONS }).then((res) => {
 		res.documents = res.documents.map((r) => {
 			r.value = slim(r.value, true) as SearchDocumentValue;
 			return r;
