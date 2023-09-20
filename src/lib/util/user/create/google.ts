@@ -1,17 +1,28 @@
 import { client } from '$lib/util/redis';
-import type { CallbacksOptions } from '@auth/core/types';
-import { email as check_email_exists } from '$lib/util/user/exists/email';
 import { EscapedEmail } from '$lib/types';
-import { user_id_prefix } from '$lib/constants';
+import { user_id_prefix, user_index } from '$lib/constants';
+import type { SignInArg } from '.';
 
-export const google = async (arg: Parameters<CallbacksOptions['signIn']>[0]) => {
-	if (!arg.profile?.email) return;
-	const email = new EscapedEmail(arg.profile.email);
-	if (await check_email_exists(email)) return;
-	const id = user_id_prefix.concat((await client.incr('last_user_id')).toString());
-	client.json.set(id, '$', {
+const new_user = async (arg: SignInArg, email: EscapedEmail): Promise<void> => {
+	const id = user_id_prefix.concat('google').concat((await client.incr('last_user_id')).toString());
+	await client.json.set(id, '$', {
 		email: email.value,
-		name: arg.profile?.name ?? '',
-		provider: arg.account?.provider
+		name: arg.profile?.name as string,
+		provider: arg.account?.provider ?? null
 	});
+};
+
+export const google = async (arg: SignInArg): Promise<void> => {
+	const email = new EscapedEmail(arg.profile?.email as string);
+	const res = await client.ft.search(user_index, `@email:"${email.value}"`);
+	if (!res.total) {
+		new_user(arg, email);
+		return;
+	} else {
+		const user = res.documents[0];
+		client.json.set(user.id, '$', {
+			email: email.value,
+			name: arg.profile?.name as string
+		});
+	}
 };

@@ -8,7 +8,7 @@ import { protected_routes } from '$lib/constants';
 import type { Provider } from '@auth/core/providers';
 import { client } from '$lib/util/redis';
 import { escape_email } from '$lib/util/escape_email';
-import { providers } from '$lib/util/user/create/providers';
+import { providers } from '$lib/util/user/create';
 
 const authorization: Handle = async ({ event, resolve }) => {
 	if (protected_routes.includes(event.url.pathname)) {
@@ -37,6 +37,7 @@ export const handle: Handle = sequence(
 		],
 		callbacks: {
 			async signIn(arg) {
+				console.log('signIn', arg)
 				if (!arg.account?.provider) return true
 				providers[arg.account?.provider](arg)
 				return true;
