@@ -35,7 +35,7 @@
 		/>
 	{/if} -->
 	<div class="name">
-		<Link href="/user/{result.id}">{result.value.name}</Link>
+		<Link href="/user/{result.id}">~ {result.value.name ?? ''}</Link>
 	</div>
 	<!-- <div class="buttons">
 		{#if result.value.is_user}
