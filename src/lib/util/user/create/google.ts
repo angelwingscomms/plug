@@ -11,7 +11,7 @@ export const google = async (arg: Parameters<CallbacksOptions['signIn']>[0]) => 
 	const id = user_id_prefix.concat((await client.incr('last_user_id')).toString());
 	client.json.set(id, '$', {
 		email: email.value,
-		id,
-		name: arg.profile?.name ?? ''
+		name: arg.profile?.name ?? '',
+		provider: arg.account?.provider
 	});
 };

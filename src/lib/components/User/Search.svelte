@@ -23,6 +23,7 @@
 
 	let search_input_ref: HTMLInputElement;
 	const get = async (page: number) => {
+		searched = true
 		if (!search) return;
 		searched = true;
 		loading = true;
@@ -45,14 +46,27 @@
 	</Modal>
 {/if} -->
 
-<Row noGutter>
-	<TextInput bind:ref={search_input_ref} bind:value={search} />
-	<Button size="field" on:click={() => get(page)} iconDescription="Search" icon={Search} />
-</Row>
+	<div class='input'>
+		<TextInput bind:ref={search_input_ref} bind:value={search} />
+		<Button size="field" on:click={() => get(page)} iconDescription="Search" icon={Search} />
+	</div>
 
 {#if loading}
 	<Loading />
-{:else if results.length > 0}
+{/if}
+
+{#if !searched}
+	<p>Search for software developer profiles and add yours</p>
+
+{:else if results.length < 0}
+<div class="none">
+		<!-- <Button kind="ghost" size="xl" on:click={() => search_input_ref.focus()}> -->
+		{searched && !results.length
+			? `There don't seem to be any results for your search`
+			: 'Search all users'}
+		<!-- </Button> -->
+	</div>
+{:else}
 	<SearchPagination
 		on:select-click
 		{select}
@@ -63,17 +77,12 @@
 		{results}
 		{page}
 	/>
-{:else}
-	<div class="none">
-		<!-- <Button kind="ghost" size="xl" on:click={() => search_input_ref.focus()}> -->
-		{searched && !results.length
-			? `There don't seem to be any results for your search`
-			: 'Search all users'}
-		<!-- </Button> -->
-	</div>
 {/if}
 
 <style lang="sass">
+	.input
+		display: flex
+		flex-direction: row
 	.none
 		display: flex
 		align-items: center

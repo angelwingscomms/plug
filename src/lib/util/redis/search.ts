@@ -71,7 +71,7 @@ export const search = async ({ index, page, filters, count, search, RETURN, quer
 		};
 	} else {
 		// options.SORTBY = {
-		// 	BY: 'created',
+		// 	BY: '__score',
 		// 	DIRECTION: 'DESC'
 		// };
 	}

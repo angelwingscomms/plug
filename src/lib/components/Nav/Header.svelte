@@ -50,6 +50,7 @@
 				{#if $page.data.session?.user}
 					<HeaderPanelLink on:click={() => signOut()}>Log out: {$page.data.session.user.email}</HeaderPanelLink>
 				{:else}
+					<HeaderPanelLink on:click={() => signIn('github')}>Log in with Github</HeaderPanelLink>
 					<HeaderPanelLink on:click={() => signIn('google')}>Log in with Google</HeaderPanelLink>
 				{/if}
 			</HeaderPanelLinks>
