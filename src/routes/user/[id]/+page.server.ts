@@ -9,6 +9,6 @@ export const load: PageServerLoad = async ({ params }) => {
 	return {
 		html: user.html,
 		name: user.name,
-		id: user.id
+		id: params.id
 	};
 };
