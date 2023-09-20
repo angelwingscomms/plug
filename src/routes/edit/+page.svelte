@@ -55,6 +55,7 @@
 </script>
 
 <OnEnter
+	ctrl
 	on:enter={save}
 />
 
