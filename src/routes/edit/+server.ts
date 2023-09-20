@@ -1,6 +1,6 @@
 import { handle_server_error } from '$lib/util/handle_server_error';
 import { client } from '$lib/util/redis';
-import { error, redirect } from '@sveltejs/kit';
+import { redirect } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
 export const DELETE: RequestHandler = async ({ request, locals }) => {
@@ -10,8 +10,8 @@ export const DELETE: RequestHandler = async ({ request, locals }) => {
 		if (!(await client.exists(user.id))) {
 			handle_server_error(
 				request.url,
-				`did not - but expected to - find user with id: ${user.id}`,
-				404
+				{message:`did not - but expected to - find user with id: ${user.id}`,
+				status:404}
 			);
 		}
 		await client.del(user.id)
@@ -27,7 +27,7 @@ export const PUT: RequestHandler = async ({ request, locals }) => {
 		const user = (await locals.getSession())?.user;
 		if (!user) throw redirect(303, '/auth');
 		if (!await client.exists(user.id)) {
-			handle_server_error(request.url, `did not - but expected to - find user with id: ${user.id}`, 404)
+			handle_server_error(request.url, {message: `did not - but expected to - find user with id: ${user.id}`, status: 404})
 		}
 		const arg = await request.json();
 		for (const key of Object.keys(arg)) {

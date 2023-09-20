@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { PostSearchDocument } from '$lib/types';
-	import Posts from '../Posts.svelte';
 	import { Loading, Pagination } from 'carbon-components-svelte';
 	import Results from './Results.svelte';
 
