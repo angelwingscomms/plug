@@ -2,14 +2,18 @@
 	import { Column, Row } from 'carbon-components-svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
+
+	let u: string
+
+	console.log('data', data)
 </script>
 
 <Row>
 	<Column>
 		<div class="all">
-			<p>{data.name}</p>
+			<p>~ {data.name}</p>
 
-			{#if data.text}
+			{#if data.html}
 				<p>{@html data.html}</p>
 			{/if}
 		</div>
