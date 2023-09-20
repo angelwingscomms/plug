@@ -62,7 +62,7 @@
 	</div>
 {/if}
 
-{#if results.length < 0}
+{#if searched && results.length < 0}
 	<div class="line">
 		<!-- <Button kind="ghost" size="xl" on:click={() => search_input_ref.focus()}> -->
 		{searched && !results.length
