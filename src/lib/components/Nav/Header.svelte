@@ -28,7 +28,7 @@
 
 <Header
 	persistentHamburgerMenu={true}
-	platformName="Techbros"
+	platformName="Free"
 	bind:isSideNavOpen={$isSideNavOpen}
 	href="/"
 >
