@@ -10,8 +10,7 @@ import hljs from 'highlight.js';
 
 // export const marked = new Marked
 
-export const parse_timeout = 37000;
-
+export const parse_timeout = 12000;
 export const options = { gfm: true, breaks: true };
 export const extensions = [
 	// extended_tables(),
