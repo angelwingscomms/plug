@@ -34,5 +34,9 @@ export const to_html = (text: string): string => {
 	return marked.parse(
 		text
 		// .replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/u, '')
+		, {
+			gfm: true,
+			breaks: true
+		}
 	);
 };
