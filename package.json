@@ -1,5 +1,5 @@
 {
-	"name": "bible-blog",
+	"name": "free",
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
@@ -51,7 +51,6 @@
 		"marked": "^9.0.3",
 		"marked-admonition-extension": "^0.0.4",
 		"marked-bidi": "^1.0.6",
-		"marked-extended-tables": "^1.0.6",
 		"marked-highlight": "^2.0.6",
 		"marked-katex-extension": "^3.0.6",
 		"marked-linkify-it": "^3.1.4",
