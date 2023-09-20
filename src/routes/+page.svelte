@@ -2,14 +2,13 @@
 	import Edit from 'carbon-icons-svelte/lib/Edit.svelte';
 	import { Button, Row, Column } from 'carbon-components-svelte';
 	import { page } from '$app/stores';
-	import { signIn } from '@auth/sveltekit/client';
 	import Search from '$lib/components/User/Search.svelte';
-	import { isSideNavOpen } from '$lib/components/Nav/store';
 </script>
 
 <Row>
 	<Column>
 		<div class="all">
+			<p>Search for Software developers. Add your profile</p>
 			{#if $page.data.session?.user}
 				<Button href="/edit" icon={Edit}>Edit Profile</Button>
 			{:else}

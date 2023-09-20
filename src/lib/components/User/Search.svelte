@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { TextInput, Button, Row, Loading, Modal } from 'carbon-components-svelte';
+	import { TextInput, Button, Row, Loading, Modal, InlineLoading } from 'carbon-components-svelte';
 	import Search from 'carbon-icons-svelte/lib/Search.svelte';
 	import type { SearchDocument } from '$lib/types';
 	import axios from 'axios';
@@ -10,11 +10,11 @@
 	import SearchPagination from '../Search/SearchPagination.svelte';
 
 	export let select = false,
+		searched = false,
 		totalItems: number = 0;
 	let loading = false,
 		results: SearchDocument<{ name: string }>[] = [],
 		search: string,
-		searched = false,
 		page: number = 1;
 
 	$: get(page);
@@ -23,7 +23,7 @@
 
 	let search_input_ref: HTMLInputElement;
 	const get = async (page: number) => {
-		searched = true
+		searched = true;
 		if (!search) return;
 		searched = true;
 		loading = true;
@@ -31,7 +31,11 @@
 			const r = await axios.post('/user/search', { query: search, page });
 			({ total: totalItems, documents: results } = r.data);
 		} catch (e: any) {
-			notify({ title: `User search error`, subtitle: e.response.data.message ?? undefined, kind: 'error' });
+			notify({
+				title: `User search error`,
+				subtitle: e.response.data.message ?? undefined,
+				kind: 'error'
+			});
 		}
 
 		loading = false;
@@ -46,20 +50,20 @@
 	</Modal>
 {/if} -->
 
-	<div class='input'>
-		<TextInput bind:ref={search_input_ref} bind:value={search} />
-		<Button size="field" on:click={() => get(page)} iconDescription="Search" icon={Search} />
-	</div>
+<div class="input">
+	<TextInput bind:ref={search_input_ref} bind:value={search} />
+	<Button size="field" on:click={() => get(page)} iconDescription="Search" icon={Search} />
+</div>
 
 {#if loading}
-	<Loading />
+	<div class="line line-space">
+		<p>Searching</p>
+			<InlineLoading />
+	</div>
 {/if}
 
-{#if !searched}
-	<p>Search for software developer profiles and add yours</p>
-
-{:else if results.length < 0}
-<div class="none">
+{#if results.length < 0}
+	<div class="line">
 		<!-- <Button kind="ghost" size="xl" on:click={() => search_input_ref.focus()}> -->
 		{searched && !results.length
 			? `There don't seem to be any results for your search`
@@ -80,10 +84,13 @@
 {/if}
 
 <style lang="sass">
+	@use '@carbon/layout'
 	.input
 		display: flex
 		flex-direction: row
-	.none
+	.line-space
+		column-gap: layout.$spacing-04
+	.line
 		display: flex
 		align-items: center
 		justify-content: center
