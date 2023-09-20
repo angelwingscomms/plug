@@ -3,10 +3,12 @@
 	import { page } from '$app/stores';
 	import OnEnter from '$lib/components/OnEnter.svelte';
 	import { notify } from '$lib/util/notify';
+	import { sanitize_object, sanitize_string } from '$lib/util/sanitize';
 	import axios from 'axios';
 	import { Button, InlineLoading, TextArea, TextInput } from 'carbon-components-svelte';
 	import Edit from 'carbon-icons-svelte/lib/Edit.svelte';
 	import TrashCan from 'carbon-icons-svelte/lib/TrashCan.svelte';
+	import { parse } from 'svelte/compiler';
 	let name = $page.data.name,
 		text = $page.data.text,
 		edit_loading = false,
@@ -31,6 +33,16 @@
 
 	const save = async () => {
 		edit_loading = true;
+		let payload
+		try {
+			payload = sanitize_object({name, text})
+			const html = await parse(payload.text as string)
+			payload.html = sanitize_string(html)
+		} catch (e) {
+			if (e === 'timeout') {
+				notify
+			}
+		}
 		try {
 			await axios.put(`/edit`, { name, text });
 			notify('Saved');
