@@ -6,5 +6,5 @@ export const load: PageServerLoad = async ({ params }) => {
 	const user = await client.json.get(params.id)
 	console.log(user)
 	if (!user) throw error(404, `User with id ${params.id} was not found`)
-	return {...user};
+	return user;
 };

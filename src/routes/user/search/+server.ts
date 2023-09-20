@@ -13,8 +13,8 @@ export const POST: RequestHandler = async ({ request }) => {
 			query,
 			RETURN: ['name', 'email'],
 			page,
-			OPTIONS: { WITHSORTKEYS: true }
 		});
+		console.log(res.documents)
 		return json(
 			res
 			// await client.ft.search(user_index, query, {
