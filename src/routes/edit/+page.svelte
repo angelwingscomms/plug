@@ -1,22 +1,48 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import OnEnter from '$lib/components/OnEnter.svelte';
 	import { notify } from '$lib/util/notify';
 	import axios from 'axios';
 	import { Button, InlineLoading, TextArea, TextInput } from 'carbon-components-svelte';
 	import Edit from 'carbon-icons-svelte/lib/Edit.svelte';
-	let name = $page.data.name, text = $page.data.text, loading = false;
+	import TrashCan from 'carbon-icons-svelte/lib/TrashCan.svelte';
+	let name = $page.data.name,
+		text = $page.data.text,
+		edit_loading = false,
+		delete_loading = false;
+
+	const del = async () => {
+		delete_loading = true;
+		try {
+			await axios.delete('/edit');
+			notify('Account deleted');
+			goto('/');
+		} catch (e: any) {
+			console.error('delete error', e);
+			notify({
+				kind: 'error',
+				title: 'Delete error',
+				subtitle: e.response.data.message ? e.response.data.message : undefined
+			});
+		}
+		delete_loading = false;
+	};
 
 	const save = async () => {
-		loading = true
+		edit_loading = true;
 		try {
 			await axios.put(`/edit`, { name, text });
 			notify('Saved');
 		} catch (e: any) {
 			console.error('save error', e);
-			notify({ kind: 'error', title: 'Save error' });
+			notify({
+				kind: 'error',
+				title: 'Save error',
+				subtitle: e.response.data.message ? e.response.data.message : undefined
+			});
 		}
-		loading = false
+		edit_loading = false;
 	};
 </script>
 
@@ -24,4 +50,5 @@
 
 <TextInput bind:value={name} labelText="name" />
 <TextArea bind:value={text} labelText="text" />
-<Button icon={loading ? InlineLoading : Edit} on:click={save}>Save</Button>
+<Button icon={edit_loading ? InlineLoading : Edit} on:click={save}>Save</Button>
+<Button icon={delete_loading ? InlineLoading : TrashCan} on:click={del}>Delete Account</Button>

@@ -2,7 +2,7 @@ import { marked } from 'marked';
 import { markedHighlight } from 'marked-highlight';
 import katex from 'marked-katex-extension';
 import bidi from 'marked-bidi';
-import extended_tables from 'marked-extended-tables';
+// import extended_tables from 'marked-extended-tables';
 import { mangle } from 'marked-mangle';
 import linkify_it from 'marked-linkify-it';
 import admonition from 'marked-admonition-extension';
@@ -14,7 +14,7 @@ export const parse_timeout = 37000;
 
 export const options = { gfm: true, breaks: true };
 export const extensions = [
-	extended_tables(),
+	// extended_tables(),
 	markedHighlight({
 		langPrefix: 'hljs language-',
 		highlight(code, lang) {
