@@ -13,7 +13,7 @@
 			<p>{data.name}</p>
 
 			{#if data.text}
-				<p>{@html to_html(data.text.toString())}</p>
+				<p>{@html data.html}</p>
 			{/if}
 			<!-- <p>All posts by {data.user}</p>
 			<PostsPagination {...data} /> -->

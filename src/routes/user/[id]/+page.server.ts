@@ -8,7 +8,8 @@ export const load: PageServerLoad = async ({ params }) => {
 	if (!user) throw error(404, `User with id ${params.id} was not found`)
 	return {
 		text: user.text,
-		data: user.data,
+		html: user.html,
+		name: user.name,
 		id: user.id
 	};
 };
