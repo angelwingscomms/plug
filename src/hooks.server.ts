@@ -56,7 +56,8 @@ export const handle: Handle = sequence(
 					user: {
 						id: user_res.id ? String(user_res.id) : undefined,
 						name: user_res.value.name ? String(user_res.value.name) : undefined,
-						email: user_res.value.email ? String(user_res.value.name) : undefined
+						email: user_res.value.email ? String(user_res.value.name) : undefined,
+						provider: user_res.value.provider ? String(user_res.value.provider) : undefined
 					},
 					expires: new Date('9999-12-31').toISOString()
 				};

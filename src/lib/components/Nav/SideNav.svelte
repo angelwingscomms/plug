@@ -10,7 +10,7 @@
 
 <SideNav bind:isOpen={$isSideNavOpen}>
 	<SideNavItems>
-		{#if $page.data.session?.user?.email}
+		{#if $page.data.session?.user}
 			<SideNavLink text="View your profile" href="/user/{$page.data.session?.user?.id}" />
 			<SideNavLink text="Edit profile" href="/edit" />
 		{/if}

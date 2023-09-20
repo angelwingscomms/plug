@@ -4,6 +4,7 @@
 	import { page } from '$app/stores';
 	import { signIn } from '@auth/sveltekit/client';
 	import Search from '$lib/components/User/Search.svelte';
+	import { isSideNavOpen } from '$lib/components/Nav/store';
 </script>
 
 <Row>
@@ -12,7 +13,7 @@
 			{#if $page.data.session?.user}
 				<Button href="/edit" icon={Edit}>Edit Profile</Button>
 			{:else}
-				<Button on:click={() => signIn('google')}>Login</Button>
+				<Button href="/auth">Login</Button>
 			{/if}
 			<Search />
 		</div>

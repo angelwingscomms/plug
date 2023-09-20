@@ -19,6 +19,11 @@
 
 	$: isOpen = false;
 	$: icon = $theme === 'g100' ? Sun : Moon;
+
+	const provider_names = {
+		google: 'Google',
+		github: 'Github'
+}
 </script>
 
 <Header
@@ -48,7 +53,8 @@
 		<HeaderAction icon={UserAvatarFilledAlt} closeIcon={UserAvatarFilledAlt}>
 			<HeaderPanelLinks>
 				{#if $page.data.session?.user}
-					<HeaderPanelLink on:click={() => signOut()}>Log out: {$page.data.session.user.email}</HeaderPanelLink>
+					<HeaderPanelLink on:click={() => signOut()}>Logged in with: {provider_names[$page.data.session.user.provider]}</HeaderPanelLink>
+					<HeaderPanelLink on:click={() => signOut()}>Log out</HeaderPanelLink>
 				{:else}
 					<HeaderPanelLink on:click={() => signIn('github')}>Log in with Github</HeaderPanelLink>
 					<HeaderPanelLink on:click={() => signIn('google')}>Log in with Google</HeaderPanelLink>

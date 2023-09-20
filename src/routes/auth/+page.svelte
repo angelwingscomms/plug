@@ -11,4 +11,5 @@
 	<Button href="/">You are logged in, click here to go to the homepage</Button>
 {:else}
 	<Button on:click={() => signIn('google')}>Sign In with Google</Button>
+	<Button on:click={() => signIn('github')}>Sign In with Github</Button>
 {/if}
