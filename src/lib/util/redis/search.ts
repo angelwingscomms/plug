@@ -6,6 +6,7 @@ import { embedding } from '$lib/util/embedding/openai';
 import { slim } from '$lib/util/redis/shape/slim';
 import type { SearchDocumentValue } from '$lib/types';
 import { float32_buffer } from '$lib/util/float32_buffer';
+import { xenova } from '../embedding/xenova';
 
 export interface SearchParams {
 	index: string;
@@ -41,7 +42,6 @@ export const search = async ({
 
 	let extra_args = ''; // ' HYBRID_POLICY ADHOC_BF';
 
-	console.log(filters);
 	if (filters && filters.length) {
 		filters.forEach((filter) => {
 			switch (filter.type) {
@@ -65,14 +65,12 @@ export const search = async ({
 		query = '*';
 	}
 
-	console.log(query);
-
 	if (search) {
 		query += `=>[KNN 7 @${embedding_field_name} $BLOB${extra_args}]`;
 		options.PARAMS = {
 			BLOB:
 				typeof search === 'string'
-					? float32_buffer(await embedding(search))
+					? float32_buffer(await xenova(search))
 					: float32_buffer(search)
 		};
 		options.SORTBY = {
@@ -86,12 +84,10 @@ export const search = async ({
 		// };
 	}
 
-	console.log(query);
-	return client.ft.search(index, query, { ...options, ...OPTIONS }).then((res) => {
-		res.documents = res.documents.map((r) => {
-			r.value = slim(r.value, true) as SearchDocumentValue;
-			return r;
-		});
-		return { ...res, page };
+	const res = await client.ft.search(index, query, { ...options, ...OPTIONS });
+	res.documents = res.documents.map((r) => {
+		r.value = slim(r.value, true) as SearchDocumentValue;
+		return r;
 	});
+	return { ...res, page };
 };

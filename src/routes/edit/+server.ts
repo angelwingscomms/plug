@@ -38,13 +38,17 @@ export const PUT: RequestHandler = async ({ request, locals }) => {
 		for (const key of Object.keys(arg)) {
 			client.json.set(user.id, `$.${key}`, arg[key]);
 		}
-		const embed_res = await axios.post(
-			embed_endpoint,
-			`${arg.name ? `${arg.name}\n\n` : ''}\n${arg.text ?? ''}`,
-			{ headers: { 'Content-Type': 'text/plain' } }
+		// const embed_res = await axios.post(
+		// 	embed_endpoint,
+		// 	`${arg.name ? `${arg.name}\n\n` : ''}\n${arg.text ?? ''}`,
+		// 	{ headers: { 'Content-Type': 'text/plain' } }
+		// );
+		// console.log('ers', embed_res);
+		client.json.set(
+			user.id,
+			'$.v',
+			float32_buffer(await xenova(`${arg.name ? `${arg.name}\n\n` : ''}\n${arg.text ?? ''}`))
 		);
-		console.log('ers', embed_res);
-		client.json.set(user.id, '$.v', float32_buffer(embed_res.data));
 		return new Response(null, { status: 200 });
 	} catch (e) {
 		throw handle_server_error(request.url, e);

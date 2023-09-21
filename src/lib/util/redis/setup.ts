@@ -1,23 +1,9 @@
 import { SchemaFieldTypes, VectorAlgorithms } from 'redis';
 import { client } from '.';
-import { user_id_prefix, user_index } from '$lib/constants';
-// import { unescape_email } from '../unescape_email';
-// import { EscapedEmail } from '$lib/types';
+import { user_id_prefix } from '$lib/constants';
 
 export const setup = async () => {
 	try {
-		// const ur = (await client.json.get('user_test_key')).email;
-		// console.log('ss', unescape_email(ur))
-		// await client.ft.dropIndex('users')
-		// console.log(
-		// 	'rera',
-		// 	await client.json.set('user_test_key', '$', {
-		// 		email: new EscapedEmail('-ed_ge,3769@gmail.com').value
-		// 	})
-		// );
-		// const escaped_email = new EscapedEmail('-ed_ge,3769@gmail.com')
-		// console.log('ee', escaped_email.value)
-		// console.log('sds', await client.ft.search(user_index, `@email:${escaped_email.value}`))
 		await client.ft.create(
 			'users',
 			{
@@ -26,7 +12,7 @@ export const setup = async () => {
 					type: SchemaFieldTypes.VECTOR,
 					ALGORITHM: VectorAlgorithms.HNSW,
 					TYPE: 'FLOAT32',
-					DIM: 1536,
+					DIM: 768,
 					DISTANCE_METRIC: 'COSINE'
 				},
 				'$.email': {
@@ -51,20 +37,9 @@ export const setup = async () => {
 				PREFIX: user_id_prefix
 			}
 		);
-		// await client.ft.alter(user_index, {
-		// 	'$.v': {
-		// 		AS: 'v',
-		// 		type: SchemaFieldTypes.VECTOR,
-		// 		ALGORITHM: VectorAlgorithms.HNSW,
-		// 		TYPE: 'FLOAT32',
-		// 		DIM: 768,
-		// 		DISTANCE_METRIC: 'COSINE'
-		// 	}
-		// });
 	} catch (e) {
-		// if (e.message !== 'Index already exists') {
-			console.error('redis setup error:', e)
-		// 	process.exit(1)
-		// }
+		if (e.message !== 'Index already exists') {
+			console.error('redis setup error:', e);
+		}
 	}
 };
