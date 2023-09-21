@@ -3,18 +3,26 @@
 	import { Button, ButtonSet } from 'carbon-components-svelte';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
+	import { previous_page } from '$lib/store';
 </script>
 
 {#if $page.data.session?.user}
 	<!-- goto previous page -->
-	<!-- <Button on:click={()=> goto('/')}>Or here to to go to the previous page</Button> -->
-	<Button href="/">You are logged in, click here to go to the homepage</Button>
+	<div>
+		<h4>You are logged in</h4>
+		<ButtonSet stacked>
+			{#if $previous_page}
+				<Button on:click={() => goto($previous_page)}>Go to the previous page</Button>
+			{/if}
+			<Button href="/">Go to the homepage</Button>
+		</ButtonSet>
+	</div>
 {:else}
 	<div>
 		<h4>Sign In</h4>
 		<ButtonSet stacked>
-			<Button on:click={() => signIn('google')}>Google</Button>
 			<Button on:click={() => signIn('github')}>Github</Button>
+			<Button on:click={() => signIn('google')}>Google</Button>
 		</ButtonSet>
 	</div>
 {/if}

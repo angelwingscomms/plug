@@ -8,7 +8,7 @@ const new_user = async (arg: SignInArg, email: EscapedEmail): Promise<void> => {
 	await client.json.set(id, '$', {
 		email: email.value,
 		name: arg.profile?.name as string,
-		provider: arg.account?.provider ?? null
+		provider: arg.account?.provider as string
 	});
 };
 
@@ -19,10 +19,8 @@ export const google = async (arg: SignInArg): Promise<void> => {
 		new_user(arg, email);
 		return;
 	} else {
-		const user = res.documents[0];
-		client.json.set(user.id, '$', {
-			email: email.value,
-			name: arg.profile?.name as string
-		});
+		await client.json.set(res.documents[0].id, '$.name', arg.profile?.name as string);
+		await client.json.set(res.documents[0].id, '$.email', email.value);
+		await client.json.set(res.documents[0].id, '$.provider', arg.account?.provider as string);
 	}
 };

@@ -37,21 +37,17 @@ export const handle: Handle = sequence(
 		],
 		callbacks: {
 			async signIn(arg) {
-				console.log('signIn', arg)
-				if (!arg.account?.provider) return true
-				providers[arg.account?.provider](arg)
+				providers[arg.account?.provider as string](arg)
 				return true;
 			},
 			async session(arg) {
-				console.log('da', arg);
-				if (!arg.session.user?.email) return arg.session;
+				if (!arg.session) return arg.session
 				const res = await client.ft.search(
 					'users',
-					`@email:${escape_email(arg.session.user.email)}`
+					`@email:${escape_email(arg.session?.user?.email as string)}`
 				);
 				if (!res.total) return arg.session
 				const user_res = res.documents[0];
-				console.log('ur', user_res);
 				if (!user_res) return arg.session
 				return {
 					user: {

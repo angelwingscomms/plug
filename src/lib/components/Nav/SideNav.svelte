@@ -6,12 +6,13 @@
 	import { isSideNavOpen } from './store';
 
 	import A2HsLink from './A2HSLink.svelte';
+	import { onMount } from 'svelte';
 </script>
 
 <SideNav bind:isOpen={$isSideNavOpen}>
 	<SideNavItems>
 		{#if $page.data.session?.user}
-			<SideNavLink text="View your profile" href="/user/{$page.data.session?.user?.id}" />
+			<SideNavLink text="View profile" href="/user/{$page.data.session?.user?.id}" />
 			<SideNavLink text="Edit profile" href="/edit" />
 		{/if}
 		<!-- <SideNavLink text="Create an article" href="/post/add" />
