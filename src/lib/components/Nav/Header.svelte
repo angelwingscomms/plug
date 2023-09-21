@@ -56,8 +56,8 @@
 					<HeaderPanelLink on:click={() => signOut()}>Logged in with: {provider_names[$page.data.session.user.provider]}</HeaderPanelLink>
 					<HeaderPanelLink on:click={() => signOut()}>Log out</HeaderPanelLink>
 				{:else}
-					<HeaderPanelLink on:click={() => signIn('github')}>Log in with Github</HeaderPanelLink>
-					<HeaderPanelLink on:click={() => signIn('google')}>Log in with Google</HeaderPanelLink>
+					<HeaderPanelLink on:click={() => signIn('github')}>Sign in with Github</HeaderPanelLink>
+					<HeaderPanelLink on:click={() => signIn('google')}>Sign in with Google</HeaderPanelLink>
 				{/if}
 			</HeaderPanelLinks>
 		</HeaderAction>

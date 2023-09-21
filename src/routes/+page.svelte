@@ -8,12 +8,12 @@
 <Row>
 	<Column>
 		<div class="all">
-			<p>Search for Software developers. Add your profile</p>
 			{#if $page.data.session?.user}
 				<Button href="/edit" icon={Edit}>Edit Profile</Button>
 			{:else}
-				<Button href="/auth">Login</Button>
+				<Button href="/auth">Add your profile</Button>
 			{/if}
+			<p>Search for Software developers</p>
 			<Search />
 		</div>
 	</Column>

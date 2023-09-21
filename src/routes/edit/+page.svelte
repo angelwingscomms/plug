@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import OnEnter from '$lib/components/OnEnter.svelte';
 	import { parse } from '$lib/util/markdown/parse/web';
 	import { notify } from '$lib/util/notify';
 	import { sanitize_object, sanitize_string } from '$lib/util/sanitize';
+	import { signOut } from '@auth/sveltekit/client';
 	import axios from 'axios';
-	import { Button, ButtonSet, InlineLoading, TextArea, TextInput } from 'carbon-components-svelte';
+	import { Button, ButtonSet, Column, FluidForm, InlineLoading, Row, TextArea, TextInput } from 'carbon-components-svelte';
 	import Edit from 'carbon-icons-svelte/lib/Edit.svelte';
 	import TrashCan from 'carbon-icons-svelte/lib/TrashCan.svelte';
 	let name = $page.data.name,
@@ -17,11 +17,12 @@
 		delete_loading = false;
 
 	const del = async () => {
+		if (delete_loading) return
 		delete_loading = true;
 		try {
 			await axios.delete('/edit');
-			notify('Account deleted');
-			goto('/');
+			notify('Profile deleted');
+			signOut()
 		} catch (e: any) {
 			console.error('delete error', e);
 			notify({
@@ -34,6 +35,7 @@
 	};
 
 	const save = async () => {
+		if (edit_loading) return
 		edit_loading = true;
 		try {
 			let payload = sanitize_object({ name, text });
@@ -58,15 +60,22 @@
 	on:enter={save}
 />
 
-<TextInput bind:value={name} labelText="name" />
-<TextArea
-	rows={15}
-	invalid={text_invalid}
-	invalidText={text_invalid_text}
-	bind:value={text}
-	labelText="text"
-/>
-<ButtonSet stacked>
-	<Button icon={edit_loading ? InlineLoading : Edit} on:click={save}>Save</Button>
-	<Button icon={delete_loading ? InlineLoading : TrashCan} on:click={del}>Delete Profile</Button>
-</ButtonSet>
+<Row>
+	<Column>
+		<FluidForm>
+			<TextInput bind:value={name} labelText="Name" />
+			<TextArea
+				rows={15}
+				placeholder="Use markdown if you want"
+				invalid={text_invalid}
+				invalidText={text_invalid_text}
+				bind:value={text}
+				labelText="text"
+			/>
+		</FluidForm>
+		<ButtonSet stacked>
+			<Button disabled={edit_loading} icon={edit_loading ? InlineLoading : Edit} on:click={save}>Save</Button>
+			<Button disabled={delete_loading} icon={delete_loading ? InlineLoading : TrashCan} on:click={del}>Delete Profile</Button>
+		</ButtonSet>
+	</Column>
+</Row>

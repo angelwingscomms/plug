@@ -8,6 +8,8 @@
 	import { inject } from '@vercel/analytics';
 	import { theme, theme_key } from '$lib/theme_store';
 	import Notifications from '$lib/components/Notifications.svelte';
+	import { navigating } from '$app/stores';
+	import { previous_page } from '$lib/store';
 
 	inject({ mode: dev ? 'development' : 'production' });
 
@@ -21,6 +23,10 @@
 			});
 		}
 	});
+
+	$: if ($navigating) {
+		$previous_page = $navigating.from?.url.pathname ?? ''
+	}
 </script>
 
 <Notifications />
