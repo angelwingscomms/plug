@@ -12,34 +12,39 @@ export const DELETE: RequestHandler = async ({ request, locals }) => {
 		const user = (await locals.getSession())?.user;
 		if (!user) throw redirect(303, '/auth');
 		if (!(await client.exists(user.id))) {
-			handle_server_error(
-				request.url,
-				{message:`did not - but expected to - find user with id: ${user.id}`,
-				status:404}
-			);
+			handle_server_error(request.url, {
+				message: `did not - but expected to - find user with id: ${user.id}`,
+				status: 404
+			});
 		}
-		await client.del(user.id)
-		return new Response()
+		await client.del(user.id);
+		return new Response();
+	} catch (e: any) {
+		throw handle_server_error(`${request.method} ${request.url}`, e);
 	}
-	catch (e: any) {
-		throw handle_server_error(`${request.method} ${request.url}`, e)
-	}
-}
+};
 
 export const PUT: RequestHandler = async ({ request, locals }) => {
 	try {
 		const user = (await locals.getSession())?.user;
 		if (!user) throw redirect(303, '/auth');
-		if (!await client.exists(user.id)) {
-			handle_server_error(request.url, {message: `did not - but expected to - find user with id: ${user.id}`, status: 404})
+		if (!(await client.exists(user.id))) {
+			handle_server_error(request.url, {
+				message: `did not - but expected to - find user with id: ${user.id}`,
+				status: 404
+			});
 		}
 		const arg = await request.json();
 		for (const key of Object.keys(arg)) {
 			client.json.set(user.id, `$.${key}`, arg[key]);
 		}
-		const embed_res = await axios.post(embed_endpoint, `${arg.name ? `${arg.name}\n\n` : ''}\n\n${arg.text ?? ''}`);
-		console.log('ers', embed_res)
-		client.json.set(user.id, '$.v', float32_buffer(embed_res.data))
+		const embed_res = await axios.post(
+			embed_endpoint,
+			`${arg.name ? `${arg.name}\n\n` : ''}\n${arg.text ?? ''}`,
+			{ headers: { 'Content-Type': 'text/plain' } }
+		);
+		console.log('ers', embed_res);
+		client.json.set(user.id, '$.v', float32_buffer(embed_res.data));
 		return new Response(null, { status: 200 });
 	} catch (e) {
 		throw handle_server_error(request.url, e);
