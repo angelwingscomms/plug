@@ -13,7 +13,6 @@
 			{:else}
 				<Button href="/auth">Add your profile</Button>
 			{/if}
-			<p>Search for Software developers</p>
 			<Search />
 		</div>
 	</Column>

@@ -55,7 +55,7 @@
 {/if} -->
 
 <div class="input">
-	<TextInput placeholder='Search' bind:ref={search_input_ref} bind:value={search} />
+	<TextInput placeholder='Search users' bind:ref={search_input_ref} bind:value={search} />
 	<Button size="field" on:click={() => get(page)} iconDescription="Search" icon={Search} />
 </div>
 
