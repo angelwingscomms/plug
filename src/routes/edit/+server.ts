@@ -2,6 +2,10 @@ import { handle_server_error } from '$lib/util/handle_server_error';
 import { client } from '$lib/util/redis';
 import { redirect } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
+import { xenova } from '$lib/util/embedding/xenova';
+import { float32_buffer } from '$lib/util/float32_buffer';
+import axios from 'axios';
+import { embed_endpoint } from '$lib/constants';
 
 export const DELETE: RequestHandler = async ({ request, locals }) => {
 	try {
@@ -33,6 +37,9 @@ export const PUT: RequestHandler = async ({ request, locals }) => {
 		for (const key of Object.keys(arg)) {
 			client.json.set(user.id, `$.${key}`, arg[key]);
 		}
+		const embed_res = await axios.post(embed_endpoint, `${arg.name ? `${arg.name}\n\n` : ''}\n\n${arg.text ?? ''}`);
+		console.log('ers', embed_res)
+		client.json.set(user.id, '$.v', float32_buffer(embed_res.data))
 		return new Response(null, { status: 200 });
 	} catch (e) {
 		throw handle_server_error(request.url, e);

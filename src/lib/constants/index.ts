@@ -8,6 +8,7 @@ export const embedding_field_name = 'v';
 export const ids_hash = 'ids';
 export const user_id_prefix = 'user_'
 export const user_index = 'users'
+export const embed_endpoint = 'http://127.0.0.1:10000';
 export const feedback_index = "feedback"
 export const feedback_id_prefix = "feedback_"
 export const content_attributes = ['name', 'body'];

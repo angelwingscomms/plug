@@ -1,6 +1,6 @@
 import { SchemaFieldTypes, VectorAlgorithms } from 'redis';
 import { client } from '.';
-import { user_id_prefix } from '$lib/constants';
+import { user_id_prefix, user_index } from '$lib/constants';
 // import { unescape_email } from '../unescape_email';
 // import { EscapedEmail } from '$lib/types';
 
@@ -51,6 +51,16 @@ export const setup = async () => {
 				PREFIX: user_id_prefix
 			}
 		);
+		// await client.ft.alter(user_index, {
+		// 	'$.v': {
+		// 		AS: 'v',
+		// 		type: SchemaFieldTypes.VECTOR,
+		// 		ALGORITHM: VectorAlgorithms.HNSW,
+		// 		TYPE: 'FLOAT32',
+		// 		DIM: 768,
+		// 		DISTANCE_METRIC: 'COSINE'
+		// 	}
+		// });
 	} catch (e) {
 		// if (e.message !== 'Index already exists') {
 			console.error('redis setup error:', e)
