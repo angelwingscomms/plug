@@ -1,7 +1,7 @@
 import type { KeyedObject } from '$lib/types';
 import { is_object } from '$lib/util/is_object';
 import { client } from '.';
-import { embedding } from '$lib/util/embedding';
+import { embedding } from '$lib/util/embedding/openai';
 import { sanitize_object } from '$lib/util/sanitize/sanitize_object';
 
 const include = (prefix: string, obj: KeyedObject, accumulator: KeyedObject) => {

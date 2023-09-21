@@ -1,4 +1,4 @@
-import { embedding } from '$lib/util/embedding';
+import { embedding } from '$lib/util/embedding/openai';
 import { error, json, type RequestHandler } from '@sveltejs/kit';
 
 export const POST = (async ({ request }) => {

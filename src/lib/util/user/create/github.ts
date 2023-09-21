@@ -7,7 +7,9 @@ const build_id = (id: string) => user_id_prefix.concat(id);
 
 export const github = async (arg: SignInArg) => {
 	const id = build_id(arg.profile?.id as string);
+	console.log(id)
 	if (await client.exists(id)) {
+		console.log('exists')
 		await client.json.set(id, '$.login', arg.profile?.login as string);
 		await client.json.set(id, '$.name', arg.profile?.name as string);
 		await client.json.set(id, '$.email', escape_email(arg.profile?.email as string));

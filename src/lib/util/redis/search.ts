@@ -2,7 +2,7 @@ import { embedding_field_name, items_per_page } from '$lib/constants';
 import type { SearchOptions } from 'redis';
 import { client } from '.';
 import type { Filters } from '$lib/types/filter';
-import { embedding } from '$lib/util/embedding';
+import { embedding } from '$lib/util/embedding/openai';
 import { slim } from '$lib/util/redis/shape/slim';
 import type { SearchDocumentValue } from '$lib/types';
 import { float32_buffer } from '$lib/util/float32_buffer';
