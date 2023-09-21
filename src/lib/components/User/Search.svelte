@@ -17,7 +17,11 @@
 		search: string,
 		page: number = 1;
 
-	$: get(page);
+	$: page_update(page);
+
+	const page_update = (page: number) => {
+		if (searched) get(page);
+	};
 
 	onMount(() => search_input_ref.focus());
 
@@ -51,36 +55,38 @@
 {/if} -->
 
 <div class="input">
-	<TextInput bind:ref={search_input_ref} bind:value={search} />
+	<TextInput placeholder='Search' bind:ref={search_input_ref} bind:value={search} />
 	<Button size="field" on:click={() => get(page)} iconDescription="Search" icon={Search} />
 </div>
 
 {#if loading}
 	<div class="line line-space">
 		<p>Searching</p>
-			<InlineLoading />
+		<InlineLoading />
 	</div>
 {/if}
 
-{#if searched && results.length < 0}
-	<div class="line">
-		<!-- <Button kind="ghost" size="xl" on:click={() => search_input_ref.focus()}> -->
-		{searched && !results.length
-			? `There don't seem to be any results for your search`
-			: 'Search all users'}
-		<!-- </Button> -->
-	</div>
-{:else}
-	<SearchPagination
-		on:select-click
-		{select}
-		{totalItems}
-		on:update={({ detail }) => {
-			get(detail.page);
-		}}
-		{results}
-		{page}
-	/>
+{#if searched}
+	{#if results.length < 0}
+		<div class="line">
+			<!-- <Button kind="ghost" size="xl" on:click={() => search_input_ref.focus()}> -->
+			{searched && !results.length
+				? `There don't seem to be any results for your search`
+				: 'Search all users'}
+			<!-- </Button> -->
+		</div>
+	{:else}
+		<SearchPagination
+			on:select-click
+			{select}
+			{totalItems}
+			on:update={({ detail }) => {
+				page_update(detail.page);
+			}}
+			{results}
+			{page}
+		/>
+	{/if}
 {/if}
 
 <style lang="sass">
