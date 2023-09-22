@@ -5,12 +5,12 @@ import type { RequestHandler } from './$types';
 
 export const POST: RequestHandler = async ({ request }) => {
 	try {
-		const { id, text } = await request.json();
+		const { user_id, feedbackText: text } = await request.json();
 		await client.json.set(
 			feedback_id_prefix.concat((await client.incr('last_feedback_id')).toString()),
 			'$',
 			{
-				id,
+				user_id,
 				text
 			}
 		);
