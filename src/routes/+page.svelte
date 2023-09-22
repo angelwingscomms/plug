@@ -2,7 +2,7 @@
 	import Edit from 'carbon-icons-svelte/lib/Edit.svelte';
 	import { Button, Row, Column } from 'carbon-components-svelte';
 	import { page } from '$app/stores';
-	import Search from '$lib/components/User/Search.svelte';
+	import Search from '$lib/components/Search/Search.svelte';
 </script>
 
 <Row>
@@ -13,7 +13,7 @@
 			{:else}
 				<Button href="/auth">Add your profile</Button>
 			{/if}
-			<Search />
+			<Search placeholder='Search users' route="/user/search" />
 		</div>
 	</Column>
 </Row>
