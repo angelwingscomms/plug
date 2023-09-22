@@ -3,7 +3,7 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
 	optimizeDeps: {
-		exclude: ['sharp', 'onnxruntime-node']
+		include: ['sharp', 'onnxruntime-node']
 	},
 	plugins: [sveltekit()],
 	test: {
