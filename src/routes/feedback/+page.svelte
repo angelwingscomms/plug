@@ -22,7 +22,7 @@
 </script>
 
 <div>
-	<h1>Suggest improvements for this platform or make any complaints</h1>
+	<h5>Suggest improvements for this platform or make any complaints</h5>
 
 	<TextArea bind:value={feedbackText} labelText="Feedback" />
 
