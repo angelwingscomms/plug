@@ -24,7 +24,7 @@ export const search = async ({
 	page,
 	filters,
 	count,
-	search,
+	search: _search,
 	RETURN,
 	OPTIONS,
 	query = ''
@@ -37,7 +37,7 @@ export const search = async ({
 	if (count) {
 		options.LIMIT = { from: 0, size: 0 };
 	} else if (page) {
-		options.LIMIT = { from: page > 1 ? (page - 1) * items_per_page : 0, size: items_per_page };
+		// options.LIMIT = { from: page > 1 ? (page - 1) * items_per_page : 0, size: items_per_page };
 	}
 
 	let extra_args = ''; // ' HYBRID_POLICY ADHOC_BF';
@@ -65,13 +65,13 @@ export const search = async ({
 		query = '*';
 	}
 
-	if (search) {
-		query += `=>[KNN 7 @${embedding_field_name} $BLOB${extra_args}]`;
+	if (_search) {
+		query += `=>[KNN ${(page||1)*items_per_page} @${embedding_field_name} $BLOB${extra_args}]`;
 		options.PARAMS = {
 			BLOB:
-				typeof search === 'string'
-					? float32_buffer(await xenova(search))
-					: float32_buffer(search)
+				typeof _search === 'string'
+					? float32_buffer(await xenova(_search))
+					: float32_buffer(_search)
 		};
 		options.SORTBY = {
 			BY: `__${embedding_field_name}_score`,

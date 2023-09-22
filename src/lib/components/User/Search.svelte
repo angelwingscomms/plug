@@ -14,7 +14,7 @@
 		totalItems: number = 0;
 	let loading = false,
 		results: SearchDocument<{ name: string }>[] = [],
-		search: string,
+		text: string,
 		page: number = 1;
 
 	$: page_update(page);
@@ -28,11 +28,11 @@
 	let search_input_ref: HTMLInputElement;
 	const get = async (page: number) => {
 		searched = true;
-		if (!search) return;
+		if (!text) return;
 		searched = true;
 		loading = true;
 		try {
-			const r = await axios.post('/user/search', { query: search, page });
+			const r = await axios.post('/user/search', { text: text, page });
 			({ total: totalItems, documents: results } = r.data);
 		} catch (e: any) {
 			notify({
@@ -55,7 +55,7 @@
 {/if} -->
 
 <div class="input">
-	<TextInput placeholder='Search users' bind:ref={search_input_ref} bind:value={search} />
+	<TextInput placeholder='Search users' bind:ref={search_input_ref} bind:value={text} />
 	<Button size="field" on:click={() => get(page)} iconDescription="Search" icon={Search} />
 </div>
 
