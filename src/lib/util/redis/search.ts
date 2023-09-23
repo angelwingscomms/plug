@@ -1,12 +1,11 @@
-import { embedding_field_name, items_per_page } from '$lib/constants';
+import { embed_endpoint, embedding_field_name, items_per_page } from '$lib/constants';
 import type { SearchOptions } from 'redis';
 import { client } from '.';
 import type { Filters } from '$lib/types/filter';
-import { embedding } from '$lib/util/embedding/openai';
 import { slim } from '$lib/util/redis/shape/slim';
 import type { SearchDocumentValue } from '$lib/types';
 import { float32_buffer } from '$lib/util/float32_buffer';
-import { xenova } from '../embedding/xenova';
+import axios from 'axios';
 
 export interface SearchParams {
 	index: string;
@@ -16,7 +15,8 @@ export interface SearchParams {
 	query?: string;
 	RETURN?: string[];
 	OPTIONS?: SearchOptions;
-	search?: string | number[];
+	text?: string;
+	embedding?: number[] | Float32Array;
 }
 
 export const search = async ({
@@ -24,8 +24,9 @@ export const search = async ({
 	page,
 	filters,
 	count,
-	search: _search,
+	text,
 	RETURN,
+	embedding,
 	OPTIONS,
 	query = ''
 }: SearchParams) => {
@@ -65,13 +66,19 @@ export const search = async ({
 		query = '*';
 	}
 
-	if (_search) {
-		query += `=>[KNN ${(page||1)*items_per_page} @${embedding_field_name} $BLOB${extra_args}]`;
+	if (text || embedding) {
+		query += `=>[KNN ${(page || 1) * items_per_page} @${embedding_field_name} $B${extra_args}]`;
+		let B;
+		if (text) {
+			const embedding_res = await axios.post(embed_endpoint, text, {
+				headers: { 'Content-Type': 'text/plain' }
+			});
+			B = float32_buffer(embedding_res.data);
+		} else {
+			B = float32_buffer(embedding);
+		}
 		options.PARAMS = {
-			BLOB:
-				typeof _search === 'string'
-					? float32_buffer(await xenova(_search))
-					: float32_buffer(_search)
+			B
 		};
 		options.SORTBY = {
 			BY: `__${embedding_field_name}_score`,
@@ -84,6 +91,7 @@ export const search = async ({
 		// };
 	}
 
+	console.log('query', query)
 	const res = await client.ft.search(index, query, { ...options, ...OPTIONS });
 	res.documents = res.documents.map((r) => {
 		r.value = slim(r.value, true) as SearchDocumentValue;

@@ -7,7 +7,7 @@ import { search } from '$lib/util/redis/search';
 export const POST: RequestHandler = async ({ request }) => {
 	try {
 		const { page, text } = await request.json();
-		const res = await search({ index, page, search: text, RETURN: ['name'] });
+		const res = await search({ index, page, text, RETURN: ['name'] });
 		console.log(res)
 		return json(res);
 	} catch (e) {
