@@ -7,14 +7,15 @@
 	import OnEnter from '$lib/components/OnEnter.svelte';
 	import { onMount } from 'svelte';
 	import type { Filters as _Filters } from '$lib/types/filter';
-	import SearchPagination from '../Search/SearchPagination.svelte';
+	import SearchPagination from './SearchPagination.svelte';
 
-	export let select = false,
-		searched = false,
+	export let searched = false,
+		text = '',
+		route: string,
+		placeholder: string,
 		totalItems: number = 0;
 	let loading = false,
 		results: SearchDocument<{ name: string }>[] = [],
-		search: string,
 		page: number = 1;
 
 	$: page_update(page);
@@ -28,11 +29,11 @@
 	let search_input_ref: HTMLInputElement;
 	const get = async (page: number) => {
 		searched = true;
-		if (!search) return;
+		if (!text) return;
 		searched = true;
 		loading = true;
 		try {
-			const r = await axios.post('/user/search', { query: search, page });
+			const r = await axios.post(route, { text, page });
 			({ total: totalItems, documents: results } = r.data);
 		} catch (e: any) {
 			notify({
@@ -48,14 +49,8 @@
 
 <OnEnter on:enter={() => get(page)} />
 
-<!-- {#if show_filters}
-	<Modal passiveModal>
-		<Filters />
-	</Modal>
-{/if} -->
-
 <div class="input">
-	<TextInput placeholder='Search users' bind:ref={search_input_ref} bind:value={search} />
+	<TextInput {placeholder} bind:ref={search_input_ref} bind:value={text} />
 	<Button size="field" on:click={() => get(page)} iconDescription="Search" icon={Search} />
 </div>
 
@@ -66,27 +61,17 @@
 	</div>
 {/if}
 
-{#if searched}
-	{#if results.length < 0}
-		<div class="line">
-			<!-- <Button kind="ghost" size="xl" on:click={() => search_input_ref.focus()}> -->
-			{searched && !results.length
-				? `There don't seem to be any results for your search`
-				: 'Search all users'}
-			<!-- </Button> -->
-		</div>
-	{:else}
-		<SearchPagination
-			on:select-click
-			{select}
-			{totalItems}
-			on:update={({ detail }) => {
-				page_update(detail.page);
-			}}
-			{results}
-			{page}
-		/>
-	{/if}
+{#if searched && results.length}
+	<SearchPagination
+		{totalItems}
+		on:update={({ detail }) => {
+			page_update(detail.page);
+		}}
+		{results}
+		{page}
+	/>
+{:else}
+	<div class="line">There don't seem to be any results for your search</div>
 {/if}
 
 <style lang="sass">
