@@ -7,13 +7,12 @@
 </script>
 
 {#if $page.data.session?.user}
-	<!-- goto previous page -->
 	<div>
 		<h4>You are logged in</h4>
 		<ButtonSet stacked>
-			{#if $previous_page}
-				<Button on:click={() => goto($previous_page)}>Go to the previous page</Button>
-			{/if}
+			<Button on:click={() => goto($page.data.t || $previous_page || '/')}
+				>Go to the previous page</Button
+			>
 			<Button href="/">Go to the homepage</Button>
 		</ButtonSet>
 	</div>
