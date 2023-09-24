@@ -28,13 +28,13 @@
 
 	let search_input_ref: HTMLInputElement;
 	const get = async (page: number) => {
-		searched = true;
 		if (!text) return;
 		searched = true;
 		loading = true;
 		try {
 			const r = await axios.post(route, { text, page });
 			({ total: totalItems, documents: results } = r.data);
+			searched = true;
 		} catch (e: any) {
 			notify({
 				title: `User search error`,
@@ -61,17 +61,19 @@
 	</div>
 {/if}
 
-{#if searched && results.length}
-	<SearchPagination
-		{totalItems}
-		on:update={({ detail }) => {
-			page_update(detail.page);
-		}}
-		{results}
-		{page}
-	/>
-{:else}
-	<div class="line">No results</div>
+{#if searched}
+	{#if results.length}
+		<SearchPagination
+			{totalItems}
+			on:update={({ detail }) => {
+				page_update(detail.page);
+			}}
+			{results}
+			{page}
+		/>
+	{:else if !loading}
+		<div class="line">No results</div>
+	{/if}
 {/if}
 
 <style lang="sass">
