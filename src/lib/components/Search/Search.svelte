@@ -71,7 +71,7 @@
 		{page}
 	/>
 {:else}
-	<div class="line">There don't seem to be any results for your search</div>
+	<div class="line">No results</div>
 {/if}
 
 <style lang="sass">

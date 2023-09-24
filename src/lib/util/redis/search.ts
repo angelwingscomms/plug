@@ -2,11 +2,8 @@ import { embedding_field_name, items_per_page } from '$lib/constants';
 import type { SearchOptions } from 'redis';
 import { client } from '.';
 import type { Filters } from '$lib/types/filter';
-import { embedding } from '$lib/util/embedding/openai';
 import { slim } from '$lib/util/redis/shape/slim';
 import type { SearchDocumentValue } from '$lib/types';
-import { float32_buffer } from '$lib/util/float32_buffer';
-
 export interface SearchParams {
 	index: string;
 	page: number | null;
@@ -15,7 +12,7 @@ export interface SearchParams {
 	query?: string;
 	RETURN?: string[];
 	OPTIONS?: SearchOptions;
-	search?: string | number[];
+	B?: Buffer;
 }
 
 export const search = async ({
@@ -23,9 +20,9 @@ export const search = async ({
 	page,
 	filters,
 	count,
-	search,
 	RETURN,
 	OPTIONS,
+	B,
 	query = ''
 }: SearchParams) => {
 	const options: SearchOptions = {
@@ -36,12 +33,9 @@ export const search = async ({
 	if (count) {
 		options.LIMIT = { from: 0, size: 0 };
 	} else if (page) {
-		options.LIMIT = { from: page > 1 ? (page - 1) * items_per_page : 0, size: items_per_page };
+		// options.LIMIT = { from: page > 1 ? (page - 1) * items_per_page : 0, size: items_per_page };
 	}
 
-	let extra_args = ''; // ' HYBRID_POLICY ADHOC_BF';
-
-	console.log(filters);
 	if (filters && filters.length) {
 		filters.forEach((filter) => {
 			switch (filter.type) {
@@ -60,20 +54,12 @@ export const search = async ({
 					query += ` @${filter.field}:(${filter.value})`;
 			}
 		});
-		extra_args = ' HYBRID_POLICY ADHOC_BF';
-	} else {
-		query = '*';
 	}
 
-	console.log(query);
-
-	if (search) {
-		query += `=>[KNN 7 @${embedding_field_name} $BLOB${extra_args}]`;
+	if (B) {
+		query += `=>[KNN ${(page || 1) * items_per_page} @${embedding_field_name} $B${query && query !== '*' ? ' HYBRID_POLICY ADHOC_BF' : ''}]`;
 		options.PARAMS = {
-			BLOB:
-				typeof search === 'string'
-					? float32_buffer(await embedding(search))
-					: float32_buffer(search)
+			B
 		};
 		options.SORTBY = {
 			BY: `__${embedding_field_name}_score`,
@@ -86,12 +72,11 @@ export const search = async ({
 		// };
 	}
 
-	console.log(query);
-	return client.ft.search(index, query, { ...options, ...OPTIONS }).then((res) => {
-		res.documents = res.documents.map((r) => {
-			r.value = slim(r.value, true) as SearchDocumentValue;
-			return r;
-		});
-		return { ...res, page };
+	console.log('query', query);
+	const res = await client.ft.search(index, query, { ...options, ...OPTIONS });
+	res.documents = res.documents.map((r) => {
+		r.value = slim(r.value, true) as SearchDocumentValue;
+		return r;
 	});
+	return { ...res, page };
 };
