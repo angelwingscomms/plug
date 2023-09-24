@@ -15,13 +15,11 @@ import type { Provider } from '@auth/core/providers';
 import { client } from '$lib/util/redis';
 import { escape_email } from '$lib/util/escape_email';
 import { providers } from '$lib/util/user/create';
-import { previous_page } from '$lib/store';
 
 const authorization: Handle = async ({ event, resolve }) => {
 	if (protected_routes.includes(event.url.pathname)) {
 		if (!(await event.locals.getSession())) {
-			previous_page.set(event.url.pathname);
-			throw redirect(303, '/auth');
+			throw redirect(303, `/auth?t=${event.url.pathname}`);
 		}
 	}
 	return resolve(event);
