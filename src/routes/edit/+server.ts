@@ -6,6 +6,7 @@ import { xenova } from '$lib/util/embedding/xenova';
 import { float32_buffer } from '$lib/util/float32_buffer';
 import axios from 'axios';
 import { embed_endpoint } from '$lib/constants';
+import { remote } from '$lib/util/embedding/remote';
 
 export const DELETE: RequestHandler = async ({ request, locals }) => {
 	try {
@@ -38,16 +39,10 @@ export const PUT: RequestHandler = async ({ request, locals }) => {
 		for (const key of Object.keys(arg)) {
 			client.json.set(user.id, `$.${key}`, arg[key]);
 		}
-		// const embed_res = await axios.post(
-		// 	embed_endpoint,
-		// 	`${arg.name ? `${arg.name}\n\n` : ''}\n${arg.text ?? ''}`,
-		// 	{ headers: { 'Content-Type': 'text/plain' } }
-		// );
-		// console.log('ers', embed_res);
 		client.json.set(
 			user.id,
 			'$.v',
-			float32_buffer(await xenova(`${arg.name ? `${arg.name}\n\n` : ''}\n${arg.text ?? ''}`))
+			await remote(`${arg.name ? `${arg.name}\n\n` : ''}\n${arg.text ?? ''}`)
 		);
 		return new Response(null, { status: 200 });
 	} catch (e) {
