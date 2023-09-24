@@ -1,12 +1,9 @@
-import { embed_endpoint, embedding_field_name, items_per_page } from '$lib/constants';
+import { embedding_field_name, items_per_page } from '$lib/constants';
 import type { SearchOptions } from 'redis';
 import { client } from '.';
 import type { Filters } from '$lib/types/filter';
 import { slim } from '$lib/util/redis/shape/slim';
 import type { SearchDocumentValue } from '$lib/types';
-import { float32_buffer } from '$lib/util/float32_buffer';
-import axios from 'axios';
-
 export interface SearchParams {
 	index: string;
 	page: number | null;
@@ -15,8 +12,7 @@ export interface SearchParams {
 	query?: string;
 	RETURN?: string[];
 	OPTIONS?: SearchOptions;
-	text?: string;
-	embedding?: number[] | Float32Array;
+	B?: Buffer;
 }
 
 export const search = async ({
@@ -24,10 +20,9 @@ export const search = async ({
 	page,
 	filters,
 	count,
-	text,
 	RETURN,
-	embedding,
 	OPTIONS,
+	B,
 	query = ''
 }: SearchParams) => {
 	const options: SearchOptions = {
@@ -40,8 +35,6 @@ export const search = async ({
 	} else if (page) {
 		// options.LIMIT = { from: page > 1 ? (page - 1) * items_per_page : 0, size: items_per_page };
 	}
-
-	let extra_args = ''; // ' HYBRID_POLICY ADHOC_BF';
 
 	if (filters && filters.length) {
 		filters.forEach((filter) => {
@@ -61,22 +54,10 @@ export const search = async ({
 					query += ` @${filter.field}:(${filter.value})`;
 			}
 		});
-		extra_args = ' HYBRID_POLICY ADHOC_BF';
-	} else {
-		query = '*';
 	}
 
-	if (text || embedding) {
-		query += `=>[KNN ${(page || 1) * items_per_page} @${embedding_field_name} $B${extra_args}]`;
-		let B;
-		if (text) {
-			const embedding_res = await axios.post(embed_endpoint, text, {
-				headers: { 'Content-Type': 'text/plain' }
-			});
-			B = float32_buffer(embedding_res.data);
-		} else {
-			B = float32_buffer(embedding);
-		}
+	if (B) {
+		query += `=>[KNN ${(page || 1) * items_per_page} @${embedding_field_name} $B${query && query !== '*' ? ' HYBRID_POLICY ADHOC_BF' : ''}]`;
 		options.PARAMS = {
 			B
 		};
@@ -91,7 +72,7 @@ export const search = async ({
 		// };
 	}
 
-	console.log('query', query)
+	console.log('query', query);
 	const res = await client.ft.search(index, query, { ...options, ...OPTIONS });
 	res.documents = res.documents.map((r) => {
 		r.value = slim(r.value, true) as SearchDocumentValue;

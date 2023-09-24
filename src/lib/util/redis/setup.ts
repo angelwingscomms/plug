@@ -1,8 +1,5 @@
-import { SchemaFieldTypes, VectorAlgorithms } from 'redis';
 import { client } from '.';
 import { user_id_prefix } from '$lib/constants';
-import { xenova } from '../embedding/xenova';
-import { float32_buffer } from '../float32_buffer';
 
 export const setup = async () => {
 	try {
@@ -54,6 +51,11 @@ export const setup = async () => {
 			'users',
 			'ON',
 			'JSON',
+			'PREFIX',
+			'1',
+			user_id_prefix,
+			'NOHL',
+			'NOFREQS',
 			'SCHEMA',
 			'$.v',
 			'AS',
