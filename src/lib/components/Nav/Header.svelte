@@ -8,7 +8,13 @@
 		HeaderUtilities,
 		HeaderAction,
 		HeaderPanelLinks,
-		HeaderPanelLink
+		HeaderPanelLink,
+
+		HeaderNavItem,
+
+		HeaderNav
+
+
 	} from 'carbon-components-svelte';
 	import Sun from 'carbon-icons-svelte/lib/Sun.svelte';
 	import Moon from 'carbon-icons-svelte/lib/Moon.svelte';
