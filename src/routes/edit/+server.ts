@@ -42,7 +42,7 @@ export const PUT: RequestHandler = async ({ request, locals }) => {
 		client.json.set(
 			user.id,
 			'$.v',
-			await remote(`${arg.name ? `${arg.name}\n\n` : ''}\n${arg.text ?? ''}`)
+			await remote(`${arg.name ? `${arg.name}\n\n` : ''}${arg.text ?? ''}`)
 		);
 		return new Response(null, { status: 200 });
 	} catch (e) {
