@@ -13,9 +13,9 @@
 		text = '',
 		route: string,
 		placeholder: string,
-		total: number = 0;
-	let loading = false,
+		total: number = 0,
 		documents: SearchDocument[] = [],
+		loading = false,
 		page: number = 1;
 
 	$: page_update(page);
@@ -32,7 +32,7 @@
 		searched = true;
 		loading = true;
 		try {
-			const r = await axios.post(route, { text, page });
+			const r = await axios.post(`/${route}/search`, { text, page });
 			({ total, documents, page } = r.data);
 			searched = true;
 		} catch (e: any) {
@@ -64,6 +64,7 @@
 {#if searched}
 	{#if documents.length}
 		<SearchPagination
+			{route}
 			{total}
 			on:update={({ detail }) => {
 				page_update(detail.page);
