@@ -19,6 +19,7 @@
 		page: number = 1;
 
 	$: page_update(page);
+	$: console.debug('documents', documents)
 
 	const page_update = (page: number) => {
 		if (searched) get(page);

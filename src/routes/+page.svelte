@@ -5,11 +5,14 @@
 	import type { Snapshot } from './$types';
 	import type { SearchDocument } from '$lib/types';
 
-	let documents: SearchDocument[], text: string;
+	let documents: SearchDocument[], text: string, searched: boolean;
 
 	export const snapshot: Snapshot = {
-		capture: () => ({ documents, text }),
-		restore: (v) => ({ documents, text } = v)
+		capture: () => ({ documents, text, searched }),
+		restore: (v) => {
+			console.debug('v', v);
+			({ documents, text, searched } = v);
+		}
 	};
 </script>
 
@@ -21,7 +24,7 @@
 			{:else}
 				<Button size="small" href="/auth">Login</Button>
 			{/if}
-			<Search bind:documents bind:text placeholder="Search users" route="user" />
+			<Search bind:searched bind:documents bind:text placeholder="Search users" route="user" />
 		</div>
 	</Column>
 </Row>
