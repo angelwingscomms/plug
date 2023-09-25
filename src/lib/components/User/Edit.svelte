@@ -74,10 +74,10 @@
 <OnEnter ctrl on:enter={save} />
 
 <FluidForm>
-	<TextInput bind:value={name} labelText="Name" />
+	<TextInput bind:value={name} labelText="Identifier (name or anything else)" />
 	<TextArea
 		rows={15}
-		placeholder="Description. Use markdown if you want"
+		placeholder="Describe yourself. Use markdown if you want"
 		invalid={text_invalid}
 		invalidText={text_invalid_text}
 		bind:value={text}

@@ -6,12 +6,12 @@
 
 <div class="all">
 	<ButtonSet>
-		<Button size="small" href="{$page.url.pathname}/similar">Similar profiles</Button>
+		<Button kind='ghost' size="small" href="{$page.url.pathname}/similar">Similar profiles</Button>
 		{#if $page.data.session?.user?.id === id}
 			<Button size="small" href="/edit">Edit profile</Button>
 		{/if}
 	</ButtonSet>
-	<p>~ {name}</p>
+	<p>{name}</p>
 
 	{#if html}
 		<p>{@html html}</p>
