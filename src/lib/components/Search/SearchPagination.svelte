@@ -1,10 +1,10 @@
 <script lang="ts">
 	import type { SearchDocument } from '$lib/types';
-	import { ButtonSet, Loading, Pagination } from 'carbon-components-svelte';
+	import { Button, ButtonSet, Loading, Pagination } from 'carbon-components-svelte';
 	import { items_per_page } from '$lib/constants';
-	import Document from './Document.svelte';
 
-	export let route: string, page: number = 1,
+	export let route: string,
+		page: number = 1,
 		documents: SearchDocument[],
 		total = documents.length;
 
@@ -16,7 +16,7 @@
 {:else}
 	<ButtonSet stacked>
 		{#each documents as document}
-			<Document {route} on:click {document} />
+			<Button kind="ghost" href="/{route}/{document.id}">~ {document.value.name ?? ''}</Button>
 		{/each}
 	</ButtonSet>
 {/if}
