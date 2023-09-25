@@ -74,7 +74,7 @@
 <OnEnter ctrl on:enter={save} />
 
 <FluidForm>
-	<TextInput bind:value={name} labelText="Identifier (name or anything else)" />
+	<TextInput bind:value={name} />
 	<TextArea
 		rows={15}
 		placeholder="Describe yourself. Use markdown if you want"
