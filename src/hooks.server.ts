@@ -47,7 +47,6 @@ export const handle: Handle = sequence(
 				return true;
 			},
 			async redirect({ url, baseUrl }) {
-				console.info({ url, baseUrl });
 				if (typeof url.split('/edit')[1] === 'string') return baseUrl;
 				const t = url.split('?t=')[1];
 				return `${t ? `${baseUrl}${t}` : url}`;
