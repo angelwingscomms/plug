@@ -14,7 +14,7 @@ import { protected_routes, user_index } from '$lib/constants';
 import type { Provider } from '@auth/core/providers';
 import { client } from '$lib/util/redis';
 import { escape_email } from '$lib/util/escape_email';
-import { providers } from '$lib/util/user/create';
+import { google } from '$lib/util/user/create/google';
 
 const authorization: Handle = async ({ event, resolve }) => {
 	if (protected_routes.includes(event.url.pathname)) {
@@ -43,8 +43,14 @@ export const handle: Handle = sequence(
 		],
 		callbacks: {
 			async signIn(arg) {
-				providers[arg.account?.provider as string](arg);
+				google(arg);
 				return true;
+			},
+			async redirect({ url, baseUrl }) {
+				console.info({ url, baseUrl });
+				if (typeof url.split('/edit')[1] === 'string') return baseUrl;
+				const t = url.split('?t=')[1];
+				return `${t ? `${baseUrl}${t}` : url}`;
 			},
 			async session(arg) {
 				if (!arg.session) return arg.session;
