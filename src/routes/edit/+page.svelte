@@ -1,5 +1,7 @@
 <script>
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 	import Edit from '$lib/components/User/Edit.svelte';
 </script>
 
-<Edit />
+<Edit on:save={()=> goto(`/user/${$page.data.session?.user?.id}`)} />
