@@ -11,7 +11,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		const res = await search({
 			index,
 			page,
-			B: await remote(text, true) as Buffer,
+			B: (await remote(text, true)) as Buffer,
 			options: { RETURN: ['name'] }
 		});
 		return json(res);

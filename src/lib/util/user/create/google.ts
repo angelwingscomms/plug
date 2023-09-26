@@ -16,15 +16,11 @@ const new_user = async (arg: SignInArg, email: EscapedEmail, v: number[]): Promi
 
 export const google = async (arg: SignInArg): Promise<void> => {
 	const email = new EscapedEmail(arg.profile?.email as string);
-	const v = await embed_user({ name: arg.profile?.name as undefined });
 	const res = await client.ft.search(user_index, `@email:"${email.value}"`);
 	if (!res.total) {
-		new_user(arg, email, v);
+		new_user(arg, email, await embed_user({ name: arg.profile?.name as string }));
 		return;
 	} else {
-		await client.json.set(res.documents[0].id, '$.name', arg.profile?.name as string);
-		await client.json.set(res.documents[0].id, '$.email', email.value);
 		await client.json.set(res.documents[0].id, '$.provider', arg.account?.provider as string);
-		await client.json.set(res.documents[0].id, '$.v', v);
 	}
 };

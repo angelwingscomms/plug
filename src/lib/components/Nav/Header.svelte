@@ -8,7 +8,7 @@
 		HeaderUtilities,
 		HeaderAction,
 		HeaderPanelLinks,
-		HeaderPanelLink,
+		HeaderPanelLink
 	} from 'carbon-components-svelte';
 	import Sun from 'carbon-icons-svelte/lib/Sun.svelte';
 	import Moon from 'carbon-icons-svelte/lib/Moon.svelte';
@@ -22,7 +22,7 @@
 	const provider_names = {
 		google: 'Google',
 		github: 'Github'
-}
+	};
 </script>
 
 <Header
@@ -52,11 +52,9 @@
 		<HeaderAction icon={UserAvatarFilledAlt} closeIcon={UserAvatarFilledAlt}>
 			<HeaderPanelLinks>
 				{#if $page.data.session?.user}
-					<HeaderPanelLink on:click={() => signOut()}>Logged in with: {provider_names[$page.data.session.user.provider]}</HeaderPanelLink>
-					<HeaderPanelLink on:click={() => signOut()}>Log out</HeaderPanelLink>
+					<HeaderPanelLink on:click={() => signOut()}>Sign out</HeaderPanelLink>
 				{:else}
-					<HeaderPanelLink on:click={() => signIn('github')}>Sign in with Github</HeaderPanelLink>
-					<HeaderPanelLink on:click={() => signIn('google')}>Sign in with Google</HeaderPanelLink>
+					<HeaderPanelLink on:click={() => signIn('google')}>Sign in</HeaderPanelLink>
 				{/if}
 			</HeaderPanelLinks>
 		</HeaderAction>
