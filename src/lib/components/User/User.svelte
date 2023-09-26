@@ -5,10 +5,10 @@
 </script>
 
 <div class="all">
-	<ButtonSet>
-		<Button kind='ghost' size="small" href="{$page.url.pathname}/similar">Similar profiles</Button>
+	<ButtonSet stacked>
+		<Button kind='ghost' size="small" href="{$page.url.pathname}/similar">Similar users</Button>
 		{#if $page.data.session?.user?.id === id}
-			<Button size="small" href="/edit">Edit profile</Button>
+			<Button kind="ghost" size="small" href="/edit">Edit</Button>
 		{/if}
 	</ButtonSet>
 	<p>{name}</p>
