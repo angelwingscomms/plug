@@ -24,7 +24,7 @@
 		edit_loading = false,
 		delete_loading = false;
 
-	const dispatch = createEventDispatcher<{ save: {name: string, html: string} }>();
+	const dispatch = createEventDispatcher<{ save: { name: string; html: string } }>();
 
 	const del = async () => {
 		if (delete_loading) return;
@@ -51,8 +51,9 @@
 			let payload = sanitize_object({ n: name, t: text });
 			const html = await parse(payload.t as string);
 			payload.h = sanitize_string(html);
+			console.debug(payload);
 			await axios.put(`/edit`, payload);
-			dispatch('save', {name, html: payload.html});
+			dispatch('save', { name, html: payload.html });
 			notify('Saved');
 		} catch (e: any) {
 			console.error('save error', e);
