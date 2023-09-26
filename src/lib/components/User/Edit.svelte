@@ -48,9 +48,9 @@
 		if (edit_loading) return;
 		edit_loading = true;
 		try {
-			let payload = sanitize_object({ name, text });
-			const html = await parse(payload.text as string);
-			payload.html = sanitize_string(html);
+			let payload = sanitize_object({ n: name, t: text });
+			const html = await parse(payload.t as string);
+			payload.h = sanitize_string(html);
 			await axios.put(`/edit`, payload);
 			dispatch('save', {name, html: payload.html});
 			notify('Saved');

@@ -8,6 +8,7 @@ import axios from 'axios';
 import { embed_endpoint } from '$lib/constants';
 import { remote } from '$lib/util/embedding/remote';
 import { embed_user } from '$lib/util/user/embed_user';
+import { sanitize_string } from '$lib/util/sanitize';
 
 export const DELETE: RequestHandler = async ({ request, locals }) => {
 	try {
@@ -36,10 +37,13 @@ export const PUT: RequestHandler = async ({ request, locals }) => {
 				status: 404
 			});
 		}
-		const arg = await request.json();
-		for (const key of Object.keys(arg)) {
-			client.json.set(user.id, `$.${key}`, arg[key]);
-		}
+		let { n,t,h } = await request.json();
+		n = sanitize_string(n)
+		t = sanitize_string(t)
+		h = sanitize_string(h)
+		client.json.set(user.id, '$.name', n)
+		client.json.set(user.id, '$.text', t);
+		client.json.set(user.id, '$.html', h);
 		client.json.set(user.id, '$.v', await embed_user(arg));
 		return new Response();
 	} catch (e) {
