@@ -44,7 +44,7 @@ export const PUT: RequestHandler = async ({ request, locals }) => {
 		client.json.set(user.id, '$.name', n)
 		client.json.set(user.id, '$.text', t);
 		client.json.set(user.id, '$.html', h);
-		client.json.set(user.id, '$.v', await embed_user(arg));
+		client.json.set(user.id, '$.v', await embed_user({name: n, text: t}));
 		return new Response();
 	} catch (e) {
 		throw handle_server_error(request.url, e);
