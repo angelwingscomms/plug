@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { Button, Row, Column, Modal } from 'carbon-components-svelte';
-	import { page } from '$app/stores';
+	import { Button, Row, Column } from 'carbon-components-svelte';
 	import Search from '$lib/components/Search/Search.svelte';
 	import type { Snapshot } from './$types';
 	import type { SearchDocument } from '$lib/types';
@@ -16,11 +15,7 @@
 <Row>
 	<Column>
 		<div class="all">
-			{#if $page.data.session?.user}
-				<Button kind="ghost" size="small" href="/edit">Edit Profile</Button>
-			{:else}
-				<Button size="small" href="/auth">Login</Button>
-			{/if}
+			<Button kind="ghost" size="small" href="/edit">Edit</Button>
 			<Search bind:searched bind:documents bind:text placeholder="Search users" route="user" />
 		</div>
 	</Column>

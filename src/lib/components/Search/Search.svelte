@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { TextInput, Button, InlineLoading, Modal, TextArea } from 'carbon-components-svelte';
-	import TextLongParagraph from 'carbon-icons-svelte/lib/TextLongParagraph.svelte';
+	import { TextInput, Button, InlineLoading } from 'carbon-components-svelte';
 	import Search from 'carbon-icons-svelte/lib/Search.svelte';
 	import type { SearchDocument } from '$lib/types';
 	import axios from 'axios';
@@ -14,14 +13,12 @@
 		text = '',
 		route: string,
 		placeholder: string,
-		area_open = false,
 		total: number = 0,
 		documents: SearchDocument[] = [],
 		loading = false,
 		page: number = 1;
 
 	$: page_update(page);
-	$: console.debug('documents', documents);
 
 	const page_update = (page: number) => {
 		if (searched) get(page);
@@ -52,13 +49,8 @@
 
 <OnEnter on:enter={() => get(page)} />
 
-<Modal modalHeading={placeholder} bind:open={area_open} shouldSubmitOnEnter={false} primaryButtonText="Search" on:submit={() =>{ get(page); area_open = false}}>
-	<TextArea rows={7} bind:value={text} />
-</Modal>
-
 <div class="input">
 	<TextInput {placeholder} bind:ref={search_input_ref} bind:value={text} />
-	<Button size="field" on:click={() => (area_open = true)} iconDescription="Expand" icon={TextLongParagraph} />
 	<Button size="field" on:click={() => get(page)} iconDescription="Search" icon={Search} />
 </div>
 
