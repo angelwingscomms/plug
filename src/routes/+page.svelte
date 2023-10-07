@@ -15,8 +15,8 @@
 <Row>
 	<Column>
 		<div class="all">
-			<Button kind="ghost" size="small" href="/edit">Edit profile</Button>
-			<Search bind:searched bind:documents bind:text placeholder="Find users using a description" route="user" />
+			<Button kind="ghost" size="small" href="/edit">Edit your profile</Button>
+			<Search bind:searched bind:documents bind:text placeholder="Find users using a description or their contact" route="user" />
 		</div>
 	</Column>
 </Row>
