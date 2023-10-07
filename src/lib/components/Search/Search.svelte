@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { TextInput, Button, InlineLoading } from 'carbon-components-svelte';
+	import { TextInput, Button, InlineLoading, TextArea } from 'carbon-components-svelte';
 	import Search from 'carbon-icons-svelte/lib/Search.svelte';
 	import type { SearchDocument } from '$lib/types';
 	import axios from 'axios';
@@ -26,7 +26,7 @@
 
 	onMount(() => search_input_ref.focus());
 
-	let search_input_ref: HTMLInputElement;
+	let search_input_ref: HTMLTextAreaElement;
 	const get = async (page: number) => {
 		if (!text) return;
 		searched = true;
@@ -47,10 +47,10 @@
 	};
 </script>
 
-<OnEnter on:enter={() => get(page)} />
+<OnEnter ctrl on:enter={() => get(page)} />
 
 <div class="input">
-	<TextInput {placeholder} bind:ref={search_input_ref} bind:value={text} />
+	<TextArea {placeholder} bind:ref={search_input_ref} bind:value={text} />
 	<Button size="field" on:click={() => get(page)} iconDescription="Search" icon={Search} />
 </div>
 
