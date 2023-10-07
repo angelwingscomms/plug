@@ -26,7 +26,7 @@
 
 	onMount(() => search_input_ref.focus());
 
-	let search_input_ref: HTMLInputElement;
+	let search_input_ref: HTMLTextAreaElement;
 	const get = async (page: number) => {
 		if (!text) return;
 		searched = true;
