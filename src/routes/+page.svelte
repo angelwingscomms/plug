@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Row, Column, Link } from 'carbon-components-svelte';
+	import { Button, Row, Column, Link, ButtonSet } from 'carbon-components-svelte';
 	import Search from '$lib/components/Search/Search.svelte';
 	import type { Snapshot } from './$types';
 	import type { SearchDocument } from '$lib/types';
@@ -15,8 +15,10 @@
 <Row>
 	<Column>
 		<div class="all">
-			<Link href='/about'>About the site</Link>
-			<Button kind="ghost" size="small" href="/edit">Edit your profile</Button>
+			<ButtonSet stacked>
+				<Button kind="ghost" href='/about'>About the site</Button>
+				<Button kind="ghost" size="small" href="/edit">Edit your profile</Button>
+			</ButtonSet>
 			<Search bind:searched bind:documents bind:text placeholder="Find users using a description or their contact" route="user" />
 		</div>
 	</Column>
