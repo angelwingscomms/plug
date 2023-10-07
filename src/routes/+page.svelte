@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Row, Column } from 'carbon-components-svelte';
+	import { Button, Row, Column, Link } from 'carbon-components-svelte';
 	import Search from '$lib/components/Search/Search.svelte';
 	import type { Snapshot } from './$types';
 	import type { SearchDocument } from '$lib/types';
@@ -15,6 +15,7 @@
 <Row>
 	<Column>
 		<div class="all">
+			<Link href='/about'>About the site</Link>
 			<Button kind="ghost" size="small" href="/edit">Edit your profile</Button>
 			<Search bind:searched bind:documents bind:text placeholder="Find users using a description or their contact" route="user" />
 		</div>
