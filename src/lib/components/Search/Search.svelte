@@ -50,7 +50,7 @@
 <OnEnter ctrl on:enter={() => get(page)} />
 
 <div class="input">
-	<TextArea {placeholder} bind:ref={search_input_ref} bind:value={text} />
+	<TextArea rows={1} {placeholder} bind:ref={search_input_ref} bind:value={text} />
 	<Button size="field" on:click={() => get(page)} iconDescription="Search" icon={Search} />
 </div>
 
