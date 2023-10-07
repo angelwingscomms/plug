@@ -8,7 +8,7 @@
 	<ButtonSet stacked>
 		<Button kind='ghost' size="small" href="{$page.url.pathname}/similar">Similar users</Button>
 		{#if $page.data.session?.user?.id === id}
-			<Button kind="ghost" size="small" href="/edit">Edit</Button>
+			<Button kind="ghost" size="small" href="/edit">Edit your profile</Button>
 		{/if}
 	</ButtonSet>
 	<p>{name}</p>

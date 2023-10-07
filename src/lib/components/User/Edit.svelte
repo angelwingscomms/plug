@@ -78,7 +78,7 @@
 	<TextInput hideLabel bind:value={name} />
 	<TextArea
 		rows={15}
-		placeholder="Describe yourself in detail, Your self, your personality, your hobbies, your experience, and stuff. Use markdown if you want. Add your contacts so other users can reach you. Use country codes (starting with the plus sign) for phone numbers"
+		placeholder="So other users can easily find you. Describe yourself in detail, Your self, your personality, your hobbies, your experience, likes and dislikes, and so on. Use markdown if you want. Add your contacts so other users can reach you. Use country codes (starting with the plus sign) for phone numbers"
 		invalid={text_invalid}
 		invalidText={text_invalid_text}
 		bind:value={text}
