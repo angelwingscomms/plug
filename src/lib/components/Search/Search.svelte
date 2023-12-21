@@ -47,10 +47,19 @@
 	};
 </script>
 
-<OnEnter on:enter={() => get(page)} />
-
 <div class="input">
-	<TextArea rows={1} {placeholder} bind:ref={search_input_ref} bind:value={text} />
+	<TextArea
+		on:keydown={(e) => {
+			if (e.key === 'Enter') {
+				e.preventDefault();
+				get(page);
+			}
+		}}
+		rows={1}
+		{placeholder}
+		bind:ref={search_input_ref}
+		bind:value={text}
+	/>
 	<Button size="field" on:click={() => get(page)} iconDescription="Search" icon={Search} />
 </div>
 

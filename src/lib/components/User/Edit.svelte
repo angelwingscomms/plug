@@ -49,7 +49,7 @@
 		if (edit_loading) return;
 		edit_loading = true;
 		try {
-			let payload = sanitize_object({ c: contact n: name, t: text });
+			let payload = sanitize_object({ c: contact ,n: name, t: text });
 			const html = await parse(payload.c as string);
 			payload.h = sanitize_string(html);
 			console.debug(payload);

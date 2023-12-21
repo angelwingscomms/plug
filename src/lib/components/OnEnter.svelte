@@ -10,6 +10,7 @@
 		if (e.key === 'Enter') {
 			if (ctrl && !e.ctrlKey) return;
 			if (shift && !e.shiftKey) return;
+			e.preventDefault()
 			dispatch('enter');
 		}
 	}}
