@@ -18,8 +18,8 @@ export const POST: RequestHandler = async ({ request }) => {
 			options: { RETURN: ['name', 'b'] }
 		});
 		res.documents = res.documents.map(d => {
-			d.value.similarity = (1 - tf.losses.cosineDistance(embedding, d.value.dist, 0).dataSync()[0])
-			delete d.value.dist
+			d.value.similarity = (1 - tf.losses.cosineDistance(embedding, d.value.b, 0).dataSync()[0])
+			delete d.value.b
 			return d
 		})
 		return json(res);
