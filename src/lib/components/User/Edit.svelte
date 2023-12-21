@@ -18,6 +18,7 @@
 	import TrashCan from 'carbon-icons-svelte/lib/TrashCan.svelte';
 	import { createEventDispatcher } from 'svelte';
 	let name = $page.data.name,
+		contact = $page.data.contact,
 		text = $page.data.text,
 		text_invalid: boolean,
 		text_invalid_text: string,
@@ -48,8 +49,8 @@
 		if (edit_loading) return;
 		edit_loading = true;
 		try {
-			let payload = sanitize_object({ n: name, t: text });
-			const html = await parse(payload.t as string);
+			let payload = sanitize_object({ c: contact n: name, t: text });
+			const html = await parse(payload.c as string);
 			payload.h = sanitize_string(html);
 			console.debug(payload);
 			await axios.put(`/edit`, payload);
@@ -76,9 +77,10 @@
 
 <FluidForm>
 	<TextInput hideLabel bind:value={name} />
+	<TextArea labelText="Contact details" bind:value={contact} rows={3} />
 	<TextArea
 		rows={15}
-		placeholder="So other users can easily find you. Describe yourself in detail, Your self, your personality, your hobbies, your experience, likes and dislikes, and so on. Use markdown if you want. Add your contacts so other users can reach you. Use country codes (starting with the plus sign) for phone numbers"
+		placeholder="So other users can easily find you. Describe yourself in detail, Your self, your personality, your hobbies, your experience, likes and dislikes, and so on"
 		invalid={text_invalid}
 		invalidText={text_invalid_text}
 		bind:value={text}

@@ -37,11 +37,13 @@ export const PUT: RequestHandler = async ({ request, locals }) => {
 				status: 404
 			});
 		}
-		let { n,t,h } = await request.json();
+		let { n,c,t,h } = await request.json();
 		n = sanitize_string(n)
+		c = sanitize_string(c)
 		t = sanitize_string(t)
 		h = sanitize_string(h)
 		client.json.set(user.id, '$.name', n)
+		client.json.set(user.id, '$.contact', c);
 		client.json.set(user.id, '$.text', t);
 		client.json.set(user.id, '$.html', h);
 		client.json.set(user.id, '$.v', await embed_user({name: n, text: t}));
