@@ -19,7 +19,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			options: { RETURN: ['name', 'v'] }
 		});
 		res.documents = res.documents.map(d => {
-			d.value.similarity = (1 - tf.losses.cosineDistance(query_embedding, d.value.v, 0).dataSync()[0]) * 100
+			d.value.similarity = ((1 - tf.losses.cosineDistance(query_embedding, d.value.v, 0).dataSync()[0]) * 100).toPrecision(2)
 			delete d.value.v
 			return d
 		})

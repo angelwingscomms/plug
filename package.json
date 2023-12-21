@@ -40,6 +40,7 @@
 	"dependencies": {
 		"@auth/core": "^0.15.2",
 		"@auth/sveltekit": "^0.3.7",
+		"@carbon/colors": "^11.20.0",
 		"@carbon/layout": "^11.19.0",
 		"@edge37/svelte-utils": "^0.0.7",
 		"@tensorflow/tfjs": "^4.15.0",
