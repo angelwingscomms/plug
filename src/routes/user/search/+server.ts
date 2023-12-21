@@ -4,14 +4,13 @@ import { handle_server_error } from '$lib/util/handle_server_error';
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { search } from '$lib/util/redis/search';
-import { remote } from '$lib/util/embedding/remote';
-import { xenova } from "$lib/util/embedding/xenova";
+import { remote } from "$lib/util/embedding/remote";
 
 export const POST: RequestHandler = async ({ request }) => {
 	try {
 		const { page, text } = await request.json();
-		const embedding = await xenova(text)
-		const B = Buffer.from(embedding)
+		const embedding = await remote(text)
+		const B = (await remote(text, true)) as Buffer
 		const res = await search({
 			index,
 			page,
