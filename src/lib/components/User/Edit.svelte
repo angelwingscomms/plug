@@ -76,10 +76,11 @@
 <OnEnter ctrl on:enter={save} />
 
 <Form>
-	<TextInput hideLabel bind:value={name} />
+	<TextInput labelText="Name" bind:value={name} />
 	<TextArea labelText="Contact details" bind:value={contact} rows={3} />
 	<TextArea
 		rows={15}
+		labelText="Describe yourself"
 		placeholder="So other users can easily find you. Describe yourself in detail, Your self, your personality, your hobbies, your experience, likes and dislikes, and so on"
 		invalid={text_invalid}
 		invalidText={text_invalid_text}
