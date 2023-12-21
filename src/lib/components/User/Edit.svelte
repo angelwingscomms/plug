@@ -75,7 +75,7 @@
 
 <OnEnter ctrl on:enter={save} />
 
-<Form>
+<div class="input">
 	<TextInput labelText="Name" bind:value={name} />
 	<TextArea labelText="Contact details" bind:value={contact} rows={3} />
 	<TextArea
@@ -86,7 +86,7 @@
 		invalidText={text_invalid_text}
 		bind:value={text}
 	/>
-</Form>
+</div>
 <ButtonSet stacked>
 	<Button disabled={edit_loading} icon={edit_loading ? InlineLoading : Save} on:click={save}
 		>Save</Button
@@ -95,3 +95,11 @@
 		>Delete Profile</Button
 	>
 </ButtonSet>
+
+<style lang="sass">
+	@use "@carbon/layout"
+	.input
+		display: flex
+		flex-direction: column
+		row-gap: layout.$spacing-03
+</style>
