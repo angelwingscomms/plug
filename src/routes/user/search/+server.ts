@@ -15,11 +15,11 @@ export const POST: RequestHandler = async ({ request }) => {
 			index,
 			page,
 			B,
-			options: { RETURN: ['name', 'b'] }
+			options: { RETURN: ['name', '__v_score'] }
 		});
 		res.documents = res.documents.map(d => {
-			d.value.similarity = (1 - tf.losses.cosineDistance(embedding, d.value.b, 0).dataSync()[0])
-			delete d.value.b
+			d.value.similarity = (1 - tf.losses.cosineDistance(embedding, d.value.__v_score, 0).dataSync()[0])
+			delete d.value.__v_score
 			return d
 		})
 		return json(res);
