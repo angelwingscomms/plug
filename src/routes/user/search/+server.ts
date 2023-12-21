@@ -5,21 +5,22 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { search } from '$lib/util/redis/search';
 import { remote } from "$lib/util/embedding/remote";
+import { client } from "$lib/util/redis";
 
 export const POST: RequestHandler = async ({ request }) => {
 	try {
 		const { page, text } = await request.json();
-		const embedding = await remote(text)
+		const query_embedding = await remote(text)
 		const B = (await remote(text, true)) as Buffer
 		const res = await search({
 			index,
 			page,
 			B,
-			options: { RETURN: ['name', '__v_score'] }
+			options: { RETURN: ['name', 'v'] }
 		});
 		res.documents = res.documents.map(d => {
-			d.value.similarity = (1 - tf.losses.cosineDistance(embedding, d.value.__v_score, 0).dataSync()[0])
-			delete d.value.__v_score
+			d.value.similarity = (1 - tf.losses.cosineDistance(query_embedding, d.value.v, 0).dataSync()[0]) * 100
+			delete d.value.v
 			return d
 		})
 		return json(res);

@@ -16,7 +16,7 @@
 {:else}
 	<ButtonSet stacked>
 		{#each documents as document}
-			<Button kind="ghost" href="/{route}/{document.id}">{document.value.name ?? ''}</Button>
+			<Button kind="ghost" href="/{route}/{document.id}">{document.value.name ?? ''} {document.value.similarity}</Button>
 		{/each}
 	</ButtonSet>
 {/if}
