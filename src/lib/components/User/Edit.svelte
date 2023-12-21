@@ -9,7 +9,7 @@
 	import {
 		Button,
 		ButtonSet,
-		FluidForm,
+		Form,
 		InlineLoading,
 		TextArea,
 		TextInput
@@ -75,7 +75,7 @@
 
 <OnEnter ctrl on:enter={save} />
 
-<FluidForm>
+<Form>
 	<TextInput hideLabel bind:value={name} />
 	<TextArea labelText="Contact details" bind:value={contact} rows={3} />
 	<TextArea
@@ -85,7 +85,7 @@
 		invalidText={text_invalid_text}
 		bind:value={text}
 	/>
-</FluidForm>
+</Form>
 <ButtonSet stacked>
 	<Button disabled={edit_loading} icon={edit_loading ? InlineLoading : Save} on:click={save}
 		>Save</Button
