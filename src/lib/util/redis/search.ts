@@ -54,7 +54,7 @@ export const search = async ({
 	if (B) {
 		const hybrid = query && query !== '*';
 		if (hybrid) query = `(${query})`
-		query += `=>[KNN ${(page || 1) * items_per_page} @${embedding_field_name} $B${hybrid ? ' HYBRID_POLICY ADHOC_BF' : ''}]`;
+		query += `=>[KNN ${(page || 1) * items_per_page} @${embedding_field_name} $B AS b${hybrid ? ' HYBRID_POLICY ADHOC_BF' : ''}]`;
 		options.PARAMS = {
 			B
 		};
