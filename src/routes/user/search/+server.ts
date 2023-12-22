@@ -6,12 +6,13 @@ import type { RequestHandler } from './$types';
 import { search } from '$lib/util/redis/search';
 import { remote } from "$lib/util/embedding/remote";
 import { client } from "$lib/util/redis";
-
+import { embed } from "$lib/util/embedding/embed";
+				
 export const POST: RequestHandler = async ({ request }) => {
 	try {
 		const { page, text } = await request.json();
-		const query_embedding = await remote(text)
-		const B = (await remote(text, true)) as Buffer
+		const query_embedding = await embed(text)
+		const B = (await embed(text, true)) as Buffer
 		const res = await search({
 			index,
 			page,
