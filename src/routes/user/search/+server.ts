@@ -4,8 +4,6 @@ import { handle_server_error } from '$lib/util/handle_server_error';
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { search } from '$lib/util/redis/search';
-import { remote } from "$lib/util/embedding/remote";
-import { client } from "$lib/util/redis";
 import { embed } from "$lib/util/embedding/embed";
 				
 export const POST: RequestHandler = async ({ request }) => {

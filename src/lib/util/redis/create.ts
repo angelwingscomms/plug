@@ -1,5 +1,5 @@
 import { client } from '$lib/util/redis';
-import { embedding } from '$lib/util/embedding/openai';
+import { embedding } from '$lib/util/embedding/oai';
 import { ids_hash } from '$lib/constants';
 import { dev } from '$app/environment';
 
