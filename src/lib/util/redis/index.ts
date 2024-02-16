@@ -1,4 +1,4 @@
-import { REDIS_URL } from '$env/static/private';
+import { REDIS } from '$env/static/private';
 import { setup } from './setup';
 import { createClient } from 'redis';
 

@@ -1,7 +1,7 @@
-import { error } from '@sveltejs/kit';
+import { error, type NumericRange } from '@sveltejs/kit';
 
 interface CustomError {
-	status: number;
+	status: NumericRange<400, 599>;
 	message: string;
 }
 
