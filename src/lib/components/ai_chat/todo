@@ -1,0 +1,65 @@
+if content entry focus and keydown:upkey, content =  previous user message content
+select_entries
+    export parent_id
+    combobox on keydown:enter
+        get embedding of current value
+        query embeddings
+        items = list of embeddings from ids res
+
+        on:select
+            parent_id = selected
+    on prompt
+        query embeddings with request prompt value and metadata parent_id: true
+        for id in response ids
+            get : summary :  `name: .., text: ..`
+            if token_length(summary) + token_length(entire_prompt) < 4096
+                add summary to context
+            else
+                break
+check if description has been added
+save description
+    each description is an ipfs object
+
+    D
+        id
+        name
+        text
+        embedding
+    
+    save
+        create object
+        add cid to another object, an array
+
+    search(query)
+        server
+            get query embedding
+            get all CIDs
+            all.map(get object)
+            all.sort(cosine_similarity(a.embedding, query embedding))
+            return top 7
+
+    on set
+        add to array
+save chat
+    local storage array of chats
+        chat: string
+        id: number - get last id from array of chats
+
+    on chat change
+        chats.find(c.id = id).chat = chat
+
+save character
+    name
+    description
+    parameters
+
+stop
+    append to end of prompt
+    strip from response
+
+
+set description
+    choose from store
+        list of descriptions
+            on:click=select
+            delete button

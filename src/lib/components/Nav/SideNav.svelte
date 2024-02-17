@@ -11,10 +11,10 @@
 <SideNav bind:isOpen={$isSideNavOpen}>
 	<SideNavItems>
 		{#if $page.data.session?.user}
-			<SideNavLink text="Profile" href="/user/{$page.data.session?.user?.id}" />
+			<SideNavLink text="profile" href="/user/{$page.data.session?.user?.id}" />
 		{/if}
 		
-		 <SideNavLink text="Feedback" href="/feedback" />
+		 <SideNavLink text="feedback" href="/feedback" />
 		<A2HsLink />
 	</SideNavItems>
 </SideNav>

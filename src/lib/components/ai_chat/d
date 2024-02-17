@@ -1,0 +1,3 @@
+
+
+a pre-prompt for a chat for a base GPT3 model. The chat will be presented by an same as the `messages` argument to the OpenAI's Chat Completion API Endpoint

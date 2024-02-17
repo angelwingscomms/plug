@@ -24,6 +24,7 @@ _learn
     goto previous page in component
     javascript disabled
 todo
+option to include email in embedding
     better styling on percentage
     more text
         We use AI to find the closest matching profiles to your search query

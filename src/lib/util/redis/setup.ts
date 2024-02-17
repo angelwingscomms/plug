@@ -4,6 +4,13 @@ import { SchemaFieldTypes, VectorAlgorithms } from 'redis';
 
 export const setup = async () => {
 	try {
+		// await client.ft.dropIndex(user_index)
+		console.debug('-users-all', await client.ft.search(user_index, "*"));
+		// console.debug('--all-keys', await client.keys("*"));
+		// for (const i of await client.keys(user_id_prefix + "*")) {
+		// 	await client.json.del(i);
+		// }
+		console.debug('-user-keys', await client.keys(user_id_prefix + "*"));
 		await client.ft.create(
 			user_index,
 			{
@@ -12,19 +19,11 @@ export const setup = async () => {
 					type: SchemaFieldTypes.VECTOR,
 					ALGORITHM: VectorAlgorithms.FLAT,
 					TYPE: 'FLOAT32',
-					DIM: 768,
+					DIM: 3072,
 					DISTANCE_METRIC: 'COSINE'
 				},
-				'$.email': {
-					AS: 'email',
-					type: SchemaFieldTypes.TEXT
-				},
-				'$.name': {
-					AS: 'name',
-					type: SchemaFieldTypes.TEXT
-				},
-				'$.id': {
-					AS: 'id',
+				'$.u': {
+					AS: 'u',
 					type: SchemaFieldTypes.TEXT
 				}
 			},

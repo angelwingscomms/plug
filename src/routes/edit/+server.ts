@@ -12,7 +12,7 @@ import { sanitize_string } from '$lib/util/sanitize';
 
 export const DELETE: RequestHandler = async ({ request, locals }) => {
 	try {
-		const user = (locals.user);
+		const user = locals.user;
 		if (!user) throw redirect(303, '/auth');
 		if (!(await client.exists(user.id))) {
 			handle_server_error(request.url, {
@@ -29,7 +29,7 @@ export const DELETE: RequestHandler = async ({ request, locals }) => {
 
 export const PUT: RequestHandler = async ({ request, locals }) => {
 	try {
-		const user = (locals.user);
+		const user = locals.user;
 		if (!user) throw redirect(303, '/auth');
 		if (!(await client.exists(user))) {
 			handle_server_error(request.url, {
@@ -37,16 +37,22 @@ export const PUT: RequestHandler = async ({ request, locals }) => {
 				status: 404
 			});
 		}
-		let { n,c,t,h } = await request.json();
-		n = sanitize_string(n)
-		c = sanitize_string(c)
-		t = sanitize_string(t)
-		h = sanitize_string(h)
-		client.json.set(user.id, '$.name', n)
-		client.json.set(user.id, '$.contact', c);
-		client.json.set(user.id, '$.text', t);
-		client.json.set(user.id, '$.html', h);
-		client.json.set(user.id, '$.v', await embed_user({name: n, text: t}));
+		let { c, t, h, u, e } = await request.json();
+		u = sanitize_string(u);
+		e = sanitize_string(e);
+		c = sanitize_string(c);
+		t = sanitize_string(t);
+		h = sanitize_string(h);
+		client.json.set(user.id, '$.u', u);
+		client.json.set(user.id, '$.e', e);
+		client.json.set(user.id, '$.c', c);
+		client.json.set(user.id, '$.t', t);
+		client.json.set(user.id, '$.h', h);
+		client.json.set(
+			user.id,
+			'$.v',
+			await embed_user({ username: u, user_description: t, contact: c, email: e })
+		);
 		return new Response();
 	} catch (e) {
 		throw handle_server_error(request.url, e);

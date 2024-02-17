@@ -16,20 +16,24 @@ import { protected_routes, user_index } from '$lib/constants';
 // import { escape_email } from '$lib/util/escape_email';
 // import { google } from '$lib/util/user/create/google';
 import { check } from '$lib/util/user/auth/check';
+import { client } from '$lib/util/redis';
 
 const authorization: Handle = async ({ event, resolve }) => {
 	if (protected_routes.includes(event.url.pathname)) {
-		if (!(await event.locals.user)) {
-			throw redirect(303, `/auth?t=${event.url.pathname}`);
+		if (!event.locals.user) {
+			throw redirect(303, `/auth`);
+			// throw redirect(303, `/auth?t=${event.url.pathname}`);
 		}
 	}
 	return resolve(event);
 };
 
 export const handle: Handle = sequence(
-	({ event, resolve }) => {
-		if (event.cookies.in) {
-			const id = check(event.cookies.in);
+	async ({ event, resolve }) => {
+		console.debug('-users-all-handle', await client.ft.search(user_index, '*', { RETURN: ['u'] }));
+		const code = event.cookies.get('code');
+		if (code) {
+			const id = check(code);
 			if (id) event.locals.user = id;
 		}
 		return resolve(event);

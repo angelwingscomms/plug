@@ -9,7 +9,6 @@
 	import {
 		Button,
 		ButtonSet,
-		Form,
 		InlineLoading,
 		TextArea,
 		TextInput
@@ -17,15 +16,16 @@
 	import Save from 'carbon-icons-svelte/lib/Save.svelte';
 	import TrashCan from 'carbon-icons-svelte/lib/TrashCan.svelte';
 	import { createEventDispatcher } from 'svelte';
-	let name = $page.data.name,
-		contact = $page.data.contact,
-		text = $page.data.text,
+	let username = $page.data.u,
+		contact = $page.data.c,
+		email = $page.data.e,
+		text = $page.data.t,
 		text_invalid: boolean,
 		text_invalid_text: string,
 		edit_loading = false,
 		delete_loading = false;
 
-	const dispatch = createEventDispatcher<{ save: { name: string; html: string } }>();
+	const dispatch = createEventDispatcher<{ save: { username: string; html: string } }>();
 
 	const del = async () => {
 		if (delete_loading) return;
@@ -49,12 +49,11 @@
 		if (edit_loading) return;
 		edit_loading = true;
 		try {
-			let payload = sanitize_object({ c: contact ,n: name, t: text });
+			let payload = sanitize_object({ c: contact, u: username, t: text, e: email });
 			const html = await parse(payload.c as string);
 			payload.h = sanitize_string(html);
-			console.debug(payload);
 			await axios.put(`/edit`, payload);
-			dispatch('save', { name, html: payload.html });
+			dispatch('save', { username, html: payload.html });
 			notify('Saved');
 		} catch (e: any) {
 			console.error('save error', e);
@@ -76,12 +75,13 @@
 <OnEnter ctrl on:enter={save} />
 
 <div class="input">
-	<TextInput labelText="Name" bind:value={name} />
+	<TextInput labelText="username" bind:value={username} />
+	<TextInput labelText="email" bind:value={email} />
 	<TextArea labelText="Contact details" bind:value={contact} rows={3} />
 	<TextArea
 		rows={15}
-		labelText="Describe yourself"
-		placeholder="So other users can easily find you. Describe yourself in detail, Your self, your personality, your hobbies, your experience, likes and dislikes, and so on"
+		labelText="Describe yourself as vividly as you like"
+		placeholder="So other users can easily find you. Describe yourself in detail, your username, your country/state/town, your likes and dislikes your personality, your hobbies, your experience, likes and dislikes, and so on"
 		invalid={text_invalid}
 		invalidText={text_invalid_text}
 		bind:value={text}
