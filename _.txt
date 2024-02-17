@@ -24,6 +24,10 @@ _learn
     goto previous page in component
     javascript disabled
 todo
+    better styling on percentage
+    more text
+        We use AI to find the closest matching profiles to your search query
+        Your can be extremely detailed in your search query and the closest matching profiles to
     type user session to custom session
     push notifications
     pay with paypal

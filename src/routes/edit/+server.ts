@@ -12,7 +12,7 @@ import { sanitize_string } from '$lib/util/sanitize';
 
 export const DELETE: RequestHandler = async ({ request, locals }) => {
 	try {
-		const user = (await locals.getSession())?.user;
+		const user = (locals.user);
 		if (!user) throw redirect(303, '/auth');
 		if (!(await client.exists(user.id))) {
 			handle_server_error(request.url, {
@@ -29,9 +29,9 @@ export const DELETE: RequestHandler = async ({ request, locals }) => {
 
 export const PUT: RequestHandler = async ({ request, locals }) => {
 	try {
-		const user = (await locals.getSession())?.user;
+		const user = (locals.user);
 		if (!user) throw redirect(303, '/auth');
-		if (!(await client.exists(user.id))) {
+		if (!(await client.exists(user))) {
 			handle_server_error(request.url, {
 				message: `did not - but expected to - find user with id: ${user.id}`,
 				status: 404

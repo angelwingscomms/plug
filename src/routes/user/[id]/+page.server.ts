@@ -9,7 +9,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 	const { '$.html': html_, '$.name': name_, '$.v': v_ } = await client.json.get(params.id, {
 		path: ['$.html', '$.name', '$.v']
 	});
-	const session = await locals.getSession()
+	const session = locals.user
     const auth_user_embedding = await client.json.get(session?.user?.id ?? '', {path: 'v'});
 	let similarity: number | undefined = undefined
 	if (auth_user_embedding) {
