@@ -45,7 +45,7 @@
 		edit_loading = true;
 		try {
 			let payload = sanitize_object({ c: contact, u: username, t: text, e: email });
-			const html = await to_html(payload.c as string); //TODO-replace with web-worker version
+			const html = await to_html(payload.t as string); //TODO-replace with web-worker version
 			payload.h = sanitize_string(html);
 			await axios.put(`/edit`, payload);
 			dispatch('save', { username, html: payload.h as string }); //TODO-review payload.h as string
