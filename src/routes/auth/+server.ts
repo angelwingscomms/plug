@@ -20,10 +20,10 @@ export const POST = async ({ cookies, request, locals }) => {
 				LIMIT: { from: 0, size: 1 }
 			});
 			console.log('new user search res', res);
-			if (res.total) return new Response('user already exists', { status: 400 });
+			if (res.total) return new Response('user already exists');
 			const id = await eup({ e, u, p: await hash(p) });
-			login({cookies, locals, id})
-			return new Response(id);
+			login({ cookies, locals, id });
+			return new Response();
 		} else {
 			const password_hash = await hash(p);
 			const res = await search<{ u: string; p: string }>({
@@ -35,10 +35,10 @@ export const POST = async ({ cookies, request, locals }) => {
 			if (!res.total) return new Response('user not found');
 			const user = res.documents[0];
 			if (user.value.p !== password_hash) {
-				return new Response('wrong password', { status: 400 });
+				return new Response('wrong password');
 			}
-			login({cookies, locals, id: user.id})
-			return new Response(user.value.u);
+			login({ cookies, locals, id: user.id });
+			return new Response();
 		}
 	} catch (e) {
 		throw handle_server_error(request, e);
