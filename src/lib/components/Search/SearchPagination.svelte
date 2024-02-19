@@ -31,6 +31,5 @@
 <style lang="sass">
 	@use "@carbon/colors"
 	.s
-		color: white
-		background-color: colors.$blue-60
+		color: colors.$blue-30
 </style>

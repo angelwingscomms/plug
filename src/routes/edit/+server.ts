@@ -33,7 +33,11 @@ export const PUT: RequestHandler = async ({ request, locals }) => {
 			});
 		}
 		let { c, t, h, u, e } = await request.json();
-		const v = await embed_user({ username: u, user_description: t, contact_details: c });
+		const v = await embed_user({
+			...(u && { username: u }),
+			...(t && { user_description: t }),
+			...(c && { contact_details: c })
+		});
 		u = sanitize_string(u);
 		e = sanitize_string(e);
 		c = sanitize_string(c);
