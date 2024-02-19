@@ -4,9 +4,7 @@
 	import type { Snapshot } from './$types';
 	import type { SearchDocument } from '$lib/types';
 
-	let documents: SearchDocument<{u: string}>[],
-		text: string,
-		searched: boolean;
+	let documents: SearchDocument<{ u: string }>[], text: string, searched: boolean;
 
 	export const snapshot: Snapshot = {
 		capture: () => ({ documents, text, searched }),
@@ -21,8 +19,14 @@
 				<!-- <Button kind="ghost" href='/about'>About the site</Button> -->
 				<Button kind="ghost" size="small" href="/edit">Edit your profile</Button>
 			</ButtonSet>
-			<p>Search for users with extreme detail</p>
-			<p>Example: "A web developer that goes by the name Gregory McCane that lives in Seattle, US and owns a white dog and loves to go skiing every weekend and listening to jazz music"</p>
+			<p>
+				This site uses AI that has a deep understanding of English to search for users whose
+				description closely match your search query.
+			</p>
+			<p>
+				Example: "A web developer that goes by the name Gregory McCane that lives in Seattle, US and
+				owns a white dog and loves to go skiing every weekend and listening to jazz music"
+			</p>
 			<Search
 				bind:searched
 				bind:documents
