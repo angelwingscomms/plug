@@ -6,23 +6,22 @@ import type { RequestHandler } from './$types';
 import { search } from '$lib/util/redis/search';
 import { embed, embed_to_buffer } from '$lib/util/embedding/embed';
 import { client } from '$lib/util/redis';
+import type { V } from '$lib/types';
 
 export const POST: RequestHandler = async ({ request }) => {
 	try {
-		console.debug((await client.json.get('user_1')).v.length)
-		console.debug((await search({index: user_index, query: "*", page: 0})).documents)
 		const { page, text } = await request.json();
 		const query_embedding = await embed(text);
 		const B = await embed_to_buffer(text);
-		const res = await search<{u: string, s: string}>({
+		const res = await search<{u: string, s: string, v: V}>({
 			index: user_index,
 			page,
 			B,
-			options: { RETURN: ['u'] }
+			options: { RETURN: ['u', 'v'] }
 		});
 		res.documents = res.documents.map((d) => {
 			d.value.s = (
-				(1 - tf.losses.cosineDistance(query_embedding, d.value.u, 0).dataSync()[0]) *
+				(1 - tf.losses.cosineDistance(query_embedding, d.value.v, 0).dataSync()[0]) *
 				100
 			).toPrecision(2);
 			return d;
