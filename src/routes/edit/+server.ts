@@ -17,7 +17,7 @@ export const DELETE: RequestHandler = async ({ request, locals }) => {
 		}
 		await client.del(user);
 		return new Response();
-	} catch (e: any) {
+	} catch (e) {
 		throw handle_server_error(`${request.method} ${request.url}`, e);
 	}
 };
@@ -28,12 +28,12 @@ export const PUT: RequestHandler = async ({ request, locals }) => {
 		if (!user) throw redirect(303, '/auth');
 		if (!(await client.exists(user))) {
 			handle_server_error(request.url, {
-				message: `did not - but expected to - find user with id: ${user}`,
+				message: `did not find user with id: ${user}`,
 				status: 404
 			});
 		}
 		let { c, t, h, u, e } = await request.json();
-		const v = await embed_user({ username: u, user_description: t, contact: c, email: e });
+		const v = await embed_user({ username: u, user_description: t, contact_details: c });
 		u = sanitize_string(u);
 		e = sanitize_string(e);
 		c = sanitize_string(c);

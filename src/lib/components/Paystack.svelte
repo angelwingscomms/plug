@@ -7,17 +7,16 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import {
-		PUBLIC_PAYSTACK_PK_LIVE,
-		PUBLIC_PAYSTACK_PK_TEST,
+		PUBLIC_PAYSTACK_LIVE,
 		PUBLIC_PAYSTACK_TEST
 	} from '$env/static/public';
 	import axios from 'axios';
 	import { Button } from 'carbon-components-svelte';
-	import type { ButtonProps } from 'carbon-components-svelte/types';
+	import type { Button as ButtonProps } from 'carbon-components-svelte/types';
 	import { createEventDispatcher } from 'svelte';
 	import { v4 } from 'uuid';
 
-	const key = PUBLIC_PAYSTACK_TEST ? PUBLIC_PAYSTACK_PK_TEST : PUBLIC_PAYSTACK_PK_LIVE;
+	const key = PUBLIC_PAYSTACK_TEST ? PUBLIC_PAYSTACK_TEST : PUBLIC_PAYSTACK_LIVE;
 	const dispatch = createEventDispatcher();
 
 	export let amount: number,

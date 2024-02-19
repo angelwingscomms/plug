@@ -4,7 +4,7 @@
 	import type { Snapshot } from './$types';
 	import type { SearchDocument } from '$lib/types';
 
-	let documents: SearchDocument[],
+	let documents: SearchDocument<{u: string}>[],
 		text: string,
 		searched: boolean;
 

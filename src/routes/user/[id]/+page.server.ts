@@ -1,4 +1,4 @@
-import * as tf from '@tensorflow/tfjs';
+import {losses} from '@tensorflow/tfjs';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { client } from '$lib/util/redis';
@@ -12,14 +12,14 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 		'$.u': u,
 		'$.v': v_
 	} = (await client.json.get(params.id, {
-		path: ['$.html', '$.name', '$.v']
+		path: ['$.h', '$.u', '$.v']
 	})) as { '$.h': string; '$.u': string; '$.v': V };
 	const auth_user_embedding = (await client.json.get(locals.user ?? '', { path: 'v' })) as V;
 	let s: number | undefined = undefined;
 	if (auth_user_embedding) {
 		s = Number(
 			(
-				(1 - tf.losses.cosineDistance(auth_user_embedding, v_[0], 0).dataSync()[0]) *
+				(1 - losses.cosineDistance(auth_user_embedding, v_[0], 0).dataSync()[0]) *
 				100
 			).toPrecision(2)
 		);

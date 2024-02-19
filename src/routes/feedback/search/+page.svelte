@@ -4,7 +4,7 @@
 	import type { Snapshot } from './$types';
 	import type { SearchDocument } from '$lib/types';
 
-	let documents: SearchDocument[], text: string;
+	let documents: SearchDocument<{u: string}>[], text: string;
 
 	export const snapshot: Snapshot = {
 		capture: () => ({ documents, text }),

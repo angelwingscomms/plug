@@ -1,5 +1,5 @@
 import { REDIS } from '$env/static/private';
-import { setup } from './setup';
+// import { setup } from './setup';
 import { createClient } from 'redis';
 
 export const client = await createClient({ url: REDIS });
@@ -9,4 +9,4 @@ try {
 } catch (e) {
 	console.error('client connect error', e);
 }
-await setup();
+// await setup();

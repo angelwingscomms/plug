@@ -13,7 +13,7 @@
 		route: string,
 		placeholder: string,
 		total: number = 0,
-		documents: SearchDocument[] = [],
+		documents: SearchDocument<{u: string, s: number}>[] = [],
 		loading = false,
 		page: number = 1;
 

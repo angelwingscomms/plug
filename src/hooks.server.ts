@@ -10,13 +10,12 @@
 // } from '$env/static/private';
 import { sequence } from '@sveltejs/kit/hooks';
 import { redirect, type Handle } from '@sveltejs/kit';
-import { protected_routes, user_index } from '$lib/constants';
+import { protected_routes } from '$lib/constants';
 // import type { Provider } from '@auth/core/providers';
 // import { client } from '$lib/util/redis';
 // import { escape_email } from '$lib/util/escape_email';
 // import { google } from '$lib/util/user/create/google';
 import { check } from '$lib/util/user/auth/check';
-import { client } from '$lib/util/redis';
 
 const authorization: Handle = async ({ event, resolve }) => {
 	if (protected_routes.includes(event.url.pathname)) {
@@ -30,7 +29,6 @@ const authorization: Handle = async ({ event, resolve }) => {
 
 export const handle: Handle = sequence(
 	async ({ event, resolve }) => {
-		console.debug('-users-all-handle', await client.ft.search(user_index, '*', { RETURN: ['u'] }));
 		const code = event.cookies.get('code');
 		if (code) {
 			const id = check(code);

@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import OnEnter from '$lib/components/OnEnter.svelte';
-	import { parse } from '$lib/util/markdown/parse/web';
+	import { to_html } from '$lib/util/markdown/parse';
+	// import { parse } from '$lib/util/markdown/parse/web';
 	import { notify } from '$lib/util/notify';
 	import { sanitize_object, sanitize_string } from '$lib/util/sanitize';
 	import { signOut } from '@auth/sveltekit/client';
@@ -44,7 +45,7 @@
 		edit_loading = true;
 		try {
 			let payload = sanitize_object({ c: contact, u: username, t: text, e: email });
-			const html = await parse(payload.c as string);
+			const html = await to_html(payload.c as string); //TODO-replace with web-worker version
 			payload.h = sanitize_string(html);
 			await axios.put(`/edit`, payload);
 			dispatch('save', { username, html: payload.h as string }); //TODO-review payload.h as string

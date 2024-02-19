@@ -6,7 +6,7 @@ import { slim } from '$lib/util/redis/shape/slim';
 import type { SearchDocument, SearchResponse } from '$lib/types';
 export interface SearchParams {
 	index: string;
-	page: number | undefined;
+	page: number;
 	filters?: Filters;
 	count?: boolean;
 	query?: string;
@@ -71,7 +71,7 @@ export const search = async <T>({
 
 	const res = await client.ft.search(index, query, options);
 	res.documents = res.documents.map((r) => {
-		return { ...r, value: slim(r.value, true) as unknown as SearchDocument };
-	}) as unknown as SearchDocument[];
+		return { ...r, value: slim(r.value, true) as unknown as SearchDocument<T> };
+	}) as unknown as SearchDocument<T>[];
 	return { ...res, page };
 };
