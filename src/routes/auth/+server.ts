@@ -2,15 +2,17 @@ import { user_index } from '$lib/constants/index.js';
 import { handle_server_error } from '$lib/util/handle_server_error.js';
 import { client } from '$lib/util/redis/index.js';
 import { eup } from '$lib/util/user/create/eup.js';
-import { hash } from 'argon2';
+import { hash, verify } from 'argon2';
 import { code } from '$lib/util/user/auth/check';
 import { search } from '$lib/util/redis/search';
 import type { Cookies } from '@sveltejs/kit';
-
+   
 const login = ({ cookies, locals, id }: { cookies: Cookies; locals: App.Locals; id: string }) => {
 	cookies.set('code', `${code(id)}`, { path: '/' });
 	locals.user = id;
 };
+
+// const hash_password = (p: string) => hash(p, { secret: Buffer.from(SECRET) });
 
 export const POST = async ({ cookies, request, locals }) => {
 	try {
@@ -19,13 +21,12 @@ export const POST = async ({ cookies, request, locals }) => {
 			const res = await client.ft.search(user_index, `@u:"${u}"`, {
 				LIMIT: { from: 0, size: 1 }
 			});
-			console.log('new user search res', res);
 			if (res.total) return new Response('user already exists');
-			const id = await eup({ e, u, p: await hash(p) });
+			const password_hash = await hash(p);
+			const id = await eup({ e, u, p: password_hash });
 			login({ cookies, locals, id });
 			return new Response();
 		} else {
-			const password_hash = await hash(p);
 			const res = await search<{ u: string; p: string }>({
 				index: user_index,
 				query: `@u:"${u}"`,
@@ -34,7 +35,7 @@ export const POST = async ({ cookies, request, locals }) => {
 			});
 			if (!res.total) return new Response('user not found');
 			const user = res.documents[0];
-			if (user.value.p !== password_hash) {
+			if (!(await verify(user.value.p, p))) {
 				return new Response('wrong password');
 			}
 			login({ cookies, locals, id: user.id });

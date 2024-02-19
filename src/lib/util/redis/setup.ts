@@ -4,6 +4,8 @@ import { SchemaFieldTypes, VectorAlgorithms } from 'redis';
 
 export const setup = async () => {
 	try {
+		// await client.ft.dropIndex(user_index)
+		// console.info('index dropped')
 		await client.ft.create(
 			user_index,
 			{
@@ -17,6 +19,10 @@ export const setup = async () => {
 				},
 				'$.u': {
 					AS: 'u',
+					type: SchemaFieldTypes.TEXT
+				},
+				'$.p': {
+					AS: 'p',
 					type: SchemaFieldTypes.TEXT
 				}
 			},

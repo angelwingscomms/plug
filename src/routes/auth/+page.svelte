@@ -27,7 +27,6 @@
 		}
 		try {
 			const res = await axios.post('/auth', { ...(n && { e: email }), u: username, p: password });
-			console.debug('rd', res.data);
 			if (res.data) {
 				error = res.data;
 				return;
