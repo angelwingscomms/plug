@@ -4,5 +4,5 @@
     export let data: PageData
 </script>
 
-<p>Similar users to {data.name ? data.name : `user ${data.id}`}</p>
+<p>Similar users to {data.u ? data.u : `user ${data.id}`}</p>
 <SearchPagination route='user' documents={data.d} />

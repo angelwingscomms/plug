@@ -1,7 +1,6 @@
 import { marked } from 'marked';
 import { markedHighlight } from 'marked-highlight';
 import katex from 'marked-katex-extension';
-import bidi from 'marked-bidi';
 // import extended_tables from 'marked-extended-tables';
 import { mangle } from 'marked-mangle';
 import linkify_it from 'marked-linkify-it';
@@ -32,8 +31,8 @@ export const extensions = [
 
 marked.use(...extensions)
 
-export const to_html = (text: string): string => {
-	return marked.parse(
+export const to_html = async (text: string): Promise<string> => {
+	return await marked.parse(
 		text
 		.replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/u, '')
 	);

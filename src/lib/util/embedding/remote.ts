@@ -1,11 +1,19 @@
 import { embed_endpoint } from '$lib/constants';
 import { Buffer } from 'node:buffer';
 
-export const remote = async (body: string, b: boolean = false): Promise<number[] | Buffer> => {
+export const remote = async (body: string): Promise<number[]> => {
 	const res = await fetch(embed_endpoint, {
-		headers: { 'Content-Type': 'text/plain', ...(b && { b }) },
 		body,
 		method: 'POST'
 	});
-	return b ? Buffer.from(await res.arrayBuffer()) : await res.json() as number[];
+	return await res.json();
+};
+
+export const remote_buffer = async (body: string): Promise<Buffer> => {
+	const res = await fetch(embed_endpoint, {
+		headers: { b: '.' },
+		body,
+		method: 'POST'
+	});
+	return Buffer.from(await res.arrayBuffer());
 };

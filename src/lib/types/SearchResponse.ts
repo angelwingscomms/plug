@@ -1,10 +1,10 @@
-export interface SearchDocument {
+export interface SearchDocument<T> {
 	id: string;
-	value: { name: string };
+	value: T;
 }
 
-export interface SearchResponse {
+export interface SearchResponse<T> {
 	total: number;
-	documents: SearchDocument[];
+	documents: SearchDocument<T>[];
 	page: number;
 }

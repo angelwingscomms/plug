@@ -1,4 +1,4 @@
-const replacements = {
+const replacements: { [i: string]: string } = {
 	',': '\\,',
 	'.': '\\.',
 	'<': '\\<',

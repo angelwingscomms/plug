@@ -1,10 +1,9 @@
 <script lang="ts">
-	import { TextInput, Button, InlineLoading, TextArea } from 'carbon-components-svelte';
+	import { 	Button, InlineLoading, TextArea } from 'carbon-components-svelte';
 	import Search from 'carbon-icons-svelte/lib/Search.svelte';
 	import type { SearchDocument } from '$lib/types';
 	import axios from 'axios';
 	import { notify } from '$lib/util/notify';
-	import OnEnter from '$lib/components/OnEnter.svelte';
 	import { onMount } from 'svelte';
 	import type { Filters as _Filters } from '$lib/types/filter';
 	import SearchPagination from './SearchPagination.svelte';

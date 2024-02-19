@@ -3,7 +3,7 @@ import type { SearchOptions } from 'redis';
 import { client } from '.';
 import type { Filters } from '$lib/types/filter';
 import { slim } from '$lib/util/redis/shape/slim';
-import type { SearchDocument } from '$lib/types';
+import type { SearchDocument, SearchResponse } from '$lib/types';
 export interface SearchParams {
 	index: string;
 	page: number | undefined;
@@ -14,7 +14,7 @@ export interface SearchParams {
 	B?: Buffer;
 }
 
-export const search = async ({
+export const search = async <T>({
 	index,
 	page,
 	filters,
@@ -22,8 +22,8 @@ export const search = async ({
 	options = {},
 	B,
 	query = filters?.length ? '' : '*'
-}: SearchParams) => {
-	options.DIALECT = 3
+}: SearchParams): Promise<SearchResponse<T>> => {
+	options.DIALECT = 3;
 
 	if (count) {
 		options.LIMIT = { from: 0, size: 0 };
@@ -53,7 +53,7 @@ export const search = async ({
 
 	if (B) {
 		const hybrid = query && query !== '*';
-		if (hybrid) query = `(${query})`
+		if (hybrid) query = `(${query})`;
 		query += `=>[KNN ${(page || 1) * items_per_page} @${embedding_field_name} $B${hybrid ? ' HYBRID_POLICY ADHOC_BF' : ''}]`;
 		options.PARAMS = {
 			B

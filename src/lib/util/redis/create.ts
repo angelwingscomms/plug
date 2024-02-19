@@ -1,12 +1,12 @@
 import { client } from '$lib/util/redis';
-import { embedding } from '$lib/util/embedding/oai';
+import { oai } from '$lib/util/embedding/oai';
 import { ids_hash } from '$lib/constants';
 import { dev } from '$app/environment';
 
 const build_id = (index: string, id: number) => `${index}_${id}`;
 
 export const add_embedding = async (data: object) => {
-	return { v: await embedding(JSON.stringify(data)), ...data };
+	return { v: await oai(JSON.stringify(data)), ...data };
 };
 
 export const create = async ({ index, data }: { index: string; data: object }) => {

@@ -13,7 +13,7 @@
 	} from '$env/static/public';
 	import axios from 'axios';
 	import { Button } from 'carbon-components-svelte';
-	import type { ButtonProps } from 'carbon-components-svelte/types/Button/Button.svelte';
+	import type { ButtonProps } from 'carbon-components-svelte/types';
 	import { createEventDispatcher } from 'svelte';
 	import { v4 } from 'uuid';
 

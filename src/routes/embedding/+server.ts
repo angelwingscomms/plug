@@ -1,10 +1,12 @@
-import { embedding } from '$lib/util/embedding/oai';
-import { error, json, type RequestHandler } from '@sveltejs/kit';
+import { oai } from '$lib/util/embedding/oai';
+import { json } from '@sveltejs/kit';
+import type { RequestHandler } from './$types';
+import { handle_server_error } from '$lib/util/handle_server_error';
 
-export const POST = (async ({ request }) => {
-	return embedding(await request.text())
-		.then((e) => json(e))
-		.catch(() => {
-			throw error(500, 'We experienced an error processing that request');
-		});
-}) satisfies RequestHandler;
+export const POST: RequestHandler = async ({ request }) => {
+	try {
+		return json(await oai(await request.text()));
+	} catch {
+		throw handle_server_error('An error occured', request);
+	}
+};

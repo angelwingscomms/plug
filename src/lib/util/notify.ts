@@ -1,6 +1,6 @@
 import { browser } from '$app/environment';
 import { arrayStore } from '$lib/util/store';
-import type { ToastNotificationProps } from 'carbon-components-svelte/types/Notification/ToastNotification.svelte';
+import type { ToastNotification as ToastNotificationProps } from 'carbon-components-svelte/types';
 
 export const notify = (message: string | ToastNotificationProps) => {
 	if (browser) {

@@ -7,7 +7,7 @@
 
 <Row>
 	<Column>
-		{data.similarity}% similarity
-		<User name={data.name} html={data.html} id={data.id} />
+		{data.s}% s
+		<User name={data.u} html={data.h} id={data.id} />
 	</Column>
 </Row>

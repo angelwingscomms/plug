@@ -5,7 +5,7 @@
 
 	export let route: string,
 		page: number = 1,
-		documents: SearchDocument[],
+		documents: SearchDocument<{ s: number; u: string }>[],
 		total = documents.length;
 
 	let loading = false;
@@ -16,7 +16,10 @@
 {:else}
 	<ButtonSet stacked>
 		{#each documents as document}
-			<Button kind="ghost" href="/{route}/{document.id}"><div class="similarity">{document.value.similarity}%</div> {document.value.name ?? ''}</Button>
+			<Button kind="ghost" href="/{route}/{document.id}"
+				><div class="s">{document.value.s}%</div>
+				{document.value.u ?? ''}</Button
+			>
 		{/each}
 	</ButtonSet>
 {/if}
@@ -27,7 +30,7 @@
 
 <style lang="sass">
 	@use "@carbon/colors"
-	.similarity
+	.s
 		color: white
 		background-color: colors.$blue-60
 </style>

@@ -6,13 +6,7 @@
 	import { sanitize_object, sanitize_string } from '$lib/util/sanitize';
 	import { signOut } from '@auth/sveltekit/client';
 	import axios from 'axios';
-	import {
-		Button,
-		ButtonSet,
-		InlineLoading,
-		TextArea,
-		TextInput
-	} from 'carbon-components-svelte';
+	import { Button, ButtonSet, InlineLoading, TextArea, TextInput } from 'carbon-components-svelte';
 	import Save from 'carbon-icons-svelte/lib/Save.svelte';
 	import TrashCan from 'carbon-icons-svelte/lib/TrashCan.svelte';
 	import { createEventDispatcher } from 'svelte';
@@ -53,7 +47,7 @@
 			const html = await parse(payload.c as string);
 			payload.h = sanitize_string(html);
 			await axios.put(`/edit`, payload);
-			dispatch('save', { username, html: payload.html });
+			dispatch('save', { username, html: payload.h as string }); //TODO-review payload.h as string
 			notify('Saved');
 		} catch (e: any) {
 			console.error('save error', e);

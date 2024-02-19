@@ -1,19 +1,28 @@
-import * as tf from "@tensorflow/tfjs"
+import * as tf from '@tensorflow/tfjs';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { client } from '$lib/util/redis';
+import type { V } from '$lib/types';
 
 export const load: PageServerLoad = async ({ params, locals }) => {
 	if (!(await client.exists(params.id)))
 		throw error(404, `User with id ${params.id} was not found`);
-	const { '$.html': html_, '$.name': name_, '$.v': v_ } = await client.json.get(params.id, {
+	const {
+		'$.h': h,
+		'$.u': u,
+		'$.v': v_
+	} = (await client.json.get(params.id, {
 		path: ['$.html', '$.name', '$.v']
-	});
-	const session = locals.user
-    const auth_user_embedding = await client.json.get(session?.user?.id ?? '', {path: 'v'});
-	let similarity: number | undefined = undefined
+	})) as { '$.h': string; '$.u': string; '$.v': V };
+	const auth_user_embedding = (await client.json.get(locals.user ?? '', { path: 'v' })) as V;
+	let s: number | undefined = undefined;
 	if (auth_user_embedding) {
-		similarity = Number(((1 - tf.losses.cosineDistance(auth_user_embedding, v_[0], 0).dataSync()[0]) * 100).toPrecision(2))
+		s = Number(
+			(
+				(1 - tf.losses.cosineDistance(auth_user_embedding, v_[0], 0).dataSync()[0]) *
+				100
+			).toPrecision(2)
+		);
 	}
-	return { id: params.id, html: html_[0], name: name_[0], similarity };
+	return { id: params.id, h: h[0], u: u[0], s };
 };

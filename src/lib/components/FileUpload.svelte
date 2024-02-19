@@ -6,7 +6,7 @@
 		dispatch_empty = false;
 
 	import { Button } from 'carbon-components-svelte';
-	import type { ButtonProps } from 'carbon-components-svelte/types/Button/Button.svelte';
+	import type { Button as ButtonProps } from 'carbon-components-svelte/types';
 	import Upload from 'carbon-icons-svelte/lib/Upload.svelte';
 	import { createEventDispatcher } from 'svelte';
 
