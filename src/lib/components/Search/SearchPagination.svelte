@@ -1,6 +1,13 @@
 <script lang="ts">
 	import type { SearchDocument } from '$lib/types';
-	import { Button, ButtonSet, Loading, Pagination } from 'carbon-components-svelte';
+	import {
+		Button,
+		ButtonSet,
+		Loading,
+		Pagination,
+		DataTable,
+		Link
+	} from 'carbon-components-svelte';
 	import { items_per_page } from '$lib/constants';
 
 	export let route: string,
@@ -8,12 +15,23 @@
 		documents: SearchDocument<{ s: number; u: string }>[],
 		total = documents.length;
 
+	const headers = [
+		{ key: 's', value: 'closeness' },
+		{ key: 'u', value: 'username' }
+	];
 	let loading = false;
 </script>
 
 {#if loading}
 	<Loading />
 {:else}
+	<!-- <DataTable {headers} rows={documents}>
+		<svelte:fragment slot="cell" let:row let:cell>
+			{#if cell.key === 'u'}
+				<Link href="/{route}/{cell.value.id}">{cell.value.value.u}</Link>
+			{:else}{cell.value.value.s}{/if}
+		</svelte:fragment>
+	</DataTable> -->
 	<ButtonSet stacked>
 		{#each documents as document}
 			<Button kind="ghost" href="/{route}/{document.id}"
