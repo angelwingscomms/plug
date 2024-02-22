@@ -14,8 +14,8 @@
 	<p>{name}</p>
 
 	{#if contact}
-		<p>Contact</p>
-		<p>{@html contact}</p>
+		<h4>Contact</h4>
+		<p class="contact">{@html contact}</p>
 	{/if}
 
 	{#if html}
@@ -25,8 +25,11 @@
 </div>
 
 <style lang="sass">
+	@use "@carbon/layout"
 	.all
 		display: flex
 		flex-direction: column
 		row-gap: 1rem
+	.contact
+		margin-left: layout.$spacing-04
 </style>

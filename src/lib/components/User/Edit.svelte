@@ -75,11 +75,11 @@
 <div class="input">
 	<TextInput labelText="username" bind:value={username} />
 	<TextInput labelText="email" bind:value={email} />
-	<TextArea labelText="Contact details" bind:value={contact} rows={3} />
+	<TextArea labelText="Contact details" helperText="You can paste links to your socials here" bind:value={contact} rows={3} />
 	<Toggle bind:toggled={x} labelText="Hide profile description on profile page" />
 	<TextArea
 		rows={15}
-		labelText="Describe yourself as vividly as you like"
+		labelText="create a description of yourself with a lot of detail to allow people find you easily"
 		placeholder="So other users can easily find you. Describe yourself in detail, your username, your country/state/town, your likes and dislikes your personality, your hobbies, your experience, likes and dislikes, and so on"
 		invalid={text_invalid}
 		invalidText={text_invalid_text}
@@ -100,5 +100,5 @@
 	.input
 		display: flex
 		flex-direction: column
-		row-gap: layout.$spacing-03
+		row-gap: layout.$spacing-06
 </style>

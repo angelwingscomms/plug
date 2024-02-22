@@ -27,6 +27,7 @@
 				Example: "A web developer that goes by the name Gregory McCane that lives in Seattle, US and
 				owns a white dog and loves to go skiing every weekend and listening to jazz music"
 			</p>
+			<p>You may edit your profile with a description of yourself with a lot of detail to allow people find you easily</p>
 			<Search
 				bind:searched
 				bind:documents
