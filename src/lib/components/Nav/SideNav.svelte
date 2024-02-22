@@ -10,8 +10,8 @@
 
 <SideNav bind:isOpen={$isSideNavOpen}>
 	<SideNavItems>
-		{#if $page.data.session?.user}
-			<SideNavLink text="profile" href="/user/{$page.data.session?.user?.id}" />
+		{#if $page.data.user}
+			<SideNavLink text="profile" href="/user/{$page.data.user}" />
 		{/if}
 		
 		 <SideNavLink text="feedback" href="/feedback" />

@@ -7,7 +7,7 @@
 
 <Row>
 	<Column>
-		{data.s}% s
-		<User name={data.u} html={data.h} id={data.id} />
+		Similarity to your profile: {data.s}%
+		<User contact={data.c} name={data.u} html={data.h} id={data.id} />
 	</Column>
 </Row>

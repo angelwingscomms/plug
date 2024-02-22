@@ -1,4 +1,4 @@
-import {losses} from '@tensorflow/tfjs';
+import { losses } from '@tensorflow/tfjs';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { client } from '$lib/util/redis';
@@ -10,19 +10,20 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 	const {
 		'$.h': h,
 		'$.u': u,
+		'$.x': x,
+		'$.c': c,
 		'$.v': v_
 	} = (await client.json.get(params.id, {
-		path: ['$.h', '$.u', '$.v']
-	})) as { '$.h': string; '$.u': string; '$.v': V };
+		path: ['$.h', '$.u', '$.v', '$.c', '$.x']
+	})) as { '$.h'?: string[]; '$.u': string[]; '$.c': string[]; '$.x': number[]; '$.v': V[] };
 	const auth_user_embedding = (await client.json.get(locals.user ?? '', { path: 'v' })) as V;
 	let s: number | undefined = undefined;
 	if (auth_user_embedding) {
 		s = Number(
-			(
-				(1 - losses.cosineDistance(auth_user_embedding, v_[0], 0).dataSync()[0]) *
-				100
-			).toPrecision(2)
+			((1 - losses.cosineDistance(auth_user_embedding, v_[0], 0).dataSync()[0]) * 100).toPrecision(
+				2
+			)
 		);
 	}
-	return { id: params.id, h: h[0], u: u[0], s };
+	return { id: params.id, ...(!x[0] && h && { h: h[0] }), c: c[0], u: u[0], s };
 };

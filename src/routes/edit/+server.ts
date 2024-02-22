@@ -32,7 +32,7 @@ export const PUT: RequestHandler = async ({ request, locals }) => {
 				status: 404
 			});
 		}
-		let { c, t, h, u, e } = await request.json();
+		let { c, t, h, u, e, x } = await request.json();
 		const v = await embed_user({
 			...(u && { username: u }),
 			...(t && { user_description: t }),
@@ -41,10 +41,12 @@ export const PUT: RequestHandler = async ({ request, locals }) => {
 		u = sanitize_string(u);
 		e = sanitize_string(e);
 		c = sanitize_string(c);
+		x = sanitize_string(x);
 		t = sanitize_string(t);
 		h = sanitize_string(h);
 		client.json.set(user, '$.u', u);
 		client.json.set(user, '$.e', e);
+		client.json.set(user, '$.x', x);
 		client.json.set(user, '$.c', c);
 		client.json.set(user, '$.t', t);
 		client.json.set(user, '$.h', h);

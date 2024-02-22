@@ -7,7 +7,7 @@
 	import { sanitize_object, sanitize_string } from '$lib/util/sanitize';
 	import { signOut } from '@auth/sveltekit/client';
 	import axios from 'axios';
-	import { Button, ButtonSet, InlineLoading, TextArea, TextInput } from 'carbon-components-svelte';
+	import { Button, ButtonSet, InlineLoading, TextArea, TextInput, Toggle } from 'carbon-components-svelte';
 	import Save from 'carbon-icons-svelte/lib/Save.svelte';
 	import TrashCan from 'carbon-icons-svelte/lib/TrashCan.svelte';
 	import { createEventDispatcher } from 'svelte';
@@ -15,6 +15,7 @@
 		contact = $page.data.c,
 		email = $page.data.e,
 		text = $page.data.t,
+		x = !!$page.data.x,
 		text_invalid: boolean,
 		text_invalid_text: string,
 		edit_loading = false,
@@ -44,7 +45,7 @@
 		if (edit_loading) return;
 		edit_loading = true;
 		try {
-			let payload = sanitize_object({ c: contact, u: username, t: text, e: email });
+			let payload = sanitize_object({ c: contact, u: username, t: text, e: email, x: Number(x) });
 			const html = await to_html(payload.t as string); //TODO-replace with web-worker version
 			payload.h = sanitize_string(html);
 			await axios.put(`/edit`, payload);
@@ -73,6 +74,7 @@
 	<TextInput labelText="username" bind:value={username} />
 	<TextInput labelText="email" bind:value={email} />
 	<TextArea labelText="Contact details" bind:value={contact} rows={3} />
+	<Toggle bind:toggled={x} labelText="Hide profile description on profile page" />
 	<TextArea
 		rows={15}
 		labelText="Describe yourself as vividly as you like"
