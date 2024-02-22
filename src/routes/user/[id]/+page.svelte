@@ -7,6 +7,6 @@
 
 <Row>
 	<Column>
-		<User s={data.s} contact={data.ch} name={data.u} html={data.h} id={data.id} />
+		<User s={data.s} ch={data.ch} u={data.u} h={data.h} id={data.id} />
 	</Column>
 </Row>
