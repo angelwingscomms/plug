@@ -5,8 +5,6 @@
 		ButtonSet,
 		Loading,
 		Pagination,
-		DataTable,
-		Link
 	} from 'carbon-components-svelte';
 	import { items_per_page } from '$lib/constants';
 
@@ -35,7 +33,7 @@
 	<ButtonSet stacked>
 		{#each documents as document}
 			<Button kind="ghost" href="/{route}/{document.id}"
-				><div class="s">{document.value.s}%</div>
+				><div class="s">{document.value.s}% match</div>
 				{document.value.u ?? ''}</Button
 			>
 		{/each}

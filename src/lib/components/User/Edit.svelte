@@ -79,8 +79,9 @@
 	<Toggle bind:toggled={x} labelText="Hide profile description on profile page" />
 	<TextArea
 		rows={15}
-		labelText="create a description of yourself with a lot of detail to allow people find you easily"
-		placeholder="So other users can easily find you. Describe yourself in detail, your username, your country/state/town, your likes and dislikes your personality, your hobbies, your experience, likes and dislikes, and so on"
+		labelText="Bio"
+		helperText="you can create a description of yourself with a lot of detail to allow people find you easily"
+		placeholder="you can describe yourself in detail, asl, your likes and dislikes your personality, your hobbies, likes and dislikes, your experiences..."
 		invalid={text_invalid}
 		invalidText={text_invalid_text}
 		bind:value={text}

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { 	Button, InlineLoading, TextArea } from 'carbon-components-svelte';
+	import { Button, InlineLoading, Modal, TextArea } from 'carbon-components-svelte';
 	import Search from 'carbon-icons-svelte/lib/Search.svelte';
 	import type { SearchDocument } from '$lib/types';
 	import axios from 'axios';
@@ -11,9 +11,11 @@
 	export let searched = false,
 		text = '',
 		route: string,
+		open = false,
+		old_search: null | string = null,
 		placeholder: string,
 		total: number = 0,
-		documents: SearchDocument<{u: string, s: number}>[] = [],
+		documents: SearchDocument<{ u: string; s: number }>[] = [],
 		loading = false,
 		page: number = 1;
 
@@ -33,6 +35,7 @@
 		try {
 			const r = await axios.post(`/${route}/search`, { text, page });
 			({ total, documents, page } = r.data);
+			old_search = text
 			searched = true;
 		} catch (e: any) {
 			notify({
@@ -46,20 +49,12 @@
 	};
 </script>
 
+<Modal hasForm bind:open primaryButtonIcon={Search} primaryButtonText="search" on:submit={() => get(page)} modalHeading="search">
+	<TextArea rows={3} {placeholder} bind:ref={search_input_ref} bind:value={text} />
+</Modal>
+
 <div class="input">
-	<TextArea
-		on:keydown={(e) => {
-			if (e.key === 'Enter') {
-				e.preventDefault();
-				get(page);
-			}
-		}}
-		rows={1}
-		{placeholder}
-		bind:ref={search_input_ref}
-		bind:value={text}
-	/>
-	<Button size="field" on:click={() => get(page)} iconDescription="Search" icon={Search} />
+	<Button on:click={() => (open = !open)}>run a search</Button>
 </div>
 
 {#if loading}
