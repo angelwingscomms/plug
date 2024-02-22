@@ -17,23 +17,33 @@
 		<p class="top">Username:</p>
 		<span class="shift">{name}</span>
 	</div>
-	<p class="top">Similarity to your profile:</p>
-	<p class="shift">{s}%</p>
+	<div class="section">
+		<p class="top">Similarity to your profile:</p>
+		<p class="shift">{s}%</p>
+	</div>
 
 	{#if contact}
-		<p class="top">Contact</p>
-		<p class="shift">{@html contact}</p>
+		<div class="section">
+			<p class="top">Contact</p>
+			<p class="shift">{@html contact}</p>
+		</div>
 	{/if}
 
 	{#if html}
-		<p class="top">About user</p>
-		<p>{@html html}</p>
+		<div class="section">
+			<p class="top">About user</p>
+			<p>{@html html}</p>
+		</div>
 	{/if}
 </div>
 
 <style lang="sass">
 	@use "@carbon/layout"
 	@use "@carbon/type"
+	.section
+		display: flex
+		flex-direction: column
+		row-gap: layout.$spacing-01
 	.all
 		display: flex
 		flex-direction: column
