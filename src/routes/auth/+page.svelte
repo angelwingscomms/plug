@@ -9,6 +9,7 @@
 	} from 'carbon-components-svelte';
 	import { Send } from 'carbon-icons-svelte';
 	import { notify } from '$lib/util';
+	import { invalidateAll } from "$app/navigation"
 	import axios from 'axios';
 	import { goto } from '$app/navigation';
 
@@ -31,6 +32,7 @@
 				error = res.data;
 				return;
 			}
+			invalidateAll()
 			goto(n ? '/edit' : '/');
 		} catch {
 			notify({ kind: 'error', title: 'An error occured' });
