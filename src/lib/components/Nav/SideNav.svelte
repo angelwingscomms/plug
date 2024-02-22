@@ -12,6 +12,7 @@
 	<SideNavItems>
 		{#if $page.data.user}
 			<SideNavLink text="profile" href="/user/{$page.data.user}" />
+			<SideNavLink text="similar users" href="/user/{$page.data.user}/similar" />
 		{/if}
 		
 		 <SideNavLink text="feedback" href="/feedback" />

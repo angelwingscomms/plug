@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { Button, ButtonSet } from 'carbon-components-svelte';
 	import { page } from '$app/stores';
-	export let name: string, html: string | undefined, id: string, contact: string;
+	export let s: number, 
+	name: string, html: string | undefined, id: string, contact: string;
 </script>
 
 <div class="all">
@@ -11,25 +12,34 @@
 			<Button kind="ghost" size="small" href="/edit">Edit your profile</Button>
 		{/if}
 	</ButtonSet>
-	<p>{name}</p>
+
+	<div>
+		<p class="top">Username:</p>
+		<span class="shift">{name}</span>
+	</div>
+	<p class="top">Similarity to your profile:</p>
+	<p class="shift">{s}%</p>
 
 	{#if contact}
-		<h4>Contact</h4>
-		<p class="contact">{@html contact}</p>
+		<p class="top">Contact</p>
+		<p class="shift">{@html contact}</p>
 	{/if}
 
 	{#if html}
-		<p>About user</p>
+		<p class="top">About user</p>
 		<p>{@html html}</p>
 	{/if}
 </div>
 
 <style lang="sass">
 	@use "@carbon/layout"
+	@use "@carbon/type"
 	.all
 		display: flex
 		flex-direction: column
 		row-gap: 1rem
-	.contact
+	.top
+		@include type.type-style('productive-heading-01')
+	.shift
 		margin-left: layout.$spacing-04
 </style>

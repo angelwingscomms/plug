@@ -9,13 +9,11 @@ export const similar = async (id: string) => {
 	const {
 		'$.v': v_,
 		'$.u': u_,
-		'$.e': e_
 	} = (await client.json.get(id, {
-		path: ['$.v', '$.u', '$.e']
+		path: ['$.v', '$.u']
 	})) as {
 		'$.v': number[][];
 		'$.u': string[];
-		'$.e': string[];
 	};
 	const embedding = (await client.json.get(id, { path: 'v' })) as V;
 	return {
@@ -28,7 +26,7 @@ export const similar = async (id: string) => {
 				page: 1,
 				B: float32_buffer(v_[0]),
 				options: { RETURN: ['u'] },
-				query: `@e:-"${e_[0]}"`
+				query: `@u:-"${u_[0]}"`
 			})
 		).documents.map((d) => {
 			d.value.s = Number(
