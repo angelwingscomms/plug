@@ -8,6 +8,6 @@
 <Row>
 	<Column>
 		Similarity to your profile: {data.s}%
-		<User contact={data.c} name={data.u} html={data.h} id={data.id} />
+		<User contact={data.ch} name={data.u} html={data.h} id={data.id} />
 	</Column>
 </Row>

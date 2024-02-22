@@ -16,6 +16,7 @@
 		email = $page.data.e,
 		text = $page.data.t,
 		x = !!$page.data.x,
+		ch = $page.data.ch,
 		text_invalid: boolean,
 		text_invalid_text: string,
 		edit_loading = false,
@@ -48,6 +49,7 @@
 			let payload = sanitize_object({ c: contact, u: username, t: text, e: email, x: Number(x) });
 			const html = await to_html(payload.t as string); //TODO-replace with web-worker version
 			payload.h = sanitize_string(html);
+			payload.ch = sanitize_string(await to_html(contact))
 			await axios.put(`/edit`, payload);
 			dispatch('save', { username, html: payload.h as string }); //TODO-review payload.h as string
 			notify('Saved');

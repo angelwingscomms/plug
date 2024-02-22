@@ -13,7 +13,7 @@
 	import axios from 'axios';
 	import { goto } from '$app/navigation';
 
-	let n = true,
+	let n = false,
 		email_invalid = false,
 		error = '',
 		loading = false,
@@ -32,7 +32,7 @@
 				error = res.data;
 				return;
 			}
-			invalidateAll()
+			await invalidateAll()
 			goto(n ? '/edit' : '/');
 		} catch {
 			notify({ kind: 'error', title: 'An error occured' });

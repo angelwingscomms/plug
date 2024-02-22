@@ -11,11 +11,11 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 		'$.h': h,
 		'$.u': u,
 		'$.x': x,
-		'$.c': c,
+		'$.ch': ch,
 		'$.v': v_
 	} = (await client.json.get(params.id, {
-		path: ['$.h', '$.u', '$.v', '$.c', '$.x']
-	})) as { '$.h'?: string[]; '$.u': string[]; '$.c': string[]; '$.x': number[]; '$.v': V[] };
+		path: ['$.h', '$.u', '$.v', '$.c', '$.x', '$.ch']
+	})) as { '$.h'?: string[]; '$.u': string[]; '$.ch': string[]; '$.x': number[]; '$.v': V[] };
 	const auth_user_embedding = (await client.json.get(locals.user ?? '', { path: 'v' })) as V;
 	let s: number | undefined = undefined;
 	if (auth_user_embedding) {
@@ -25,5 +25,5 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 			)
 		);
 	}
-	return { id: params.id, ...(!x[0] && h && { h: h[0] }), c: c[0], u: u[0], s };
+	return { id: params.id, ...(!x[0] && h && { h: h[0] }), ch: ch[0], u: u[0], s };
 };

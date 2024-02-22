@@ -6,7 +6,7 @@
 
 <div class="all">
 	<ButtonSet stacked>
-		<Button kind='ghost' size="small" href="{$page.url.pathname}/similar">Similar users</Button>
+		<Button kind="ghost" size="small" href="{$page.url.pathname}/similar">Similar users</Button>
 		{#if $page.data.user === id}
 			<Button kind="ghost" size="small" href="/edit">Edit your profile</Button>
 		{/if}
@@ -14,16 +14,14 @@
 	<p>{name}</p>
 
 	{#if contact}
-	<p>Contact</p>
-	<p>{contact}</p>
+		<p>Contact</p>
+		<p>{@html contact}</p>
 	{/if}
 
 	{#if html}
-	<p>About user</p>
+		<p>About user</p>
 		<p>{@html html}</p>
 	{/if}
-
-	
 </div>
 
 <style lang="sass">
