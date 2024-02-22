@@ -9,11 +9,14 @@
 	} from 'carbon-components-svelte';
 	import { Send } from 'carbon-icons-svelte';
 	import { notify } from '$lib/util';
-	import { invalidateAll } from "$app/navigation"
+	import { invalidateAll } from '$app/navigation';
 	import axios from 'axios';
 	import { goto } from '$app/navigation';
+	import type { PageData } from './$types';
 
-	let n = false,
+	export let data: PageData;
+
+	let n = data.n,
 		email_invalid = false,
 		error = '',
 		loading = false,
@@ -32,7 +35,7 @@
 				error = res.data;
 				return;
 			}
-			await invalidateAll()
+			await invalidateAll();
 			goto(n ? '/edit' : '/');
 		} catch {
 			notify({ kind: 'error', title: 'An error occured' });
