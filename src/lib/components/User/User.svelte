@@ -4,6 +4,7 @@
 	import Edit from 'carbon-icons-svelte/lib/Edit.svelte';
 	import ArrowRight from 'carbon-icons-svelte/lib/ArrowRight.svelte';
 	export let s: number | undefined, u: string, h: string | undefined, id: string, ch: string;
+	let self = $page.data.user === id;
 </script>
 
 <div class="all">
@@ -13,12 +14,14 @@
 		{/if}
 	</ButtonSet>
 
-		<h3 class="shift">{u}</h3>
+	<h3 class="shift">{u}</h3>
 	{#if s && $page.data.user !== id}
 		<div class="section">
 			<p class="top">This profile is {s}% similar to yours</p>
 		</div>
 	{/if}
+
+	<Button href="{$page.data.pathname}/chat">Chat</Button>
 
 	{#if ch}
 		<div class="section">
