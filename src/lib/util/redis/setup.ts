@@ -4,6 +4,47 @@ import { SchemaFieldTypes, VectorAlgorithms } from 'redis';
 
 export const setup = async () => {
 	try {
+		await client.ft.create(
+			message_index,
+			{
+				'$.v': {
+					AS: 'v',
+					type: SchemaFieldTypes.VECTOR,
+					ALGORITHM: VectorAlgorithms.FLAT,
+					TYPE: 'FLOAT32',
+					DIM: 3072,
+					DISTANCE_METRIC: 'COSINE'
+				},
+				'$.f': {
+					AS: 'f',
+					type: SchemaFieldTypes.TEXT
+				},
+				'$.t': {
+					AS: 't',
+					type: SchemaFieldTypes.TEXT
+				},
+				'$.d': {
+					AS: 'd',
+					type: SchemaFieldTypes.NUMERIC,
+					SORTABLE: true,
+					NOINDEX: true
+				},
+				'$.c': {
+					AS: 'c',
+					type: SchemaFieldTypes.TEXT,
+					NOINDEX: true
+				}
+			},
+			{
+				ON: 'JSON',
+				PREFIX: message_id_prefix,
+				NOHL: true
+			}
+		);
+	} catch (e) {
+		console.error(`redis create ${message_index} error:`, e);
+	}
+	try {
 		// await client.ft.dropIndex(user_index)
 		// console.info('index dropped')
 		await client.ft.create(
@@ -32,40 +73,7 @@ export const setup = async () => {
 				NOHL: true
 			}
 		);
-
-		await client.ft.create(
-			message_index,
-			{
-				'$.v': {
-					AS: 'v',
-					type: SchemaFieldTypes.VECTOR,
-					ALGORITHM: VectorAlgorithms.FLAT,
-					TYPE: 'FLOAT32',
-					DIM: 3072,
-					DISTANCE_METRIC: 'COSINE'
-				},
-				'$.f': {
-					AS: 'f',
-					type: SchemaFieldTypes.TEXT
-				},
-				'$.t': {
-					AS: 't',
-					type: SchemaFieldTypes.TEXT
-				},
-				'$.d': {
-					AS: 'd',
-					type: SchemaFieldTypes.NUMERIC,
-					SORTABLE: true,
-					NOINDEX: true
-				}
-			},
-			{
-				ON: 'JSON',
-				PREFIX: message_id_prefix,
-				NOHL: true
-			}
-		);
 	} catch (e) {
-		console.error('redis setup error:', e);
+		console.error(`redis create ${user_index} error:`, e);
 	}
 };

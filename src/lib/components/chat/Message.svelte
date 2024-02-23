@@ -44,25 +44,26 @@
 	/>
 </ContextMenu> -->
 
-{#if show && message.value.c != null}
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<div class="a">
-		<div
-			bind:this={target}
-			on:click={() => (menu_open = true)}
-			on:keydown={() => (menu_open = true)}
-			class="message"
-			class:user={message.value.f === u}
-			class:r={message.value.t !== u}
-		>
-			<p class="content">
-				{message.value.c}
-			</p>
-		</div>
-		<Button iconDescription="Copy" icon={Copy} on:click={copy} size="small" kind="ghost" />
-		<!-- <Button iconDescription="Copy" icon={TrashCan} on:click={() => dispatch('delete_message', message.id)} size="small" kind="ghost" /> -->
+<!-- {#if show && message.value.c != null} -->
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<div class="a">
+	<div
+		bind:this={target}
+		on:click={() => (menu_open = true)}
+		on:keydown={() => (menu_open = true)}
+		class="message"
+		class:user={message.value.f === u}
+		class:r={message.value.t !== u}
+	>
+		<p class="content">
+			{message.value.c} {message.id}
+		</p>
 	</div>
-{/if}
+	<Button iconDescription="Copy" icon={Copy} on:click={copy} size="small" kind="ghost" />
+	<!-- <Button iconDescription="Copy" icon={TrashCan} on:click={() => dispatch('delete_message', message.id)} size="small" kind="ghost" /> -->
+</div>
+
+<!-- {/if} -->
 
 <style lang="sass">
 	@use '@carbon/type'
