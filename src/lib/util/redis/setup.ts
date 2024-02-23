@@ -54,7 +54,9 @@ export const setup = async () => {
 				},
 				'$.d': {
 					AS: 'd',
-					type: SchemaFieldTypes.NUMERIC
+					type: SchemaFieldTypes.NUMERIC,
+					SORTABLE: true,
+					NOINDEX: true
 				}
 			},
 			{

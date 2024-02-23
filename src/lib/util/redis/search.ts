@@ -6,7 +6,7 @@ import { slim } from '$lib/util/redis/shape/slim';
 import type { SearchDocument, SearchResponse } from '$lib/types';
 export interface SearchParams {
 	index: string;
-	page: number;
+	page?: number;
 	filters?: Filters;
 	count?: boolean;
 	query?: string;
@@ -16,7 +16,7 @@ export interface SearchParams {
 
 export const search = async <T>({
 	index,
-	page,
+	page = 0,
 	filters,
 	count,
 	options = {},

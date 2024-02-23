@@ -41,6 +41,7 @@
 		"@auth/sveltekit": "^0.13.0",
 		"@carbon/colors": "^11.20.0",
 		"@carbon/layout": "^11.20.0",
+		"@carbon/themes": "^11.32.0",
 		"@carbon/type": "^11.25.0",
 		"@edge37/svelte-utils": "^0.0.9",
 		"@tensorflow/tfjs": "^4.17.0",

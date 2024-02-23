@@ -1,11 +1,12 @@
 <script lang="ts">
-	export let messages: _Message[] = [],
+	export let messages: SearchDocument<_Message>[] = [],
 		u = '',
 		text = '',
 		name = 'Partner',
 		name_label = 'Name',
+		// used to indicate when the last message has been succesfully sent
 		success: boolean,
-		chat_container: HTMLElement | null = null,
+		chat_container: HTMLElement | undefined = undefined,
 		restart_modal = false,
 		hide_parameters = false,
 		show_name_edit = false,
@@ -29,6 +30,7 @@
 	import { type Message as _Message } from '$lib/types/message';
 	import Input from './Input.svelte';
 	import { createEventDispatcher } from 'svelte';
+	import type { SearchDocument } from '$lib/types';
 	// import More from './More.svelte';
 
 	const dispatch = createEventDispatcher();
@@ -45,7 +47,7 @@
 	// 	messages = [...messages.filter((m) => m.id !== id)];
 	// };
 
-	const send = async ({ detail }: { detail: _Message }) => {
+	const send = async ({ detail }: { detail: { c: string; d: number } }) => {
 		if (!send_without_description && !description) {
 			description_error = true;
 			dispatch('send_attempt_without_description');

@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 	import Edit from 'carbon-icons-svelte/lib/Edit.svelte';
 	import ArrowRight from 'carbon-icons-svelte/lib/ArrowRight.svelte';
-	export let s: number | undefined, u: string, h: string | undefined, id: string, ch: string, same: boolean;
+	export let s: number | undefined, u: string, h: string | undefined, id: string, ch: string;
 </script>
 
 <div class="all">

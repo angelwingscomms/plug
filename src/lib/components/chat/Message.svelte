@@ -5,10 +5,12 @@
 	import { TrashCan } from 'carbon-icons-svelte';
 	import { createEventDispatcher } from 'svelte';
 	import type { Message } from '$lib/types/message';
-	export let message: Message, u: string,
+	import type { SearchDocument } from '$lib/types';
+	export let message: SearchDocument<Message>,
+		u: string,
 		// hide_system_messages = false,
 		show = true;
-		// show = message.role !== 'system';
+	// show = message.role !== 'system';
 	// ? true
 	// : message.role === 'system' &&
 	//   !hide_system_messages
@@ -21,8 +23,8 @@
 	const dispatch = createEventDispatcher();
 
 	const copy = () => {
-		if (message.c)
-			navigator.clipboard.writeText(message.c).then(() => {
+		if (message.value.c)
+			navigator.clipboard.writeText(message.value.c).then(() => {
 				notify({
 					title: 'message copied to clipboard',
 					timeout: 1300
@@ -42,7 +44,7 @@
 	/>
 </ContextMenu> -->
 
-{#if show && message.c != null}
+{#if show && message.value.c != null}
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div class="a">
 		<div
@@ -50,11 +52,11 @@
 			on:click={() => (menu_open = true)}
 			on:keydown={() => (menu_open = true)}
 			class="message"
-			class:user={message.f === u}
-			class:r={message.t !== u}
+			class:user={message.value.f === u}
+			class:r={message.value.t !== u}
 		>
 			<p class="content">
-				{message.c}
+				{message.value.c}
 			</p>
 		</div>
 		<Button iconDescription="Copy" icon={Copy} on:click={copy} size="small" kind="ghost" />

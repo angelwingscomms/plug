@@ -6,8 +6,10 @@
 	// import type { ChatCompletionContentPartImage, ChatCompletionUserMessageParam } from 'openai/resources';
 	import { notify } from '$lib/util/notify';
 	import { Close, Send, Menu, Upload } from 'carbon-icons-svelte';
+	import type { Message } from '$lib/types/message';
 
 	export let // run: (m: ChatCompletionUserMessageParam) => void,
+	
 		success: boolean,
 		more_open: boolean,
 		can_send: boolean,
@@ -18,8 +20,9 @@
 		message_input_ref: HTMLTextAreaElement,
 		text: string;
 
-	type Image = {url: string} & { id: number };
+	type Image = { url: string } & { id: number };
 	// type Image = ChatCompletionContentPartImage & { id: number };
+	const dispatch = createEventDispatcher<{ send: { c: string; d: number } }>();
 
 	let images: Image[] = [],
 		next_image_id = 0,
@@ -56,12 +59,12 @@
 		// 	notify({ kind: 'error', title: 'Error', subtitle: e.toString() ?? 'Please retry' });
 		// }
 		success = false;
-		dispatch('send', { role: 'user', content: [{ type: 'text', text }, 
-		// ...images.map((i) => ({ type: i.type, image_url: i.image_url }))
-	] });
+		dispatch('send', {
+			c: text,
+			d: Date.now()
+			// [...images.map((i) => ({ type: i.type, image_url: i.image_url }))]
+		});
 	};
-
-	const dispatch = createEventDispatcher();
 
 	const remove_image = (id: number) => {
 		images = [...images.filter((i) => i.id !== id)];
