@@ -21,7 +21,7 @@
 		</div>
 	{/if}
 
-	<Button href="{$page.data.pathname}/chat">Chat with {u}</Button>
+	<Button href="/user/{id}/chat">Chat with {u}</Button>
 
 	{#if ch}
 		<div class="section">
