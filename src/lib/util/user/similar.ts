@@ -29,9 +29,9 @@ export const similar = async (id: string) => {
 				query: `@u:-"${u_[0]}"`
 			})
 		).documents.map((d) => {
-			d.value.s = Number(
+			d.value.s = 
 				((1 - losses.cosineDistance(embedding, v_[0], 0).dataSync()[0]) * 100).toPrecision(2)
-			);
+			
 			return d;
 		})
 	};

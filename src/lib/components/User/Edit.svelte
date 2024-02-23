@@ -76,7 +76,6 @@
 	<TextInput labelText="username" bind:value={username} />
 	<TextInput labelText="email" bind:value={email} />
 	<TextArea labelText="Contact details" helperText="You can paste links to your socials here" bind:value={contact} rows={3} />
-	<Toggle bind:toggled={x} labelText="Hide profile description on profile page" />
 	<TextArea
 		rows={15}
 		labelText="Bio"
@@ -86,6 +85,7 @@
 		invalidText={text_invalid_text}
 		bind:value={text}
 	/>
+	<Toggle bind:toggled={x} labelText="Hide your bio on your profile page" />
 </div>
 <ButtonSet stacked>
 	<Button disabled={edit_loading} icon={edit_loading ? InlineLoading : Save} on:click={save}

@@ -47,5 +47,5 @@
 <style lang="sass">
 	@use "@carbon/colors"
 	.s
-		color: colors.$blue-30
+		color: colors.$blue-40
 </style>

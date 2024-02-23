@@ -11,20 +11,26 @@
 	};
 </script>
 
-<h1>search for users with detailed descriptions</h1>
-<p class="text">
-	you can search for users using descriptions and contact details
-</p>
-
-<Search
-	bind:searched
-	bind:documents
-	bind:text
-	placeholder="user description..."
-	route="user"
-/>
+<div class="s">
+    <h1>search for users with detailed descriptions</h1>
+    <p class="text">
+        you can search for users using descriptions and contact details
+    </p>
+    
+    <Search
+        bind:searched
+        bind:documents
+        bind:text
+        placeholder="user description..."
+        route="user"
+    />
+</div>
 
 <style lang="sass">
+    .s
+        display: flex
+        flex-direction: column
+        row-gap: 1rem
     h1
         font-weight: 300
         margin-bottom: 3rem

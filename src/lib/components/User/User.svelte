@@ -1,27 +1,22 @@
 <script lang="ts">
 	import { Button, ButtonSet } from 'carbon-components-svelte';
 	import { page } from '$app/stores';
-	export let s: number | undefined, u: string, h: string | undefined, id: string, ch: string;
+	import Edit from 'carbon-icons-svelte/lib/Edit.svelte';
+	import ArrowRight from 'carbon-icons-svelte/lib/ArrowRight.svelte';
+	export let s: number | undefined, u: string, h: string | undefined, id: string, ch: string, same: boolean;
 </script>
 
 <div class="all">
 	<ButtonSet stacked>
-		<Button kind="ghost" size="small" href="{$page.url.pathname}/similar"
-			>Similar users to {u}</Button
-		>
 		{#if $page.data.user === id}
-			<Button kind="ghost" size="small" href="/edit">Edit your profile</Button>
+			<Button icon={Edit} href="/edit">edit your profile</Button>
 		{/if}
 	</ButtonSet>
 
-	<div>
-		<p class="top">Username:</p>
-		<span class="shift">{u}</span>
-	</div>
-	{#if s}
+		<h3 class="shift">{u}</h3>
+	{#if s && $page.data.user !== id}
 		<div class="section">
-			<p class="top">Similarity to your profile:</p>
-			<p class="shift">{s}%</p>
+			<p class="top">This profile is {s}% similar to yours</p>
 		</div>
 	{/if}
 
@@ -38,6 +33,12 @@
 			<p>{@html h}</p>
 		</div>
 	{/if}
+
+	<ButtonSet stacked>
+		<Button icon={ArrowRight} href="{$page.url.pathname}/similar"
+			>users similar to {$page.data.user === id ? 'you' : u}</Button
+		>
+	</ButtonSet>
 </div>
 
 <style lang="sass">

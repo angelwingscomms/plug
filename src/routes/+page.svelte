@@ -34,10 +34,10 @@
 			{#if $page.data.user}
 				<Button href="/user/{$page.data.user}/similar" icon={ArrowRight}
 					>See similar profiles</Button
-				>{:else}
+				><Button href="/edit" icon={Edit}>Edit your profile</Button>{:else}
 				<Button icon={ArrowRight} href="/auth?n=1">create a profile</Button>
 			{/if}
-			<Button kind="tertiary" icon={Search} href='/user/search'>user search</Button>
+			<Button kind="tertiary" icon={Search} href="/user/search">user search</Button>
 		</div>
 	</Column>
 </Row>

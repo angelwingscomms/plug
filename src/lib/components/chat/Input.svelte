@@ -3,7 +3,7 @@
 	import { createEventDispatcher } from 'svelte';
 	// import { send_on_enter } from './store';
 	import FileUpload from '../FileUpload.svelte';
-	import type { ChatCompletionContentPartImage, ChatCompletionUserMessageParam } from 'openai/resources';
+	// import type { ChatCompletionContentPartImage, ChatCompletionUserMessageParam } from 'openai/resources';
 	import { notify } from '$lib/util/notify';
 	import { Close, Send, Menu, Upload } from 'carbon-icons-svelte';
 
@@ -18,7 +18,8 @@
 		message_input_ref: HTMLTextAreaElement,
 		text: string;
 
-	type Image = ChatCompletionContentPartImage & { id: number };
+	type Image = {url: string} & { id: number };
+	// type Image = ChatCompletionContentPartImage & { id: number };
 
 	let images: Image[] = [],
 		next_image_id = 0,
@@ -55,7 +56,9 @@
 		// 	notify({ kind: 'error', title: 'Error', subtitle: e.toString() ?? 'Please retry' });
 		// }
 		success = false;
-		dispatch('send', { role: 'user', content: [{ type: 'text', text }, ...images.map((i) => ({ type: i.type, image_url: i.image_url }))] });
+		dispatch('send', { role: 'user', content: [{ type: 'text', text }, 
+		// ...images.map((i) => ({ type: i.type, image_url: i.image_url }))
+	] });
 	};
 
 	const dispatch = createEventDispatcher();
@@ -65,33 +68,33 @@
 	};
 
 	const update_images = async ({ detail }: { detail: File[] }) => {
-		files_loading = true;
-		for (let i = 0; i < detail.length; i++) {
-			try {
-				const base64 = await file_to_base64(detail[i]);
-				images = [
-					...images,
-					{
-						id: next_image_id,
-						type: 'image_url',
-						image_url: {
-							url: base64 as string,
-							detail: 'high'
-						}
-					}
-				];
-				next_image_id++;
-			} catch (err) {
-				notify({
-					kind: 'error',
-					title: 'Error occurred while trying to read uploaded file'
-				});
-			}
-		}
-		files_loading = false;
+		// files_loading = true;
+		// for (let i = 0; i < detail.length; i++) {
+		// 	try {
+		// 		const base64 = await file_to_base64(detail[i]);
+		// 		images = [
+		// 			...images,
+		// 			{
+		// 				id: next_image_id,
+		// 				type: 'image_url',
+		// 				image_url: {
+		// 					url: base64 as string,
+		// 					detail: 'high'
+		// 				}
+		// 			}
+		// 		];
+		// 		next_image_id++;
+		// 	} catch (err) {
+		// 		notify({
+		// 			kind: 'error',
+		// 			title: 'Error occurred while trying to read uploaded file'
+		// 		});
+		// 	}
+		// }
+		// files_loading = false;
 	};
 
-	const send_message
+	// const send_message
 
 	$: if (success) images = [];
 </script>
@@ -101,12 +104,16 @@
 <div class="input">
 	{#if images.length}
 		<div class="images">
-			{#each images as image}
+			<!-- {#each images as image}
 				<div class="image">
 					<img class="img" src={image.image_url.url} alt="to be sent as part of the message" />
-					<Button on:click={() => remove_image(image.id)} icon={Close} iconDescription="Delete this image" />
+					<Button
+						on:click={() => remove_image(image.id)}
+						icon={Close}
+						iconDescription="Delete this image"
+					/>
 				</div>
-			{/each}
+			{/each} -->
 		</div>
 	{/if}
 	<div class="text-and-buttons">
@@ -123,7 +130,13 @@
 			bind:ref={message_input_ref}
 			bind:value={text}
 		/>
-		<Button disabled={!can_send} size="field" on:click={send} iconDescription={'Send'} icon={loading ? InlineLoading : Send} />
+		<Button
+			disabled={!can_send}
+			size="field"
+			on:click={send}
+			iconDescription={'Send'}
+			icon={loading ? InlineLoading : Send}
+		/>
 		<FileUpload
 			label={String(images.length)}
 			on:change={update_images}
@@ -150,12 +163,12 @@
 		column-gap: layout.$spacing-06
 		width: 100%
 		overflow: scroll
-	.image
-		display: flex
-		flex-direction: column
-		align-items: center
-	.img
-		height: 123px
+	// .image
+	// 	display: flex
+	// 	flex-direction: column
+	// 	align-items: center
+	// .img
+	// 	height: 123px
 	.input
 		display: flex
 		flex-direction: column

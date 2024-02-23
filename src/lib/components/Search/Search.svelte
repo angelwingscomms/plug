@@ -49,7 +49,7 @@
 	};
 </script>
 
-<Modal hasForm bind:open primaryButtonIcon={Search} primaryButtonText="search" on:submit={() => get(page)} modalHeading="search">
+<Modal hasForm bind:open primaryButtonIcon={Search} primaryButtonText="search" on:submit={() => {get(page); open = false}} modalHeading="search">
 	<TextArea rows={3} {placeholder} bind:ref={search_input_ref} bind:value={text} />
 </Modal>
 

@@ -1,5 +1,6 @@
 <script lang="ts">
-	export let messages: Message[] = [],
+	export let messages: _Message[] = [],
+		u = '',
 		text = '',
 		name = 'Partner',
 		name_label = 'Name',
@@ -25,6 +26,7 @@
 	import { Button, InlineLoading, TextArea, Modal, Row, Column } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 	import Message from './Message.svelte';
+	import { type Message as _Message } from '$lib/types/message';
 	import Input from './Input.svelte';
 	import { createEventDispatcher } from 'svelte';
 	// import More from './More.svelte';
@@ -39,11 +41,11 @@
 
 	let description_error = false;
 
-	const delete_message = (id: number) => {
-		messages = [...messages.filter((m) => m.id !== id)];
-	};
+	// const delete_message = (id: number) => {
+	// 	messages = [...messages.filter((m) => m.id !== id)];
+	// };
 
-	const send = async ({ detail }: { detail: ChatCompletionUserMessageParam }) => {
+	const send = async ({ detail }: { detail: _Message }) => {
 		if (!send_without_description && !description) {
 			description_error = true;
 			dispatch('send_attempt_without_description');
@@ -77,7 +79,7 @@
 	<!-- </ButtonSet> -->
 </Modal>
 
-<More
+<!-- <More
 	bind:open={more_open}
 	bind:restart_modal
 	{name_label}
@@ -91,18 +93,18 @@
 	{disable_description_edit}
 	bind:description
 	bind:parameters
-/>
+/> -->
 
 <Row>
 	<Column>
 		<div class="all">
 			<div bind:this={chat_container} class="messages">
 				{#each messages as message}
-					<Message on:delete_message={({ detail }) => delete_message(detail)} {message} />
+					<Message {u} {message} />
+					<!-- <Message {u} on:delete_message={({ detail }) => delete_message(detail)} {message} /> -->
 				{/each}
 			</div>
 			<Input
-
 				on:send={send}
 				bind:send_on_enter
 				bind:success
