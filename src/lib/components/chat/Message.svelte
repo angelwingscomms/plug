@@ -57,7 +57,9 @@
 		class:r={message.value.t !== u}
 	>
 		<p class="content">
-			{@html to_html(message.value.c)}
+			{#await to_html(message.value.c) then v}
+				{@html v}
+			{/await}
 		</p>
 	</div>
 	<Button iconDescription="Copy" icon={Copy} on:click={copy} size="small" kind="ghost" />
