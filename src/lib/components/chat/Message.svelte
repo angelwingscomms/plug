@@ -56,7 +56,7 @@
 		class:r={message.value.t !== u}
 	>
 		<p class="content">
-			{message.value.c} {message.id}
+			{message.value.c}
 		</p>
 	</div>
 	<Button iconDescription="Copy" icon={Copy} on:click={copy} size="small" kind="ghost" />
