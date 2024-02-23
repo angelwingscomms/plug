@@ -6,7 +6,6 @@
 	import { createEventDispatcher } from 'svelte';
 	import type { Message } from '$lib/types/message';
 	import type { SearchDocument } from '$lib/types';
-	import { to_html } from '$lib/util/markdown/parse';
 	export let message: SearchDocument<Message>,
 		u: string,
 		// hide_system_messages = false,
@@ -57,9 +56,7 @@
 		class:r={message.value.t !== u}
 	>
 		<p class="content">
-			{#await to_html(message.value.c) then v}
-				{@html v}
-			{/await}
+			{message.value.c}
 		</p>
 	</div>
 	<Button iconDescription="Copy" icon={Copy} on:click={copy} size="small" kind="ghost" />
