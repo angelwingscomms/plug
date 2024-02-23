@@ -6,10 +6,7 @@ import { client } from '$lib/util/redis';
 import type { V } from '$lib/types';
 
 export const similar = async (id: string) => {
-	const {
-		'$.v': v_,
-		'$.u': u_,
-	} = (await client.json.get(id, {
+	const { '$.v': v_, '$.u': u_ } = (await client.json.get(id, {
 		path: ['$.v', '$.u']
 	})) as {
 		'$.v': number[][];
@@ -20,18 +17,18 @@ export const similar = async (id: string) => {
 		u: u_[0],
 		id: id,
 		d: (
-			await search<{ u: string; s: number }>({
+			await search<{ u: string; s: number; v: V }>({
 				//TODO - actually add similarity
 				index: user_index,
 				page: 1,
 				B: float32_buffer(v_[0]),
-				options: { RETURN: ['u'] },
+				options: { RETURN: ['u', 'v'] },
 				query: `@u:-"${u_[0]}"`
 			})
 		).documents.map((d) => {
-			d.value.s = 
-				((1 - losses.cosineDistance(embedding, v_[0], 0).dataSync()[0]) * 100).toPrecision(2)
-			
+			d.value.s = Number(
+				((1 - losses.cosineDistance(embedding, d.value.v, 0).dataSync()[0]) * 100).toPrecision(2)
+			);
 			return d;
 		})
 	};
