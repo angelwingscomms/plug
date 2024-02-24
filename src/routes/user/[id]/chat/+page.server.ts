@@ -15,5 +15,13 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 			SORTBY: { BY: 'd', DIRECTION: 'DESC' }
 		}
 	});
-	return { id: params.id, m: res.documents.sort((a, b) => b.value.d - a.value.d) };
+	return {
+		id: params.id,
+		m: res.documents
+			.sort((a, b) => b.value.d - a.value.d)
+			.map(async (m) => {
+				m.value.uf = ((await client.json.get(m.value.f, { path: 'u' })) as string) || '';
+				return m;
+			})
+	};
 };
