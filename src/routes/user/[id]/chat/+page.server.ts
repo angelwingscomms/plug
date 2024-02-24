@@ -9,11 +9,11 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 	if (!(await client.exists(params.id))) throw error(404, 'User not found');
 	const res = await search<Message>({
 		index: message_index,
-		query: `@f:"${locals.user}" @t:"${params.id}"`,
+		query: `@f:"${locals.user}"|"${params.id}" @t:"${params.id}"|"${locals.user}"`,
 		options: {
-			RETURN: ['f', 't', 'd', 'c'],
+			RETURN: ['f', 't', 'd', 'h'],
 			SORTBY: { BY: 'd', DIRECTION: 'DESC' }
 		}
 	});
-	return { id: params.id, m: res.documents.sort((a, b) => a.value.d - b.value.d) };
+	return { id: params.id, m: res.documents.sort((a, b) => b.value.d - a.value.d) };
 };

@@ -1,6 +1,6 @@
 <script lang="ts">
 	export let messages: SearchDocument<_Message>[] = [],
-		u = '',
+		u: string,
 		text = '',
 		name = 'Partner',
 		name_label = 'Name',
@@ -100,12 +100,6 @@
 <Row>
 	<Column>
 		<div class="all">
-			<div bind:this={chat_container} class="messages">
-				{#each messages as message}
-					<Message {u} {message} />
-					<!-- <Message {u} on:delete_message={({ detail }) => delete_message(detail)} {message} /> -->
-				{/each}
-			</div>
 			<Input
 				on:send={send}
 				bind:send_on_enter
@@ -118,6 +112,13 @@
 				bind:text
 				bind:message_input_ref
 			/>
+			<div bind:this={chat_container} class="messages">
+				{#each messages as message}
+					<Message {u} {message} />
+					<!-- <Message {u} on:delete_message={({ detail }) => delete_message(detail)} {message} /> -->
+				{/each}
+			</div>
+			
 		</div>
 	</Column>
 </Row>
@@ -133,7 +134,6 @@
 		display: flex
 		flex-grow: 2
 		flex-direction: column
-		height: 360px
 		width: 100%
 		overflow-y: scroll
 		row-gap: 1rem

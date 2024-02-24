@@ -52,11 +52,11 @@
 		on:click={() => (menu_open = true)}
 		on:keydown={() => (menu_open = true)}
 		class="message"
-		class:user={message.value.f === u}
+		class:user={message.value.f === u}	
 		class:r={message.value.t !== u}
 	>
 		<p class="content">
-			{message.value.c}
+			{@html message.value.h}
 		</p>
 	</div>
 	<Button iconDescription="Copy" icon={Copy} on:click={copy} size="small" kind="ghost" />
@@ -92,5 +92,6 @@
 		background-color: colors.$blue-60
 
 	.content
+		color: white !important
 		@include type.type-style('body-01')
 </style>

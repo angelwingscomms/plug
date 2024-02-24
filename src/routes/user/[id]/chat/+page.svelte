@@ -6,6 +6,7 @@
 	import ably from 'ably';
 	import { message_index } from '$lib/constants';
 	import { onMount } from 'svelte';
+	import { to_html } from '$lib/util/markdown/parse';
 
 	export let data: PageData;
 
@@ -25,15 +26,13 @@
 
 		channel.subscribe(message_name(data.id, data.user), (m) => {
 			console.debug('sub got', m);
-			messages = [...messages, m.data];
-			console.debug('m', messages)
+			messages = [m.data, ...messages];
 		});
 	});
 
 	const send = async ({ detail }: { detail: { c: string; d: number } }) => {
-		console.debug('send s.df', detail);
-		await axios.post(`/user/${data.id}/chat`, detail);
+		await axios.post(`/user/${data.id}/chat`, { ...detail, h: await to_html(detail.c) });
 	};
 </script>
 
-<Interface bind:messages bind:success send_on_enter={true} bind:message_input_ref on:send={send} />
+<Interface u={data.user} bind:messages bind:success send_on_enter={true} bind:message_input_ref on:send={send} />
