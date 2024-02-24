@@ -28,6 +28,7 @@ todo
     add message flow
         add to indexeddb
     snapshot of chat text
+    messages pagination
     option to include email in embedding
     better styling on percentage
     more text

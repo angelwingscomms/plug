@@ -7,10 +7,12 @@
 	import { to_html } from '$lib/util/markdown/parse';
 	import { page } from '$app/stores';
 
-	export let route: string, name: string, text = "";
+	export let route: string,
+		name: string,
+		text = '',
+		messages = $page.data.m;
 
-	let messages = $page.data.m,
-		message_input_ref: HTMLTextAreaElement,
+	let message_input_ref: HTMLTextAreaElement,
 		success = true;
 
 	onMount(async () => {
@@ -29,7 +31,7 @@
 
 	const send = async ({ detail }: { detail: { c: string; d: number } }) => {
 		await axios.post(route, { ...detail, h: await to_html(detail.c) });
-		text = ""
+		text = '';
 	};
 </script>
 

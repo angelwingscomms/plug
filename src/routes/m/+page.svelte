@@ -1,9 +1,14 @@
 <script lang="ts">
 	import Chat from '$lib/components/chat/Chat.svelte';
-	import type { PageData } from './$types';
+	import type { PageData, Snapshot } from './$types';
 	export let data: PageData;
 
-	let name = data.user;
+	let name = data.user, text = "string";
+
+	export const snapshot: Snapshot = {
+		capture: () => ({  text }),
+		restore: (v) => ({  text } = v)
+	};
 </script>
 
-<Chat route="/m" {name} />
+<Chat bind:text route="/m" {name} />
