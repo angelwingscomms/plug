@@ -46,7 +46,7 @@
 
 <!-- {#if show && message.value.c != null} -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div class="a">
+<a href="/m/{message.id}" class="a">
 	<div
 		bind:this={target}
 		on:click={() => (menu_open = true)}
@@ -62,7 +62,7 @@
 	</div>
 	<Button iconDescription="Copy" icon={Copy} on:click={copy} size="small" kind="ghost" />
 	<!-- <Button iconDescription="Copy" icon={TrashCan} on:click={() => dispatch('delete_message', message.id)} size="small" kind="ghost" /> -->
-</div>
+</a>
 
 <!-- {/if} -->
 

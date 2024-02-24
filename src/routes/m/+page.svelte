@@ -3,11 +3,12 @@
 	import type { PageData, Snapshot } from './$types';
 	export let data: PageData;
 
-	let name = data.user, text = "string";
+	let name = "all",
+		text = '';
 
 	export const snapshot: Snapshot = {
-		capture: () => ({  text }),
-		restore: (v) => ({  text } = v)
+		capture: () => ({ text }),
+		restore: (v) => ({ text } = v)
 	};
 </script>
 

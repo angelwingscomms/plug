@@ -11,7 +11,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 		const message = {
 			...m,
 			f: locals.user,
-            t: ""
+            t: "all"
 		};
 		const id = `${message_id_prefix}${await client.incr('last_free_message_id')}`;
 		await client.json.set(id, '$', message);
