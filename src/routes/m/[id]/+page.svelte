@@ -5,7 +5,7 @@
 	import type { PageData, Snapshot } from './$types';
 	export let data: PageData;
 
-	let name = data.id,
+	let name = data.id || "",
 		text = '';
 
 	export const snapshot: Snapshot = {
@@ -13,5 +13,7 @@
 		restore: (v) => ({ text } = v)
 	};
 </script>
+
+<h4>replies to message by {data.u}</h4>
 
 <Chat bind:text route="/m/{data.id}" {name} />

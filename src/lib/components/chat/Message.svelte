@@ -56,7 +56,7 @@
 		class:user={message.value.f === u}
 		class:r={message.value.t !== u}
 	>
-		<p class="username">{message.value.uf}</p>
+		<!-- <p class="username">{message.value.uf}</p> -->
 		<p class="content">
 			{@html message.value.h}
 		</p>
