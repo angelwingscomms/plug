@@ -75,6 +75,8 @@
 		display: flex
 		flex-direction: row
 		column-gap: 1rem
+		color: white
+		text-decoration: none
 		// max-width: 100%
 
 	.username

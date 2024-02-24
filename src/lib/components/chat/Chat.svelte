@@ -6,6 +6,8 @@
 	import { onMount } from 'svelte';
 	import { to_html } from '$lib/util/markdown/parse';
 	import { page } from '$app/stores';
+	import { Modal } from 'carbon-components-svelte';
+	import Search from '../Search/Search.svelte';
 
 	export let route: string,
 		name: string,

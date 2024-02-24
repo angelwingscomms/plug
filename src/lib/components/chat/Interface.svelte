@@ -13,6 +13,7 @@
 		disable_description_edit = false,
 		description = '',
 		more_open = false,
+		search_modal = false,
 		description_label = 'Description',
 		description_error_text = 'You may not send messages without setting description',
 		send_without_content = false,
@@ -61,6 +62,10 @@
 		// run(m)
 	};
 </script>
+
+<!-- <Modal bind:open={search_modal} passiveModal hasForm hasScrollingContent>
+	<Search f="c" {route} />
+</Modal> -->
 
 <Modal modalHeading="Download then restart?" passiveModal bind:open={restart_modal}>
 	<p>Download chat first before restarting?</p>

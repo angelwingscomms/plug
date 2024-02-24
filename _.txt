@@ -24,6 +24,9 @@ _learn
     goto previous page in component
     javascript disabled
 todo
+    message search
+    message details
+    message username
     notifications
     add message flow
         add to indexeddb

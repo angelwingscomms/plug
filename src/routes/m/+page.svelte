@@ -12,4 +12,4 @@
 	};
 </script>
 
-<Chat bind:text route="/m" {name} />
+<Chat f="f" bind:text route="/m" {name} />
