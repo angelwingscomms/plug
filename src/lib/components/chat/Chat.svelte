@@ -9,6 +9,7 @@
 	import { v4 } from 'uuid';
 
 	export let route: string,
+		loading = false,
 		name: string,
 		text = '',
 		messages = $page.data.m,
@@ -30,14 +31,18 @@
 	});
 
 	const send = async ({ detail }: { detail: { c: string; d: number } }) => {
-		message_input_ref.disabled = true
+		if (loading) return;
+		loading = true;
+		message_input_ref.disabled = true;
 		await axios.post(route, { ...detail, h: await to_html(detail.c), _id: v4() });
 		text = '';
-		message_input_ref.disabled = false
+		message_input_ref.disabled = false;
+		loading = false;
 	};
 </script>
 
 <Interface
+	{loading}
 	bind:text
 	u={$page.data.user}
 	bind:messages

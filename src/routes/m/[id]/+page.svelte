@@ -2,6 +2,7 @@
 	import Chat from '$lib/components/chat/Chat.svelte';
 	import type { SearchDocument } from '$lib/types';
 	import type { Message } from '$lib/types/message';
+	import { truncate } from 'carbon-components-svelte';
 	import type { PageData, Snapshot } from './$types';
 	export let data: PageData;
 
@@ -14,6 +15,14 @@
 	};
 </script>
 
-<h4>replies to message by {data.u}</h4>
+<p class="f">replies to </p>
+<p use:truncate>{data.c}</p>
 
 <Chat bind:text route="/m/{data.id}" {name} />
+
+<style lang="sass">
+	@use "@carbon/type"
+
+	.f
+		@include type.type-style('label-01')
+</style>
