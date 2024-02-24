@@ -1,5 +1,6 @@
 import { message_index } from '$lib/constants';
 import { type Message } from '$lib/types/message';
+import { client } from '$lib/util/redis';
 import { search } from '$lib/util/redis/search';
 import type { PageServerLoad } from './$types';
 
@@ -12,5 +13,16 @@ export const load: PageServerLoad = async () => {
 			SORTBY: { BY: 'd', DIRECTION: 'DESC' }
 		}
 	});
-	return { m: res.documents.sort((a, b) => b.value.d - a.value.d) };
+	const _m = await Promise.all(
+		res.documents
+			.sort((a, b) => b.value.d - a.value.d)
+			.map(async (m) => {
+				m.value.uf = ((await client.json.get(m.value.f, { path: 'u' })) as string) || '';
+				return m;
+			})
+	)
+	console.debug('_m', _m)
+	return {
+		m: _m
+	};
 };

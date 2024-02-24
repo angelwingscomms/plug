@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Chat from '$lib/components/chat/Chat.svelte';
 	import type { PageData, Snapshot } from './$types';
-	export let data: PageData;
 
 	let name = "all",
 		text = '';
@@ -12,4 +11,4 @@
 	};
 </script>
 
-<Chat f="f" bind:text route="/m" {name} />
+<Chat bind:text route="/m" {name} />

@@ -17,8 +17,12 @@ export const POST: RequestHandler = async ({ request, params, locals }) => {
 		};
 		const id = `${message_id_prefix}${await client.incr('last_free_message_id')}`;
 		await client.json.set(id, '$', message);
-		message_channel.publish(params.id, { id, value: { ...message } });
-		message_channel.publish(message_name(params.id, locals.user), { id, value: { ...message } });
+		const event = {
+			id,
+			value: { ...message, uf: (await client.json.get(locals.user, { path: 'u' })) as string }
+		};
+		message_channel.publish(params.id, event);
+		message_channel.publish(message_name(params.id, locals.user), event);
 		return new Response();
 	} catch (e) {
 		throw handle_server_error(`/m/${params.id} error: ${e}`, request);

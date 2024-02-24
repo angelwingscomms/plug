@@ -4,9 +4,9 @@
 	// import { send_on_enter } from './store';
 	import FileUpload from '../FileUpload.svelte';
 	// import type { ChatCompletionContentPartImage, ChatCompletionUserMessageParam } from 'openai/resources';
-	import { notify } from '$lib/util/notify';
+	// import { notify } from '$lib/util/notify';
 	import { Close, Send, Menu, Upload } from 'carbon-icons-svelte';
-	import type { Message } from '$lib/types/message';
+	// import type { Message } from '$lib/types/message';
 
 	export let // run: (m: ChatCompletionUserMessageParam) => void,
 	

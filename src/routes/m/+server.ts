@@ -11,12 +11,16 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 		const message = {
 			...m,
 			f: locals.user,
-            t: "all"
+			t: 'all'
 		};
 		const id = `${message_id_prefix}${await client.incr('last_free_message_id')}`;
 		await client.json.set(id, '$', message);
-		message_channel.publish(locals.user, { id, value: { ...message } });
-		message_channel.publish("all", { id, value: { ...message } });
+		const event = {
+			id,
+			value: { ...message, uf: (await client.json.get(m.value.f, { path: 'u' })) as string }
+		};
+		message_channel.publish(locals.user, event);
+		message_channel.publish('all', event);
 		// message_channel.publish(message_name(locals.user, locals.user), { id, value: { ...message } });
 		return new Response();
 	} catch (e) {

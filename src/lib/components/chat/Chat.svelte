@@ -6,15 +6,13 @@
 	import { onMount } from 'svelte';
 	import { to_html } from '$lib/util/markdown/parse';
 	import { page } from '$app/stores';
-	import { Modal } from 'carbon-components-svelte';
-	import Search from '../Search/Search.svelte';
+	import { v4 } from 'uuid';
 
 	export let route: string,
 		name: string,
 		text = '',
-		messages = $page.data.m;
-
-	let message_input_ref: HTMLTextAreaElement,
+		messages = $page.data.m,
+		message_input_ref: HTMLTextAreaElement,
 		success = true;
 
 	onMount(async () => {
@@ -32,8 +30,10 @@
 	});
 
 	const send = async ({ detail }: { detail: { c: string; d: number } }) => {
-		await axios.post(route, { ...detail, h: await to_html(detail.c) });
+		message_input_ref.disabled = true
+		await axios.post(route, { ...detail, h: await to_html(detail.c), _id: v4() });
 		text = '';
+		message_input_ref.disabled = false
 	};
 </script>
 

@@ -7,9 +7,10 @@
 	import type { Message } from '$lib/types/message';
 	import type { SearchDocument } from '$lib/types';
 	export let message: SearchDocument<Message>,
-		u: string,
+		u: string
 		// hide_system_messages = false,
-		show = true;
+		// show = true
+		;
 	// show = message.role !== 'system';
 	// ? true
 	// : message.role === 'system' &&
@@ -55,7 +56,7 @@
 		class:user={message.value.f === u}
 		class:r={message.value.t !== u}
 	>
-		<p class="username">{message.value.f}</p>
+		<p class="username">{message.value.uf}</p>
 		<p class="content">
 			{@html message.value.h}
 		</p>
