@@ -36,7 +36,7 @@
 				return;
 			}
 			await invalidateAll();
-			goto(n ? '/edit' : '/');
+			goto(data.t ? data.t : n ? '/edit' : '/');
 		} catch {
 			notify({ kind: 'error', title: 'An error occured' });
 		}
