@@ -52,9 +52,10 @@
 		on:click={() => (menu_open = true)}
 		on:keydown={() => (menu_open = true)}
 		class="message"
-		class:user={message.value.f === u}	
+		class:user={message.value.f === u}
 		class:r={message.value.t !== u}
 	>
+		<p class="username">{message.value.f}</p>
 		<p class="content">
 			{@html message.value.h}
 		</p>
@@ -69,13 +70,15 @@
 	@use '@carbon/type'
 	@use '@carbon/colors'
 	@use '@carbon/themes'
-	@use '@carbon/layout'
 
 	.a
 		display: flex
 		flex-direction: row
-		column-gap: layout.$spacing-05
+		column-gap: 1rem
 		// max-width: 100%
+
+	.username
+		@include type.type-style('label-01')
 
 	.message
 		white-space: pre-wrap

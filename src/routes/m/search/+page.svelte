@@ -12,17 +12,16 @@
 </script>
 
 <div class="s">
-	<h1>search for users with detailed descriptions</h1>
-	<p class="text">you can search for users using descriptions and contact details</p>
-
-	<Search
-		f="u"
-		bind:searched
-		bind:documents
-		bind:text
-		placeholder="user description..."
-		route="user"
-	/>
+    <h1>search for messages</h1>
+    
+    <Search
+        f="h"
+        bind:searched
+        bind:documents
+        bind:text
+        placeholder="user description..."
+        route="m"
+    />
 </div>
 
 <style lang="sass">

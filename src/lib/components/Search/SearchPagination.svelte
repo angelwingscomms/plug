@@ -10,7 +10,8 @@
 
 	export let route: string,
 		page: number = 1,
-		documents: SearchDocument<{ s: number; u: string }>[],
+		f: string,
+		documents: SearchDocument<{ s: number; } & any>[],
 		total = documents.length;
 
 	const headers = [
@@ -34,7 +35,7 @@
 		{#each documents as document}
 			<Button kind="ghost" href="/{route}/{document.id}"
 				><div class="s">{document.value.s}% match</div>
-				{document.value.u ?? ''}</Button
+				{@html document.value[f] ?? ''}</Button
 			>
 		{/each}
 	</ButtonSet>

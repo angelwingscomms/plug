@@ -24,7 +24,14 @@ _learn
     goto previous page in component
     javascript disabled
 todo
-option to include email in embedding
+    goto t after login if t
+    add message flow
+        add to indexeddb
+    notifications
+    snapshot of chat text
+    update protected routes
+        add /user/[id]/chat to protected routes
+    option to include email in embedding
     better styling on percentage
     more text
         We use AI to find the closest matching profiles to your search query

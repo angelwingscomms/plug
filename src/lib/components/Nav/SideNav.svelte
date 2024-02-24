@@ -15,6 +15,7 @@
 			<SideNavLink text="users similar to you" href="/user/{$page.data.user}/similar" />
 		{/if}
 		
+		 <SideNavLink text="messages" href="/m/search" />
 		 <SideNavLink text="feedback" href="/feedback" />
 		<A2HsLink />
 	</SideNavItems>

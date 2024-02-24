@@ -11,6 +11,7 @@
 	export let searched = false,
 		text = '',
 		route: string,
+		f: string,
 		open = false,
 		old_search: null | string = null,
 		placeholder: string,
@@ -67,6 +68,7 @@
 {#if searched}
 	{#if documents.length}
 		<SearchPagination
+		{f}
 			{route}
 			{total}
 			on:update={({ detail }) => {

@@ -31,6 +31,7 @@
 	import Input from './Input.svelte';
 	import { createEventDispatcher } from 'svelte';
 	import type { SearchDocument } from '$lib/types';
+	import { page } from '$app/stores';
 	// import More from './More.svelte';
 
 	const dispatch = createEventDispatcher();
@@ -100,25 +101,26 @@
 <Row>
 	<Column>
 		<div class="all">
-			<Input
-				on:send={send}
-				bind:send_on_enter
-				bind:success
-				bind:can_send
-				bind:loading
-				bind:content_error
-				bind:content_error_text
-				bind:more_open
-				bind:text
-				bind:message_input_ref
-			/>
+			{#if $page.data.user}
+				<Input
+					on:send={send}
+					bind:send_on_enter
+					bind:success
+					bind:can_send
+					bind:loading
+					bind:content_error
+					bind:content_error_text
+					bind:more_open
+					bind:text
+					bind:message_input_ref
+				/>
+			{/if}
 			<div bind:this={chat_container} class="messages">
 				{#each messages as message}
 					<Message {u} {message} />
 					<!-- <Message {u} on:delete_message={({ detail }) => delete_message(detail)} {message} /> -->
 				{/each}
 			</div>
-			
 		</div>
 	</Column>
 </Row>

@@ -18,7 +18,7 @@ import { protected_routes } from '$lib/constants';
 import { check } from '$lib/util/user/auth/check';
 
 const authorization: Handle = async ({ event, resolve }) => {
-	if (protected_routes.includes(event.url.pathname)) {
+	if (protected_routes.some(r => r.test(event.url.pathname))) {
 		if (!event.locals.user) {
 			throw redirect(303, `/auth`);
 			// throw redirect(303, `/auth?t=${event.url.pathname}`);

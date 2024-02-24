@@ -58,7 +58,7 @@
 		// 	console.error('Request error', e);
 		// 	notify({ kind: 'error', title: 'Error', subtitle: e.toString() ?? 'Please retry' });
 		// }
-		success = false;
+		// success = false;
 		dispatch('send', {
 			c: text,
 			d: Date.now()
