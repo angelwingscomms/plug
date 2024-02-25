@@ -1,9 +1,50 @@
-import { message_id_prefix } from '$lib/constants';
+import * as tf from '@tensorflow/tfjs';
+import { message_id_prefix, message_index } from '$lib/constants';
+import type { V } from '$lib/types';
+import type { Message } from '$lib/types/message';
 import { message_channel } from '$lib/util/ably';
+import { embed, embed_to_buffer } from '$lib/util/embedding/embed';
 // import { message_name } from '$lib/util/chat/message_name';
 import { handle_server_error } from '$lib/util/handle_server_error';
 import { client } from '$lib/util/redis';
+import { search } from '$lib/util/redis/search';
 import type { RequestHandler } from './$types';
+import { json } from '@sveltejs/kit';
+
+export const GET: RequestHandler = async ({ url, request }) => {
+	try {
+		let page = Number(url.searchParams.get('p'));
+		if (isNaN(page)) page = 0;
+		const q = url.searchParams.get('q') || '';
+		const t = url.searchParams.get('t') || '';
+		const query_embedding = await embed(q);
+		const B = await embed_to_buffer(q);
+		const res = await search<Message & { s: string; v?: V }>({
+			index: message_index,
+			...(t && { query: `@t:"t"` }),
+			B,
+			page,
+			options: {
+				RETURN: ['f', 'd', 'h', 'v']
+			}
+		});
+		res.documents = await Promise.all(
+			res.documents.map(async (m) => {
+				m.value.s = (
+					(1 - tf.losses.cosineDistance(query_embedding, m.value.v || [], 0).dataSync()[0]) * //hacked v to be or empty array to satisfy type
+					100
+				).toPrecision(2);
+				m.value.uf = ((await client.json.get(m.value.f, { path: 'u' })) as string) || '';
+				m.value.cl = ((await client.json.get(m.value.f, { path: 'cl' })) as string) || '';
+				delete m.value.v;
+				return m;
+			})
+		);
+		return json(res);
+	} catch (e) {
+		throw handle_server_error(`${e}`, request);
+	}
+};
 
 export const POST: RequestHandler = async ({ request, locals }) => {
 	try {
@@ -11,7 +52,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 		const message = {
 			...m,
 			f: locals.user,
-			t: 'all'
+			t: 't'
 		};
 		const id = `${message_id_prefix}${await client.incr('last_free_message_id')}`;
 		await client.json.set(id, '$', message);
@@ -23,8 +64,9 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 				cl: (await client.json.get(m.value.f, { path: 'cl' })) as string
 			}
 		};
+		message_channel.publish('e', event);
+		message_channel.publish('t', event);
 		message_channel.publish(locals.user, event);
-		message_channel.publish('all', event);
 		// message_channel.publish(message_name(locals.user, locals.user), { id, value: { ...message } });
 		return new Response();
 	} catch (e) {

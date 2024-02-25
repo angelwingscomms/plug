@@ -37,6 +37,6 @@ export const load: PageServerLoad = async ({ params, request }) => {
 			)
 		};
 	} catch (e) {
-		handle_server_error(`${e}`, request);
+		throw handle_server_error(`${e}`, request);
 	}
 };

@@ -24,8 +24,11 @@ _learn
     goto previous page in component
     javascript disabled
 todo
-    message box background is user color
+    constant for to name field of top level messages
+    constant for event name for all messages
+    explain in Edit what color does
     fix similar username not showing
+    *current user search uses empty string to search if q is not provided in query args
     remove message v from broadcast event and page loads
     message search
     message details

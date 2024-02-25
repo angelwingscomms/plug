@@ -1,8 +1,9 @@
 <script lang="ts">
 	import Chat from '$lib/components/chat/Chat.svelte';
-	import type { PageData, Snapshot } from './$types';
+	import { Toggle } from 'carbon-components-svelte';
+	import type { Snapshot } from './$types';
 
-	let name = "all",
+	let t = true,
 		text = '';
 
 	export const snapshot: Snapshot = {
@@ -11,4 +12,6 @@
 	};
 </script>
 
-<Chat cl={data.cl} bind:text route="/m" {name} />
+<Toggle bind:toggled={t}>Top level messages only</Toggle>
+
+<Chat bind:text route="/m{t ? '?t=1' : ''}" name={t ? 't' : 'e'} />

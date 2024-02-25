@@ -1,6 +1,7 @@
 import { client } from '.';
 import { message_id_prefix, message_index, user_id_prefix, user_index } from '$lib/constants';
 import { SchemaFieldTypes, VectorAlgorithms } from 'redis';
+// import { search } from './search';
 
 export const setup = async () => {
 	try {
@@ -52,6 +53,12 @@ export const setup = async () => {
 
 	// create message_index
 	try {
+		// const res = await search({ index: message_index, query: `@t:"all"` });
+		// console.info('rrsd', res.total)
+		// res.documents.forEach((d) => {
+		// 	client.json.set(d.id, '$.t', 't');
+		// });
+		// console.info('rrsd done')
 		await client.ft.create(
 			message_index,
 			{

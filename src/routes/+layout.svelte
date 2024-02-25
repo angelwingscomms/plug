@@ -11,6 +11,8 @@
 	import { navigating } from '$app/stores';
 	import { previous_page } from '$lib/store';
 
+	console.log('God bless you Isa')
+
 	inject({ mode: dev ? 'development' : 'production' });
 
 	if (browser && navigator && navigator.serviceWorker)

@@ -9,7 +9,6 @@
 	import { v4 } from 'uuid';
 
 	export let route: string,
-	cl: string,
 		loading = false,
 		name: string,
 		text = '',

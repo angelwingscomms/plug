@@ -34,9 +34,9 @@
 		searched = true;
 		loading = true;
 		try {
-			const r = await axios.post(`/${route}/search`, { text, page });
+			const r = await axios.get(route, { params: { q: text, p: page } });
 			({ total, documents, page } = r.data);
-			old_search = text
+			old_search = text;
 			searched = true;
 		} catch (e: any) {
 			notify({
@@ -50,7 +50,17 @@
 	};
 </script>
 
-<Modal hasForm bind:open primaryButtonIcon={Search} primaryButtonText="search" on:submit={() => {get(page); open = false}} modalHeading="search">
+<Modal
+	hasForm
+	bind:open
+	primaryButtonIcon={Search}
+	primaryButtonText="search"
+	on:submit={() => {
+		get(page);
+		open = false;
+	}}
+	modalHeading="search"
+>
 	<TextArea rows={3} {placeholder} bind:ref={search_input_ref} bind:value={text} />
 </Modal>
 
@@ -68,7 +78,7 @@
 {#if searched}
 	{#if documents.length}
 		<SearchPagination
-		{f}
+			{f}
 			{route}
 			{total}
 			on:update={({ detail }) => {

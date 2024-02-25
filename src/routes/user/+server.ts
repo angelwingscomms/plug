@@ -5,17 +5,18 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { search } from '$lib/util/redis/search';
 import { embed, embed_to_buffer } from '$lib/util/embedding/embed';
-import { client } from '$lib/util/redis';
 import type { V } from '$lib/types';
 
-export const POST: RequestHandler = async ({ request }) => {
+export const GET: RequestHandler = async ({ url }) => {
 	try {
-		const { page, text } = await request.json();
-		const query_embedding = await embed(text);
-		const B = await embed_to_buffer(text);
-		const res = await search<{u: string, s: string, v: V}>({
+		let p = Number(url.searchParams.get('p'));
+		if (isNaN(p)) p = 0;
+		const q = url.searchParams.get('q') || '';
+		const query_embedding = await embed(q);
+		const B = await embed_to_buffer(q);
+		const res = await search<{ u: string; s: string; v: V }>({
 			index: user_index,
-			page,
+			page: p,
 			B,
 			options: { RETURN: ['u', 'v'] }
 		});
@@ -28,6 +29,6 @@ export const POST: RequestHandler = async ({ request }) => {
 		});
 		return json(res);
 	} catch (e) {
-		throw handle_server_error(request.url, e);
+		throw handle_server_error(url.pathname, e);
 	}
 };
