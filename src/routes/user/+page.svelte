@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Search from '$lib/components/Search/Search.svelte';
-	import type { Snapshot } from './search/$types';
+	import type { Snapshot } from './$types';
 	import type { SearchDocument } from '$lib/types';
 
 	let documents: SearchDocument<{ u: string; s: number }>[], text: string, searched: boolean;

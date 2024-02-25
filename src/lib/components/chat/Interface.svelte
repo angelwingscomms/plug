@@ -8,6 +8,7 @@
 		success: boolean,
 		chat_container: HTMLElement | undefined = undefined,
 		restart_modal = false,
+		route: string,
 		// hide_parameters = false,
 		// show_name_edit = false,
 		// disable_description_edit = false,
@@ -33,6 +34,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import type { SearchDocument } from '$lib/types';
 	import { page } from '$app/stores';
+	import Search from '../Search/Search.svelte';
 	// import More from './More.svelte';
 
 	const dispatch = createEventDispatcher();
@@ -62,10 +64,6 @@
 		// run(m)
 	};
 </script>
-
-<Modal bind:open={search_modal} passiveModal hasForm hasScrollingContent>
-	<Search f="c" {route} />
-</Modal>
 
 <Modal modalHeading="Download then restart?" passiveModal bind:open={restart_modal}>
 	<p>Download chat first before restarting?</p>
@@ -108,6 +106,7 @@
 		<div class="all">
 			{#if $page.data.user}
 				<Input
+					{route}
 					on:send={send}
 					bind:send_on_enter
 					bind:success

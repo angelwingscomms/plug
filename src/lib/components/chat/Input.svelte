@@ -1,18 +1,21 @@
 <script lang="ts">
-	import { TextArea, Button, InlineLoading } from 'carbon-components-svelte';
+	import { TextArea, Button, InlineLoading, Modal } from 'carbon-components-svelte';
 	import { createEventDispatcher } from 'svelte';
 	// import { send_on_enter } from './store';
 	import FileUpload from '../FileUpload.svelte';
 	// import type { ChatCompletionContentPartImage, ChatCompletionUserMessageParam } from 'openai/resources';
 	// import { notify } from '$lib/util/notify';
-	import { Close, Send, Menu, Upload } from 'carbon-icons-svelte';
+	import { Close, Send, Menu, Upload, Search as SearchIcon } from 'carbon-icons-svelte';
+	import Search from '../Search/Search.svelte';
 	// import type { Message } from '$lib/types/message';
 
 	export let // run: (m: ChatCompletionUserMessageParam) => void,
 	
 		success: boolean,
-		more_open: boolean,
+		// more_open: boolean,
 		can_send: boolean,
+		search_open = false,
+		route: string,
 		send_on_enter: boolean,
 		loading: boolean,
 		content_error: boolean,
@@ -104,6 +107,10 @@
 
 <svelte:window on:keydown={keydown} />
 
+<Modal bind:open={search_open} passiveModal hasForm hasScrollingContent>
+	<Search placeholder="Search" f="c" {route} />
+</Modal>
+
 <div class="input">
 	{#if images.length}
 		<div class="images">
@@ -120,6 +127,13 @@
 		</div>
 	{/if}
 	<div class="text-and-buttons">
+		<Button
+			disabled={!can_send}
+			size="field"
+			on:click={() => search_open = true}
+			iconDescription="Search"
+			icon={SearchIcon}
+		/>
 		<TextArea
 			style="min-width: unset"
 			rows={2}

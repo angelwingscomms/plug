@@ -42,6 +42,7 @@
 
 <Interface
 	{loading}
+	{route}
 	bind:text
 	u={$page.data.user}
 	bind:messages

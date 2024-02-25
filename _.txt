@@ -26,6 +26,7 @@ _learn
 todo
     constant for to name field of top level messages
     constant for event name for all messages
+    chat search placeholder
     explain in Edit what color does
     fix similar username not showing
     *current user search uses empty string to search if q is not provided in query args

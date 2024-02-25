@@ -16,7 +16,7 @@
 		old_search: null | string = null,
 		placeholder: string,
 		total: number = 0,
-		documents: SearchDocument<{ u: string; s: number }>[] = [],
+		documents: SearchDocument<{ u: string; s: string }>[] = [],
 		loading = false,
 		page: number = 1;
 

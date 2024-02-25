@@ -5,4 +5,4 @@
 </script>
 
 <h4>Similar users to {data.u ? data.u : `user ${data.id}`}</h4>
-<SearchPagination route='user' documents={data.d} />
+<SearchPagination f="u" route='user' documents={data.d} />
