@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { notify } from '$lib/util/notify';
-	import { Button, ContextMenu, ContextMenuOption, CopyButton } from 'carbon-components-svelte';
+	import { Button, ContextMenu, ContextMenuOption, CopyButton, truncate } from 'carbon-components-svelte';
 	import Copy from 'carbon-icons-svelte/lib/Copy.svelte';
 	import { TrashCan } from 'carbon-icons-svelte';
 	import { createEventDispatcher } from 'svelte';
@@ -56,7 +56,7 @@
 		class:r={message.value.t !== u}
 	>
 		<p class="username">{message.value.uf}</p>
-		<p class="content">
+		<p use:truncate class="content">
 			{@html message.value.h}
 		</p>
 	</div>

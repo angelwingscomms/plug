@@ -140,7 +140,7 @@
 			iconDescription={'Send'}
 			icon={loading ? InlineLoading : Send}
 		/>
-		<FileUpload
+		<!-- <FileUpload
 			label={String(images.length)}
 			on:change={update_images}
 			button={{
@@ -149,7 +149,7 @@
 			}}
 			multiple
 		/>
-		<Button size="field" on:click={() => (more_open = true)} iconDescription="More" icon={Menu} />
+		<Button size="field" on:click={() => (more_open = true)} iconDescription="More" icon={Menu} /> -->
 	</div>
 </div>
 

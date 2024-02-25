@@ -13,9 +13,8 @@
 		name: string,
 		text = '',
 		messages = $page.data.m,
-		message_input_ref: HTMLTextAreaElement,
 		success = true;
-
+	let message_input_ref: HTMLTextAreaElement;
 	onMount(async () => {
 		const realtime = new ably.Realtime({ authUrl: `/ably?i=${$page.data.id}` });
 		// realtime.auth.requestToken((await axios.get(`/ably?i=${$page.data.id}`)).data);

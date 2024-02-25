@@ -17,11 +17,11 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 	});
 	return {
 		id: params.id,
-		m: res.documents
+		m: await Promise.all(res.documents
 			.sort((a, b) => b.value.d - a.value.d)
 			.map(async (m) => {
 				m.value.uf = ((await client.json.get(m.value.f, { path: 'u' })) as string) || '';
 				return m;
-			})
+			}))
 	};
 };

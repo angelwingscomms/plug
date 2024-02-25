@@ -9,8 +9,8 @@ import { handle_server_error } from '$lib/util/handle_server_error';
 export const load: PageServerLoad = async ({ params, request }) => {
 	try {
 		if (!(await client.exists(params.id))) throw error(404, 'Message not found');
-		const { c, f } = (await client.json.get(params.id, { path: ['f', 'c'] })) as {
-			c: string;
+		const { h, f } = (await client.json.get(params.id, { path: ['f', 'h'] })) as {
+			h: string;
 			f: string;
 		};
 		const res = await search<Message>({
@@ -23,14 +23,16 @@ export const load: PageServerLoad = async ({ params, request }) => {
 		});
 		return {
 			f,
-			c,
+			h,
 			id: params.id,
-			m: res.documents
-				.sort((a, b) => b.value.d - a.value.d)
-				.map(async (m) => {
-					m.value.uf = ((await client.json.get(m.value.f, { path: 'u' })) as string) || '';
-					return m;
-				})
+			m: await Promise.all(
+				res.documents
+					.sort((a, b) => b.value.d - a.value.d)
+					.map(async (m) => {
+						m.value.uf = ((await client.json.get(m.value.f, { path: 'u' })) as string) || '';
+						return m;
+					})
+			)
 		};
 	} catch (e) {
 		handle_server_error(`${e}`, request);
