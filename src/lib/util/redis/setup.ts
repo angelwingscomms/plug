@@ -49,6 +49,8 @@ export const setup = async () => {
 	} catch (e) {
 		console.error(`redis create ${message_index} error:`, e);
 	}
+
+	// create message_index
 	try {
 		await client.ft.create(
 			message_index,
@@ -95,6 +97,8 @@ export const setup = async () => {
 	} catch (e) {
 		console.error(`redis create ${message_index} error:`, e);
 	}
+
+	// create user_index
 	try {
 		// await client.ft.dropIndex(user_index)
 		// console.info('index dropped')
@@ -115,6 +119,10 @@ export const setup = async () => {
 				},
 				'$.p': {
 					AS: 'p',
+					type: SchemaFieldTypes.TEXT
+				},
+				'$.cl': {
+					AS: 'cl',
 					type: SchemaFieldTypes.TEXT
 				}
 			},

@@ -25,11 +25,13 @@ export const load: PageServerLoad = async ({ params, request }) => {
 			f,
 			h,
 			id: params.id,
+			username: (await client.json.get(f, { path: 'u' })) as string,
 			m: await Promise.all(
 				res.documents
 					.sort((a, b) => b.value.d - a.value.d)
 					.map(async (m) => {
 						m.value.uf = ((await client.json.get(m.value.f, { path: 'u' })) as string) || '';
+						m.value.cl = ((await client.json.get(m.value.f, { path: 'cl' })) as string) || '';
 						return m;
 					})
 			)

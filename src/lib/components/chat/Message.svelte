@@ -51,6 +51,7 @@
 		bind:this={target}
 		on:click={() => (menu_open = true)}
 		on:keydown={() => (menu_open = true)}
+		style="background-color: {message.value.cl}"
 		class="message"
 		class:user={message.value.f === u}
 		class:r={message.value.t !== u}

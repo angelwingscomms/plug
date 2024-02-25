@@ -11,4 +11,4 @@
 	};
 </script>
 
-<Chat bind:text route="/m" {name} />
+<Chat cl={data.cl} bind:text route="/m" {name} />

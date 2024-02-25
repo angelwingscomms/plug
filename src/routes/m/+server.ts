@@ -17,7 +17,11 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 		await client.json.set(id, '$', message);
 		const event = {
 			id,
-			value: { ...message, uf: (await client.json.get(m.value.f, { path: 'u' })) as string }
+			value: {
+				...message,
+				uf: (await client.json.get(m.value.f, { path: 'u' })) as string,
+				cl: (await client.json.get(m.value.f, { path: 'cl' })) as string
+			}
 		};
 		message_channel.publish(locals.user, event);
 		message_channel.publish('all', event);

@@ -9,6 +9,7 @@
 	import { v4 } from 'uuid';
 
 	export let route: string,
+	cl: string,
 		loading = false,
 		name: string,
 		text = '',
@@ -41,6 +42,7 @@
 </script>
 
 <Interface
+{cl}
 	{loading}
 	bind:text
 	u={$page.data.user}

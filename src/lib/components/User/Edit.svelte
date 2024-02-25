@@ -15,6 +15,7 @@
 		contact = $page.data.c,
 		email = $page.data.e,
 		text = $page.data.t,
+		cl = $page.data.cl,
 		x = !!$page.data.x,
 		ch = $page.data.ch,
 		text_invalid: boolean,
@@ -46,7 +47,7 @@
 		if (edit_loading) return;
 		edit_loading = true;
 		try {
-			let payload = sanitize_object({ c: contact, u: username, t: text, e: email, x: Number(x) });
+			let payload = sanitize_object({ c: contact, u: username, t: text, e: email, x: Number(x), cl });
 			const html = await to_html(payload.t as string); //TODO-replace with web-worker version
 			payload.h = sanitize_string(html);
 			payload.ch = sanitize_string(await to_html(contact))
@@ -85,6 +86,10 @@
 		invalidText={text_invalid_text}
 		bind:value={text}
 	/>
+	<div>
+		<label for="color">Color</label>
+		<input bind:value={cl} name="color" type="color">
+	</div>
 	<Toggle bind:toggled={x} labelText="Hide your bio on your profile page" />
 </div>
 <ButtonSet stacked>

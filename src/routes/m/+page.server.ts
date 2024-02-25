@@ -18,10 +18,11 @@ export const load: PageServerLoad = async () => {
 			.sort((a, b) => b.value.d - a.value.d)
 			.map(async (m) => {
 				m.value.uf = ((await client.json.get(m.value.f, { path: 'u' })) as string) || '';
+				m.value.cl = ((await client.json.get(m.value.f, { path: 'cl' })) as string) || '';
 				return m;
 			})
-	)
-	console.debug('_m', _m)
+	);
+	console.debug('_m', _m);
 	return {
 		m: _m
 	};

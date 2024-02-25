@@ -1,4 +1,5 @@
 export type Message = {
+    cl: string,
     h: string,
     uf: string,
     c: string,

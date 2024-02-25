@@ -15,8 +15,11 @@
 	};
 </script>
 
-<Modal bind:open={show_details}>
-	{@html data.h}
+<Modal passiveModal modalHeading="message details" hasScrollingContent bind:open={show_details}>
+	<div class="c">
+		<p>author: {data.username}</p>
+		{@html data.h}
+	</div>
 </Modal>
 
 <p class="f">replies to</p>
@@ -34,7 +37,10 @@
 
 <style lang="sass">
 	@use "@carbon/type"
-
+	.c
+		display: flex
+		flex-direction: column
+		row-gap: 1rem
 	.t
 		display: flex
 		flex-direction: row

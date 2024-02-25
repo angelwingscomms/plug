@@ -24,6 +24,8 @@ _learn
     goto previous page in component
     javascript disabled
 todo
+    message box background is user color
+    fix similar username not showing
     remove message v from broadcast event and page loads
     message search
     message details

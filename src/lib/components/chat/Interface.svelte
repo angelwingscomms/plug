@@ -6,6 +6,7 @@
 		// name_label = 'Name',
 		// used to indicate when the last message has been succesfully sent
 		success: boolean,
+		cl: string,
 		chat_container: HTMLElement | undefined = undefined,
 		restart_modal = false,
 		// hide_parameters = false,
@@ -122,7 +123,7 @@
 			{/if}
 			<div bind:this={chat_container} class="messages">
 				{#each messages as message}
-					<Message {u} {message} />
+					<Message {cl} {u} {message} />
 					<!-- <Message {u} on:delete_message={({ detail }) => delete_message(detail)} {message} /> -->
 				{/each}
 			</div>
