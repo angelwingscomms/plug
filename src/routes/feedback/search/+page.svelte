@@ -15,7 +15,7 @@
 <Row>
 	<Column>
 		<div class="all">
-			<Search bind:documents bind:text route="feedback" placeholder="Search all feedback" />
+			<Search f="t" bind:documents bind:text route="feedback" placeholder="Search all feedback" />
 		</div>
 	</Column>
 </Row>
