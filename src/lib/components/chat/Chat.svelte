@@ -41,7 +41,6 @@
 </script>
 
 <Interface
-{cl}
 	{loading}
 	bind:text
 	u={$page.data.user}

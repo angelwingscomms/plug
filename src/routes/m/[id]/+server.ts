@@ -67,6 +67,7 @@ export const POST: RequestHandler = async ({ request, params, locals }) => {
 		};
 		message_channel.publish("e", event);
 		message_channel.publish(params.id, event);
+		message_channel.publish(locals.user, event);
 		message_channel.publish(message_name(params.id, locals.user), event);
 		return new Response();
 	} catch (e) {
