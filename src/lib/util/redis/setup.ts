@@ -1,10 +1,15 @@
 import { client } from '.';
 import { message_id_prefix, message_index, user_id_prefix, user_index } from '$lib/constants';
 import { SchemaFieldTypes, VectorAlgorithms } from 'redis';
+import { embed } from '../embedding/embed';
 // import { search } from './search';
 
 export const setup = async () => {
 	try {
+		for (const i of await client.keys(`${message_id_prefix}*`)) {
+			const c = await client.json.get(i, {path: 'c'}) as string
+			await client.json.set(i, '$.v', await embed(c))
+		}
 		await client.ft.create(
 			message_index,
 			{

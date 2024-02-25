@@ -12,6 +12,6 @@
 	};
 </script>
 
-<Toggle bind:toggled={t}>Top level messages only</Toggle>
+<Toggle labelText="Top level messages only" bind:toggled={t} />
 
 <Chat bind:text route="/m{t ? '?t=1' : ''}" name={t ? 't' : 'e'} />

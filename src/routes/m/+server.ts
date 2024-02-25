@@ -1,5 +1,5 @@
 import * as tf from '@tensorflow/tfjs';
-import { message_id_prefix, message_index } from '$lib/constants';
+import { message_id_prefix, message_index, top_level_messages_name } from '$lib/constants';
 import type { V } from '$lib/types';
 import type { Message } from '$lib/types/message';
 import { message_channel } from '$lib/util/ably';
@@ -17,17 +17,20 @@ export const GET: RequestHandler = async ({ url, request }) => {
 		if (isNaN(page)) page = 0;
 		const q = url.searchParams.get('q') || '';
 		const t = url.searchParams.get('t') || '';
+		console.debug('page, t', page, t)
 		const query_embedding = await embed(q);
 		const B = await embed_to_buffer(q);
 		const res = await search<Message & { s: string; v?: V }>({
 			index: message_index,
-			...(t && { query: `@t:"t"` }),
+			query: `@t: ${top_level_messages_name}`,
+			// ...(t && { query: `@t:${top_level_messages_name}` }),
 			B,
 			page,
 			options: {
 				RETURN: ['f', 'd', 'h', 'v']
 			}
 		});
+		console.debug('mt', res.total)
 		res.documents = await Promise.all(
 			res.documents.map(async (m) => {
 				m.value.s = (

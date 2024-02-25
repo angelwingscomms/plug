@@ -87,7 +87,7 @@
 </Modal>
 
 <Modal bind:open={search_open} passiveModal hasForm hasScrollingContent>
-	<Search placeholder="Search" f="c" {route} />
+	<Search placeholder="Search" f="h" {route} />
 </Modal>
 
 <!-- <More
