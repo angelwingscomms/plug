@@ -6,6 +6,7 @@
 		// name_label = 'Name',
 		// used to indicate when the last message has been succesfully sent
 		success: boolean,
+		search_open = false,
 		chat_container: HTMLElement | undefined = undefined,
 		restart_modal = false,
 		route: string,
@@ -85,6 +86,10 @@
 	<!-- </ButtonSet> -->
 </Modal>
 
+<Modal bind:open={search_open} passiveModal hasForm hasScrollingContent>
+	<Search placeholder="Search" f="c" {route} />
+</Modal>
+
 <!-- <More
 	bind:open={more_open}
 	bind:restart_modal
@@ -108,6 +113,7 @@
 				<Input
 					{route}
 					on:send={send}
+					bind:search_open
 					bind:send_on_enter
 					bind:success
 					bind:can_send

@@ -60,8 +60,8 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 			id,
 			value: {
 				...message,
-				uf: (await client.json.get(m.value.f, { path: 'u' })) as string,
-				cl: (await client.json.get(m.value.f, { path: 'cl' })) as string
+				uf: (await client.json.get(locals.user, { path: 'u' })) as string,
+				cl: (await client.json.get(locals.user, { path: 'cl' })) as string
 			}
 		};
 		message_channel.publish('e', event);

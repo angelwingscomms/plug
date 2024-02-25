@@ -50,7 +50,7 @@
 	};
 </script>
 
-<Modal
+<!-- <Modal
 	hasForm
 	bind:open
 	primaryButtonIcon={Search}
@@ -62,10 +62,12 @@
 	modalHeading="search"
 >
 	<TextArea rows={3} {placeholder} bind:ref={search_input_ref} bind:value={text} />
-</Modal>
+</Modal> -->
 
 <div class="input">
-	<Button on:click={() => (open = !open)}>run a search</Button>
+	<TextArea rows={3} {placeholder} bind:ref={search_input_ref} bind:value={text} />
+	<Button on:click={() => get(page)}>search</Button>
+	<!-- <Button on:click={() => (open = !open)}>run a search</Button> -->
 </div>
 
 {#if loading}

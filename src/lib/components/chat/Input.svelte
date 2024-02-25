@@ -107,10 +107,6 @@
 
 <svelte:window on:keydown={keydown} />
 
-<Modal bind:open={search_open} passiveModal hasForm hasScrollingContent>
-	<Search placeholder="Search" f="c" {route} />
-</Modal>
-
 <div class="input">
 	{#if images.length}
 		<div class="images">

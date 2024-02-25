@@ -6,6 +6,7 @@ export const room_id_prefix = 'room_';
 export const replies_index_name = 'replies';
 export const replied_index_name = 'replied';
 export const posts_index_name = 'post';
+export const top_level_messages_name = "t";
 export const protected_routes = [/\/edit/, /\/user\/\w+\/chat/];
 export const embedding_model = 'text-embedding-ada-002';
 export const embedding_field_name = 'v';
