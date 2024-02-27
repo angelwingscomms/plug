@@ -47,6 +47,7 @@
 		"@carbon/themes": "^11.32.0",
 		"@carbon/type": "^11.25.0",
 		"@edge37/svelte-utils": "^0.0.9",
+		"@sveltejs/adapter-node": "^4.0.1",
 		"@tensorflow/tfjs": "^4.17.0",
 		"@types/marked": "^5.0.2",
 		"@vercel/analytics": "^1.2.2",

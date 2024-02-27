@@ -66,7 +66,7 @@
 
 <div class="input">
 	<TextArea rows={3} {placeholder} bind:ref={search_input_ref} bind:value={text} />
-	<Button on:click={() => get(page)}>search</Button>
+	<Button icon={Search} on:click={() => get(page)} />
 	<!-- <Button on:click={() => (open = !open)}>run a search</Button> -->
 </div>
 

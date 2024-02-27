@@ -25,6 +25,7 @@
 		// })
 
 		channel.subscribe(name, (m) => {
+			console.debug('got --', m)
 			messages = [m.data, ...messages];
 		});
 	});

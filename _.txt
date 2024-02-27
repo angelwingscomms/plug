@@ -24,6 +24,11 @@ _learn
     goto previous page in component
     javascript disabled
 todo
+    tests
+        send message to t
+        send message to m
+        send message to e
+        edit profile
     constant for to name field of top level messages
     constant for event name for all messages
     chat search placeholder

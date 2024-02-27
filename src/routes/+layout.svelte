@@ -11,14 +11,21 @@
 	import { navigating } from '$app/stores';
 	import { previous_page } from '$lib/store';
 
-	console.log('God bless you Isa')
+	console.log('God bless Isa')
 
 	inject({ mode: dev ? 'development' : 'production' });
 
 	if (browser && navigator && navigator.serviceWorker)
 		navigator.serviceWorker.ready.then((registration) => registration.update());
 
-	onMount(() => {
+	onMount(async() => {
+		if (window.navigator && window.navigator.serviceWorker) {
+			console.info('dlf', navigator.serviceWorker.controller)
+			await navigator.serviceWorker.ready
+			console.info('service worker ready')
+		} else {
+			console.debug('unavailable')
+		}
 		if (window.matchMedia) {
 			window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
 				e.matches ? $theme = 'g100' : $theme = 'white'
