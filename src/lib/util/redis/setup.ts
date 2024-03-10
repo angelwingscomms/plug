@@ -1,10 +1,13 @@
 import { client } from '.';
-import { embedding_dimension, message_id_prefix, message_index, user_id_prefix, user_index } from '$lib/constants';
+import { embedding_dimension, message_id_prefix, message_index, tag_id_prefix, tag_index, user_id_prefix, user_index } from '$lib/constants';
 import { SchemaFieldTypes, VectorAlgorithms } from 'redis';
 // import { search } from './search';
 
 export const setup = async () => {
 	console.debug('--setup')
+	await client.ft.dropIndex(message_index)
+	await client.ft.dropIndex(user_index)
+
 	try {
 		// for (const i of await client.keys(`${user_id_prefix}*`)) {
 		// 	const v = await client.json.get(i, { path: 'v' });
@@ -130,6 +133,34 @@ export const setup = async () => {
 			{
 				ON: 'JSON',
 				PREFIX: message_id_prefix,
+				NOHL: true
+			}
+		);
+	} catch (e) {
+		console.error(`redis create ${message_index} error:`, e);
+	}
+
+	// create tag_index
+	try {
+		await client.ft.create(
+			tag_index,
+			{
+				'$.v': {
+					AS: 'v',
+					type: SchemaFieldTypes.VECTOR,
+					ALGORITHM: VectorAlgorithms.FLAT,
+					TYPE: 'FLOAT32',
+					DIM: embedding_dimension,
+					DISTANCE_METRIC: 'COSINE'
+				},
+				'$.t': {
+					AS: 't',
+					type: SchemaFieldTypes.TEXT
+				},
+			},
+			{
+				ON: 'JSON',
+				PREFIX: tag_id_prefix,
 				NOHL: true
 			}
 		);

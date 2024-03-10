@@ -54,7 +54,7 @@ export const actions: Actions = {
 					.promise();
 				uploaded_images.push(res.Location);
 			}
-
+			await tagflow(params.id, a)
 			const v = await remote(JSON.stringify({ name: n, about: a, price: `${p}` }));
 			await client.json.set(params.id, '$.n', n);
 			if (uploaded_display_image)
