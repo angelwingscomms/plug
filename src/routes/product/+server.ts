@@ -11,6 +11,6 @@ export const GET: RequestHandler = async ({ request, url }) => {
 		const res = await search({ query: '@k:"p"', index: message_index, options: { RETURN: ['n', 'i', 'p'] }, B });
 		return json(res);
 	} catch (e) {
-		handle_server_error(request, e)
+		throw handle_server_error(request, e)
 	}
 };
