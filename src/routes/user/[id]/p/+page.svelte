@@ -5,8 +5,10 @@
 		Button,
 		Column,
 		InlineLoading,
+		Link,
 		Row,
 		TextInput,
+		Tile
 	} from 'carbon-components-svelte';
 	import { Search } from 'carbon-icons-svelte';
 	import { onMount } from 'svelte';
@@ -27,7 +29,7 @@
 	});
 
 	let value = '',
-		documents: SearchDocument<ProductListing>[] = [];
+		documents: SearchDocument<ProductListing>[] = data.p;
 
 	export const search = async () => {
 		if (loading) return
@@ -50,8 +52,13 @@
 <Row>
 	<Column>
 		<div class="input">
-			<TextInput hideLabel placeholder="Search" bind:value labelText="Search" />
-			<Button size="field" on:click={search} icon={loading ? InlineLoading : Search} />
+			<TextInput
+				hideLabel
+				placeholder="Search"
+				bind:value
+				labelText="Search"
+			/>
+			<Button size="field" on:click={search} icon={loading ? InlineLoading : Search } />
 		</div>
 	</Column>
 </Row>

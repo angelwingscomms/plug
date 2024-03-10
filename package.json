@@ -15,18 +15,22 @@
 		"format": "prettier --plugin-search-dir . --write ."
 	},
 	"devDependencies": {
+		"@gradio/client": "^0.12.1",
 		"@playwright/test": "^1.41.2",
 		"@sveltejs/adapter-vercel": "^5.1.0",
 		"@sveltejs/kit": "^2.5.1",
 		"@types/dompurify": "^3.0.5",
+		"@types/eventsource": "^1.1.15",
 		"@types/jsdom": "^21.1.6",
 		"@types/jsonwebtoken": "^9.0.5",
 		"@types/uuid": "^9.0.8",
+		"@types/ws": "^8.5.4",
 		"@typescript-eslint/eslint-plugin": "^7.0.2",
 		"@typescript-eslint/parser": "^7.0.2",
 		"@vite-pwa/sveltekit": "^0.4.0",
 		"carbon-components-svelte": "^0.82.10",
 		"carbon-icons-svelte": "^12.5.0",
+		"esbuild": "^0.19.0",
 		"eslint": "^8.56.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.35.1",
@@ -54,8 +58,11 @@
 		"ably": "^1.2.49",
 		"argon2": "^0.31.2",
 		"axios": "^1.6.7",
+		"bufferutil": "^4.0.7",
 		"dompurify": "^3.0.9",
+		"eventsource": "^2.0.2",
 		"highlight.js": "^11.9.0",
+		"ibm-cos-sdk": "^1.13.3",
 		"isomorphic-dompurify": "^2.4.0",
 		"jsdom": "^24.0.0",
 		"jsonwebtoken": "^9.0.2",
@@ -70,7 +77,9 @@
 		"openai": "^4.28.0",
 		"redis": "^4.6.13",
 		"sass": "^1.71.1",
+		"semiver": "^1.1.0",
 		"sharp": "^0.33.2",
-		"uuid": "^9.0.1"
+		"uuid": "^9.0.1",
+		"ws": "^8.13.0"
 	}
 }

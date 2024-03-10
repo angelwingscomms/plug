@@ -1,19 +1,26 @@
+import { EMBED } from "$env/static/private";
+
 export const items_per_page = 7;
 export const message_index = 'free_message';
-export const message_id_prefix = 'free_message_';
+export const message_id_prefix = 'a_';
 export const room_index = 'room';
 export const room_id_prefix = 'room_';
+export const tag_index = "tag";
+export const tag_id_prefix = "tag_"
 export const replies_index_name = 'replies';
 export const replied_index_name = 'replied';
 export const posts_index_name = 'post';
 export const top_level_messages_name = "t";
-export const protected_routes = [/\/edit/, /\/user\/\w+\/chat/];
+export const protected_routes = [/\/edit/, /\/user\/\w+\/chat/, /\/product\/add/];
 export const embedding_model = 'text-embedding-ada-002';
 export const embedding_field_name = 'v';
+export const embedding_dimension = 512;
+// export const embedding_dimensions = 1024;
+// export const embedding_field_name = 'v';
 export const ids_hash = 'ids';
 export const user_id_prefix = 'user_';
 export const user_index = 'users';
-export const embed_endpoint = 'http://18.215.251.72:80';
+export const embed_endpoint = EMBED
 export const feedback_index = 'feedback';
 export const feedback_id_prefix = 'feedback_';
 export const content_attributes = ['name', 'body'];

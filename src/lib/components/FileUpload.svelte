@@ -1,6 +1,8 @@
 <script lang="ts">
 	export let 
 		multiple = false,
+		name: string = "",
+		ref: HTMLInputElement,
 		label = `Upload file${multiple ? 's' : ''}`,
 		button: ButtonProps = {},
 		dispatch_empty = false;
@@ -9,8 +11,6 @@
 	import type { Button as ButtonProps } from 'carbon-components-svelte/types';
 	import Upload from 'carbon-icons-svelte/lib/Upload.svelte';
 	import { createEventDispatcher } from 'svelte';
-
-	let ref: HTMLInputElement;
 
 	const dispatch = createEventDispatcher();
 
@@ -25,4 +25,4 @@
 </script>
 
 <Button icon={Upload} iconDescription={label ?? "Upload file"} {...button} on:click={() => ref.click()}>{#if label}{label}{/if}</Button>
-<input style="display: none;" {multiple} on:change={change} type="file" bind:this={ref} />
+<input style="display: none;" {multiple} {name} on:change={change} type="file" bind:this={ref} />

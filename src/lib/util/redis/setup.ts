@@ -1,15 +1,26 @@
 import { client } from '.';
-import { message_id_prefix, message_index, user_id_prefix, user_index } from '$lib/constants';
+import { embedding_dimension, message_id_prefix, message_index, user_id_prefix, user_index } from '$lib/constants';
 import { SchemaFieldTypes, VectorAlgorithms } from 'redis';
-import { embed } from '../embedding/embed';
 // import { search } from './search';
 
 export const setup = async () => {
+	console.debug('--setup')
 	try {
-		for (const i of await client.keys(`${message_id_prefix}*`)) {
-			const c = await client.json.get(i, {path: 'c'}) as string
-			await client.json.set(i, '$.v', await embed(c))
+		// for (const i of await client.keys(`${user_id_prefix}*`)) {
+		// 	const v = await client.json.get(i, { path: 'v' });
+		// 	await client.json.set(i, '$.v3072', v);
+		// }
+		for (const i of await client.keys(`a_*`)) {
+			// console.info('-i', i)
+			await client.json.del(i)
+			// const m = await client.json.get(i);
+			// await client.json.set(`${message_id_prefix}${i.split('free_message_')[1]}`, '$', m);
+			// // await client.json.set(i, '$.v', await );
 		}
+		// await client.ft.dropIndex(message_index)
+		// await client.ft.dropIndex(user_index)
+		console.info('done')
+		console.log('update done, indices dropped')
 		await client.ft.create(
 			message_index,
 			{
@@ -18,7 +29,7 @@ export const setup = async () => {
 					type: SchemaFieldTypes.VECTOR,
 					ALGORITHM: VectorAlgorithms.FLAT,
 					TYPE: 'FLOAT32',
-					DIM: 3072,
+					DIM: embedding_dimension,
 					DISTANCE_METRIC: 'COSINE'
 				},
 				'$.f': {
@@ -27,6 +38,22 @@ export const setup = async () => {
 				},
 				'$.t': {
 					AS: 't',
+					type: SchemaFieldTypes.TEXT
+				},
+				'$.k': {
+					AS: 'k',
+					type: SchemaFieldTypes.TEXT
+				},
+				'$.n': {
+					AS: 'n',
+					type: SchemaFieldTypes.TEXT
+				},
+				'$.i': {
+					AS: 'i',
+					type: SchemaFieldTypes.TEXT
+				},
+				'$.p': {
+					AS: 'p',
 					type: SchemaFieldTypes.TEXT
 				},
 				'$.d': {
@@ -72,7 +99,7 @@ export const setup = async () => {
 					type: SchemaFieldTypes.VECTOR,
 					ALGORITHM: VectorAlgorithms.FLAT,
 					TYPE: 'FLOAT32',
-					DIM: 3072,
+					DIM: embedding_dimension,
 					DISTANCE_METRIC: 'COSINE'
 				},
 				'$.f': {
@@ -122,7 +149,7 @@ export const setup = async () => {
 					type: SchemaFieldTypes.VECTOR,
 					ALGORITHM: VectorAlgorithms.FLAT,
 					TYPE: 'FLOAT32',
-					DIM: 3072,
+					DIM: embedding_dimension,
 					DISTANCE_METRIC: 'COSINE'
 				},
 				'$.u': {

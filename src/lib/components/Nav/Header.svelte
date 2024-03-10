@@ -23,7 +23,7 @@
 
 <Header
 	persistentHamburgerMenu={true}
-	platformName="Search"
+	platformName="Plug"
 	bind:isSideNavOpen={$isSideNavOpen}
 	href="/"
 >
