@@ -1,10 +1,6 @@
 <script lang="ts">
 	import { Column, Link, Row } from 'carbon-components-svelte';
-	import type { PageData } from './$types';
-
-	export let data: PageData;
-
-	console.log('d', data);
+	export let data;
 </script>
 
 <Row>
