@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Edit from '$lib/components/product/Edit.svelte';
-	import { type PageData } from './$types';
-	export let data: PageData;
+	export let data;
 </script>
 
 <Edit p={data.p} />
