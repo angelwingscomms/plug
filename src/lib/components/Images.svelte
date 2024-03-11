@@ -32,7 +32,7 @@
         display: flex
         flex-direction: row
         column-gap: layout.$spacing-06
-        width: 100%
+        max-width: 100%
         overflow-y: scroll
     .image
         display: flex

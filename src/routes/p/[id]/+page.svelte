@@ -6,7 +6,7 @@
 </script>
 
 <Row>
-	<Column max={432}>
+	<Column>
 		<div>
 			{#if data.u === data.user}
 				<Link href="{$page.url.pathname}/edit">Edit this item</Link>
@@ -23,7 +23,10 @@
 
 <style lang="sass">
     @use '@carbon/layout'
+    h3
+        word-break: break-all
     div
+        max-width: 100%
         display: flex
         flex-direction: column
         row-gap: layout.$spacing-06
