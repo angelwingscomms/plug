@@ -8,7 +8,7 @@
 		<div>
 			<h3>{data.n}</h3>
 			<p>Owner: <Link href="/user/{data.u}/p">{data.uf}</Link></p>
-			<img src={data.i.Location} alt="hmm" />
+			<img src={data.i} alt="hmm" />
 			<pre>{data.a}</pre>
 		</div>
 	</Column>

@@ -2,15 +2,16 @@
 	import type { ProductListing } from '$lib/types/product';
 	import { Button, Link } from 'carbon-components-svelte';
 	export let p: ProductListing, id: string;
-	import { ShoppingCartPlus, StarFilled } from 'carbon-icons-svelte';
+	// import { ShoppingCartPlus, StarFilled } from 'carbon-icons-svelte';
 </script>
 
 <div class="product-card">
 	<div class="product-image">
 		<img src={p.i} alt="example" />
 	</div>
-	<Link href="/product/id/{id}">{p.n}</Link>
-	<Link href="/user/id/{p.u}">Seller details</Link>
+  <p>{p.n}</p>
+	<Link href="/product/id/{id}">product details</Link>
+	<Link href="/user/id/{p.u}">seller details</Link>
 	<!-- <p>{p.up}{p.p}</p> -->
 	<div class="act">
 		<!-- <Button>Buy Now</Button>
