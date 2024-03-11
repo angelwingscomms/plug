@@ -24,6 +24,7 @@ _learn
     goto previous page in component
     javascript disabled
 todo
+    edit product preserves image
     sidenav add product
     show images in add page
     edit page shows image

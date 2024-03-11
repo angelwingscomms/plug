@@ -14,11 +14,14 @@
 	import FileUpload from '$lib/components/FileUpload.svelte';
 	import { Send } from 'carbon-icons-svelte';
 	import type { Product } from '$lib/types/product';
+	import { onMount } from 'svelte';
 
-	export let p: Product | undefined = undefined;
+	export let p: Product | undefined = undefined, button_text: string;
 	let loading = false,
 		images_ref: HTMLInputElement,
 		display_images_ref: HTMLInputElement;
+
+	onMount(() => {console.debug(images_ref.files, display_images_ref.files)})
 
 	// const send = async () => {
 	// try {
@@ -63,7 +66,7 @@
 				multiple
 				label="Add images {images_ref?.files?.length || 0}"
 			/>
-			<Button icon={loading ? InlineLoading : Send} type="submit">Add</Button>
+			<Button icon={loading ? InlineLoading : Send} type="submit">{button_text}</Button>
 		</form>
 	</Column>
 </Row>

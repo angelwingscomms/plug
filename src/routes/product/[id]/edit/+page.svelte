@@ -3,4 +3,4 @@
 	export let data;
 </script>
 
-<Edit p={data.p} />
+<Edit p={data.p} button_text="Edit" />

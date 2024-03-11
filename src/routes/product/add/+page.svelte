@@ -3,4 +3,4 @@
 
 </script>
 
-<Edit action="/product/add" />
+<Edit button_text="Add" />

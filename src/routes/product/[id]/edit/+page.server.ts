@@ -6,6 +6,7 @@ import { IBMCOS_APIKEY, IBMCOS_ENDPOINT, IBMCOS_SERVICE_INSTANCE_ID } from '$env
 import { handle_server_error } from '$lib/util/handle_server_error';
 import type { Product } from '$lib/types/product';
 import { embed } from '$lib/util/embedding/embed';
+import { tagflow } from '$lib/util/product/tagflow';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const p = (await client.json.get(params.id, { path: ['n', 'p', 'i', 'ii', 'a'] })) as Product;
@@ -23,8 +24,10 @@ export const actions: Actions = {
 			const a = String(data.get('a') || '');
 			const p = String(data.get('p') || '');
 			// const c = String(data.get('c') || '');
-			const i = data.get('i');
-			const ii = data.getAll('ii');
+			const i = data.get('i') as File;
+			console.debug('--i', i)
+			const ii = data.getAll('ii') as File[];
+			console.debug('--ii', ii)
 
 			const cos = new IBM.S3({
 				endpoint: IBMCOS_ENDPOINT,
@@ -34,7 +37,7 @@ export const actions: Actions = {
 
 			const uploaded_images: string[] = [];
 
-			const uploaded_display_image = i
+			const uploaded_display_image = i.size
 				? await cos
 						.upload({
 							Bucket: 'unimart',
@@ -45,6 +48,7 @@ export const actions: Actions = {
 				: undefined;
 
 			for (let i = ii.length - 1; i > -1; i--) {
+				if (!ii[i].size) continue
 				const res = await cos
 					.upload({
 						Bucket: 'unimart',
