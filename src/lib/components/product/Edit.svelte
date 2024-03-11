@@ -104,7 +104,7 @@
 			
 				<TextInput maxlength={2160} name="n" value={p?.n ?? ''} labelText="Name" />
 				<TextInput maxlength={2160} name="p" value={p?.p ?? ''} labelText="Price" />
-				<TextArea maxlength={2160} name="a" value={p?.a ?? ''} labelText="About this product" />
+				<TextArea helperText="Describe the product in detail, so users can easily find it" maxlength={2160} name="a" value={p?.a ?? ''} labelText="About this product" />
 				<!-- <FileUpload
 					loading={image_loading}
 					name="i"
