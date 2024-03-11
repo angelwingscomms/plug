@@ -5,7 +5,9 @@ import { handle_server_error } from '$lib/util/handle_server_error';
 
 export const load: PageServerLoad = async ({ request, params }) => {
 	try {
-		const product = (await client.json.get(params.id, { path: ['n', 'h', 'i', 'ii', 'u', 'p'] })) as {
+		const product = (await client.json.get(params.id, {
+			path: ['n', 'h', 'i', 'ii', 'u', 'p']
+		})) as {
 			n: string;
 			h: string;
 			i: string;
@@ -13,10 +15,9 @@ export const load: PageServerLoad = async ({ request, params }) => {
 			p: number;
 			u: string;
 		};
-		if (!product) throw error(400, `product with id "${params.id}" not found`)
-		const username = (await client.json.get(product.u, { path: 'u' })) as string;
-		return { ...product, uf: username };
+		if (!product) throw error(400, `product with id "${params.id}" not found`);
+		return product;
 	} catch (e) {
-		throw handle_server_error(request, e)
+		throw handle_server_error(request, e);
 	}
 };

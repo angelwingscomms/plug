@@ -22,6 +22,8 @@
 
 <style lang="sass">
 	@use '@carbon/layout'
+	p
+		word-break: break-all
 	.products
 		display: flex
 		flex-direction: row
