@@ -1,23 +1,23 @@
 <script lang="ts">
 	import type { ProductListing } from '$lib/types/product';
-	import { Button, Link } from 'carbon-components-svelte';
+	import { Button, Link, truncate } from 'carbon-components-svelte';
 	export let p: ProductListing, id: string;
 	// import { ShoppingCartPlus, StarFilled } from 'carbon-icons-svelte';
 </script>
 
 <a class="card" href="/product/{id}">
-  <div class="product-card">
-    <div class="product-image">
-      <img src={p.i} alt="product" />
-    </div>
-    <p>{p.n}</p>
-    <!-- <Link href="/user/{p.u}">contact seller</Link> -->
-    <p>GH₵ {p.p}</p>
-    <div class="act">
-      <!-- <Button>Buy Now</Button>
+	<div class="product-card">
+		<div class="product-image">
+			<img src={p.i} alt="product" />
+		</div>
+		<p use:truncate>{p.n}</p>
+		<!-- <Link href="/user/{p.u}">contact seller</Link> -->
+		<p>GH₵ {p.p}</p>
+		<div class="act">
+			<!-- <Button>Buy Now</Button>
       <Button icon={ShoppingCartPlus} /> -->
-    </div>
-  </div>
+		</div>
+	</div>
 </a>
 
 <style lang="sass">
