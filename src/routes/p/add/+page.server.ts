@@ -8,7 +8,7 @@ import { handle_server_error } from '$lib/util/handle_server_error';
 // import { tagflow } from '$lib/util/product/tagflow';
 import { embed } from '$lib/util/embedding/embed';
 import { sanitize_string } from '$lib/util/sanitize';
-import { parse } from '$lib/util/markdown/parse/node';
+import sharp from 'sharp';
 import { to_html } from '$lib/util/markdown/parse';
 
 export const actions: Actions = {
@@ -18,7 +18,7 @@ export const actions: Actions = {
 			const n = sanitize_string(String(data.get('n') || ''));
 			const a = sanitize_string(String(data.get('a') || ''));
 			// const c = String(data.get('c') || '');
-			const p = sanitize_string( String(data.get('p') || ''));
+			const p = sanitize_string(String(data.get('p') || ''));
 			const i = data.get('i') as unknown as number;
 			const ii = data.getAll('ii');
 
@@ -46,7 +46,9 @@ export const actions: Actions = {
 					.upload({
 						Bucket: 'unimart',
 						Key: String(await client.incr('last_ibm_cos_object_id')),
-						Body: Buffer.from(await (ii[i] as File).arrayBuffer())
+						Body: await sharp(await (ii[i] as File).arrayBuffer())
+							.webp({ quality: 36 })
+							.toBuffer()
 					})
 					.promise();
 				uploaded_images.push(res.Location);
@@ -68,7 +70,7 @@ export const actions: Actions = {
 			// await tagflow(id, a)
 			throw redirect(302, `/p/${id}`);
 		} catch (e) {
-			throw handle_server_error(request, e)
+			throw handle_server_error(request, e);
 		}
 	}
 };

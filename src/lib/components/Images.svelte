@@ -10,7 +10,7 @@
 	const dispatch = createEventDispatcher<{ 'x-click': number }>();
 </script>
 
-<div class="images">
+<div class="images cute-scroll cute-scroll-no-vertical">
 	{#each images as { id, src }, index}
 		<div class="image">
 			<img class="img" {src} {alt} />
@@ -33,7 +33,7 @@
         flex-direction: row
         column-gap: layout.$spacing-06
         width: 100%
-        overflow: scroll
+        overflow-y: scroll
     .image
         display: flex
         flex-direction: column

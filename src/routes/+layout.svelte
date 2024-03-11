@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Content, Grid, Theme } from 'carbon-components-svelte';
 	import 'carbon-components-svelte/css/all.css';
+	import '../app.sass'
 	import { browser } from '$app/environment';
 	import { Header, SideNav } from '$lib/components/Nav';
 	import { onMount } from 'svelte';

@@ -7,6 +7,7 @@ import { handle_server_error } from '$lib/util/handle_server_error';
 import type { Product } from '$lib/types/product';
 import { embed } from '$lib/util/embedding/embed';
 import { sanitize_string } from '$lib/util/sanitize';
+import sharp from 'sharp';
 import { parse } from '$lib/util/markdown/parse/node';
 import { to_html } from '$lib/util/markdown/parse';
 
@@ -53,7 +54,9 @@ export const actions: Actions = {
 					.upload({
 						Bucket: 'unimart',
 						Key: String(await client.incr('last_ibm_cos_object_id')),
-						Body: Buffer.from(await (ii[i] as File).arrayBuffer())
+						Body: await sharp(await (ii[i] as File).arrayBuffer())
+							.webp({ quality: 36 })
+							.toBuffer()
 					})
 					.promise();
 				uploaded_images.push(res.Location);
