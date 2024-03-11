@@ -12,29 +12,24 @@
 	import { goto } from '$app/navigation';
 	// import { OnEnter } from 'sveltekit-carbon-utils';
 	import FileUpload from '$lib/components/FileUpload.svelte';
-	import { Send } from 'carbon-icons-svelte';
+	import { CenterSquare, Send } from 'carbon-icons-svelte';
 	import type { Product } from '$lib/types/product';
-	import { onMount } from 'svelte';
 	import { notify } from '$lib/util';
+	import Images from '../Images.svelte';
 
 	export let p: Product | undefined = undefined,
-		image_loading = false,
 		images: Image[] = [],
 		images_loading = false,
 		button_text: string;
 	let loading = false,
 		next_image_id = 0,
-		image_added = false, //TODO-check
+		display_image = 0,
 		images_ref: HTMLInputElement,
 		image_ref: HTMLInputElement;
 
-	type Image = { id: number; url: string };
+	type Image = { id: number; src: string };
 
-	onMount(() => {
-		console.debug(images_ref.files, image_ref.files);
-	});
-
-	$: console.debug(image_ref?.files)
+	$: console.debug(image_ref?.files);
 
 	const file_to_base64 = (file: File) => {
 		return new Promise((resolve, reject) => {
@@ -59,7 +54,7 @@
 					...images,
 					{
 						id: next_image_id,
-						url: base64 as string
+						src: base64 as string
 					}
 				];
 				next_image_id++;
@@ -71,6 +66,10 @@
 			}
 		}
 		images_loading = false;
+	};
+
+	const remove_image = (id: number) => {
+		images = [...images.filter((i) => i.id !== id)];
 	};
 
 	// const send = async () => {
@@ -105,7 +104,7 @@
 			<TextInput name="n" value={p?.n ?? ''} labelText="Name" />
 			<TextInput name="p" value={p?.p ?? ''} labelText="Price" />
 			<TextArea name="a" value={p?.a ?? ''} labelText="About this product" />
-			<FileUpload
+			<!-- <FileUpload
 				loading={image_loading}
 				name="i"
 				bind:ref={image_ref}
@@ -113,7 +112,7 @@
 					image_added = true
 				}}
 				label="{image_added ? 'Change' : 'Add'} display image"
-			/>
+			/> -->
 			<!-- {#if images.length}
 				<div class="images">
 					{#each images as image}
@@ -128,6 +127,15 @@
 					{/each}
 				</div>
 			{/if} -->
+			<input type="number" style="display: none;" value={display_image} name="i" />
+			<Images alt="product" on:x-click={({ detail }) => remove_image(detail)} {images} let:index>
+				<Button
+					icon={CenterSquare}
+					iconDescription="Set as display image"
+					kind={index === display_image ? 'primary' : 'ghost'}
+					on:click={() => (display_image = index)}
+				/>
+			</Images>
 			<FileUpload
 				loading={images_loading}
 				bind:ref={images_ref}

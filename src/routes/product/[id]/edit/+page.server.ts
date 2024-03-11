@@ -6,7 +6,6 @@ import { IBMCOS_APIKEY, IBMCOS_ENDPOINT, IBMCOS_SERVICE_INSTANCE_ID } from '$env
 import { handle_server_error } from '$lib/util/handle_server_error';
 import type { Product } from '$lib/types/product';
 import { embed } from '$lib/util/embedding/embed';
-import { tagflow } from '$lib/util/product/tagflow';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const p = (await client.json.get(params.id, { path: ['n', 'p', 'i', 'ii', 'a'] })) as Product;
@@ -24,7 +23,7 @@ export const actions: Actions = {
 			const a = String(data.get('a') || '');
 			const p = String(data.get('p') || '');
 			// const c = String(data.get('c') || '');
-			const i = data.get('i') as File;
+			const i = data.get('i') as unknown as number;
 			console.debug('--i', i);
 			const ii = data.getAll('ii') as File[];
 			console.debug('--ii', ii);
@@ -37,15 +36,15 @@ export const actions: Actions = {
 
 			const uploaded_images: string[] = [];
 
-			const uploaded_display_image = i.size
-				? await cos
-						.upload({
-							Bucket: 'unimart',
-							Key: String(await client.incr('last_ibm_cos_object_id')),
-							Body: Buffer.from(await (i as File).arrayBuffer())
-						})
-						.promise()
-				: undefined;
+			// const uploaded_display_image = i.size
+			// 	? await cos
+			// 			.upload({
+			// 				Bucket: 'unimart',
+			// 				Key: String(await client.incr('last_ibm_cos_object_id')),
+			// 				Body: Buffer.from(await (i as File).arrayBuffer())
+			// 			})
+			// 			.promise()
+			// 	: undefined;
 
 			for (let i = ii.length - 1; i > -1; i--) {
 				if (!ii[i].size) continue;
@@ -61,15 +60,17 @@ export const actions: Actions = {
 			// await tagflow(params.id, a);
 			const v = await embed(JSON.stringify({ name: n, about: a, price: `${p}` }));
 			await client.json.set(params.id, '$.n', n);
-			console.debug('--u', uploaded_display_image);
-			if (uploaded_display_image)
-				await client.json.set(params.id, '$.i', uploaded_display_image.Location);
-			if (uploaded_images.length)
+			// console.debug('--u', uploaded_display_image);
+			// if (uploaded_display_image)
+			// 	await client.json.set(params.id, '$.i', uploaded_display_image.Location);
+			if (uploaded_images.length) {
 				await client.json.set(
 					params.id,
-					'$.i',
-					uploaded_images.map((i) => i.Location)
+					'$.ii',
+					uploaded_images
 				);
+				await client.json.set(params.id, '$.i', uploaded_images[i]);
+			}
 			await client.json.set(params.id, '$.a', a);
 			await client.json.set(params.id, '$.p', p);
 			await client.json.set(params.id, '$.v', v);

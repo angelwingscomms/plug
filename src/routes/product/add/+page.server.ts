@@ -5,7 +5,7 @@ import type { Actions } from './$types';
 import { IBMCOS_APIKEY, IBMCOS_ENDPOINT, IBMCOS_SERVICE_INSTANCE_ID } from '$env/static/private';
 import { message_id_prefix } from '$lib/constants';
 import { handle_server_error } from '$lib/util/handle_server_error';
-import { tagflow } from '$lib/util/product/tagflow';
+// import { tagflow } from '$lib/util/product/tagflow';
 import { embed } from '$lib/util/embedding/embed';
 
 export const actions: Actions = {
@@ -16,7 +16,7 @@ export const actions: Actions = {
 			const a = String(data.get('a') || '');
 			// const c = String(data.get('c') || '');
 			const p = String(data.get('p') || '');
-			const i = data.get('i');
+			const i = data.get('i') as unknown as number;
 			const ii = data.getAll('ii');
 
 			const id = `${message_id_prefix}${await client.incr('last_free_message_id')}`;
@@ -27,15 +27,15 @@ export const actions: Actions = {
 				serviceInstanceId: IBMCOS_SERVICE_INSTANCE_ID
 			});
 
-			const uploaded_images: object[] = [];
+			const uploaded_images: string[] = [];
 
-			const uploaded_display_image = await cos
-				.upload({
-					Bucket: 'unimart',
-					Key: String(await client.incr('last_ibm_cos_object_id')),
-					Body: Buffer.from(await (i as File).arrayBuffer())
-				})
-				.promise();
+			// const uploaded_display_image = await cos
+			// 	.upload({
+			// 		Bucket: 'unimart',
+			// 		Key: String(await client.incr('last_ibm_cos_object_id')),
+			// 		Body: Buffer.from(await (i as File).arrayBuffer())
+			// 	})
+			// 	.promise();
 
 			for (let i = ii.length - 1; i > -1; i--) {
 				console.log(i, ii[i]);
@@ -46,7 +46,7 @@ export const actions: Actions = {
 						Body: Buffer.from(await (ii[i] as File).arrayBuffer())
 					})
 					.promise();
-				uploaded_images.push(res);
+				uploaded_images.push(res.Location);
 			}
 
 			const v = await embed(JSON.stringify({ name: n, about: a }));
@@ -55,8 +55,8 @@ export const actions: Actions = {
 				n,
 				a,
 				v,
-				ii: uploaded_images.map(i => i.Location),
-				i: uploaded_display_image.Location,
+				ii: uploaded_images,
+				i: uploaded_images[i],
 				p,
 				k: 'p'
 			});

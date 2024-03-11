@@ -1,16 +1,27 @@
 <script lang="ts">
-	export let // edit: boolean,
-		images: string[];
-	// import { Button } from "carbon-components-svelte";
+	export let edit: boolean = false,
+		images: { id: number; src: string }[],
+		alt: string,
+		x_icon_description = 'remove this image';
+	import { Button } from 'carbon-components-svelte';
+	import { Close } from 'carbon-icons-svelte';
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher<{ 'x-click': number }>();
 </script>
 
 <div class="images">
-	{#each images as src}
+	{#each images as { id, src }, index (id)}
 		<div class="image">
-			<img class="img" {src} alt="to be sent as part of the message" />
-			<!-- {#if edit}
-                <Button on:click={() => remove_image(image.id)} icon={Close} iconDescription="Delete this image" />
-            {/if} -->
+			<img class="img" {src} {alt} />
+			{#if edit}
+				<Button
+					on:click={() => dispatch('x-click', id)}
+					icon={Close}
+					iconDescription={x_icon_description}
+				/>
+			{/if}
+			<slot {id} {index} />
 		</div>
 	{/each}
 </div>

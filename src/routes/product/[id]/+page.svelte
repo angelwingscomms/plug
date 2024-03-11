@@ -13,7 +13,7 @@
 			{/if}
 			<h3>{data.n}</h3>
 			<p>Owner: <Link href="/user/{data.u}">{data.uf}</Link></p>
-			<Images images={data.ii} />
+			<Images alt="product" images={data.ii.map((src, id) => ({ id, src }))} />
 			<pre>{data.a}</pre>
 		</div>
 	</Column>
