@@ -1,5 +1,6 @@
-import { embed_endpoint } from '$lib/constants';
 // import { Buffer } from 'node:buffer';
+
+import { embed_endpoint } from "$lib/constants/server";
 
 export const remote = async (text: string): Promise<number[]> => {
 	const res = await fetch(embed_endpoint, {
