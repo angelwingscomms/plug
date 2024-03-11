@@ -3,5 +3,5 @@ import { oai } from './oai';
 
 export const embed = (t: string) => oai(t);
 
-export const embed_to_buffer = async (t: string): Promise<Buffer> =>
+export const embed_buffer = async (t: string): Promise<Buffer> =>
 	Buffer.from(new Float32Array(await oai(t)).buffer);

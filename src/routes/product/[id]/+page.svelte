@@ -1,11 +1,15 @@
 <script lang="ts">
 	import { Column, Link, Row } from 'carbon-components-svelte';
+	import {page} from "$app/stores"
 	export let data;
 </script>
 
 <Row>
 	<Column max={432}>
 		<div>
+			{#if data.u === data.user}
+				<Link href="{$page.url.pathname}/edit">Edit this item</Link>
+			{/if}
 			<h3>{data.n}</h3>
 			<p>Owner: <Link href="/user/{data.u}/p">{data.uf}</Link></p>
 			<img src={data.i} alt="hmm" />

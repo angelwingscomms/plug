@@ -5,8 +5,8 @@ import { SchemaFieldTypes, VectorAlgorithms } from 'redis';
 
 export const setup = async () => {
 	console.debug('--setup')
-	await client.ft.dropIndex(message_index)
-	await client.ft.dropIndex(user_index)
+	// await client.ft.dropIndex(message_index)
+	// await client.ft.dropIndex(user_index)
 
 	try {
 		// for (const i of await client.keys(`${user_id_prefix}*`)) {

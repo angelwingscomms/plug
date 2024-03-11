@@ -2,7 +2,7 @@ import * as tf from '@tensorflow/tfjs';
 import { message_id_prefix, message_index } from '$lib/constants';
 import { message_channel } from '$lib/util/ably';
 import { message_name } from '$lib/util/chat/message_name';
-import { embed, embed_to_buffer } from '$lib/util/embedding/embed';
+import { embed, embed_buffer } from '$lib/util/embedding/embed';
 import { handle_server_error } from '$lib/util/handle_server_error';
 import { client } from '$lib/util/redis';
 import { error, json } from '@sveltejs/kit';
@@ -18,7 +18,7 @@ export const GET: RequestHandler = async ({ url, params, request }) => {
 		if (isNaN(page)) page = 0;
 		const q = url.searchParams.get('q') || '';
 		const query_embedding = await embed(q);
-		const B = await embed_to_buffer(q);
+		const B = await embed_buffer(q);
 		const res = await search<Message & { s: string; v?: V }>({
 			index: message_index,
 			query: `@t:"${params.id}"`,

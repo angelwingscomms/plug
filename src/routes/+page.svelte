@@ -27,7 +27,7 @@
 	});
 
 	let value = '',
-		documents: SearchDocument<ProductListing>[] = [];
+		documents: SearchDocument<ProductListing>[] = data.documents;
 
 	export const search = async () => {
 		if (loading) return
@@ -49,6 +49,7 @@
 
 <Row>
 	<Column>
+		<h1>Simple Shopping</h1>
 		<div class="input">
 			<TextInput hideLabel placeholder="Search" bind:value labelText="Search" />
 			<Button size="field" on:click={search} icon={loading ? InlineLoading : Search} />
@@ -64,6 +65,8 @@
 
 <style lang="sass">
 	@use '@carbon/layout'
+	h1
+		padding: 1rem 0
 	.products
 		display: flex
 		flex-direction: row

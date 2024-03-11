@@ -1,7 +1,6 @@
 <script lang="ts">
-	export let 
-		multiple = false,
-		name: string = "",
+	export let multiple = false,
+		name: string = '',
 		ref: HTMLInputElement,
 		label = `Upload file${multiple ? 's' : ''}`,
 		button: ButtonProps = {},
@@ -24,5 +23,12 @@
 	};
 </script>
 
-<Button icon={Upload} iconDescription={label ?? "Upload file"} {...button} on:click={() => ref.click()}>{#if label}{label}{/if}</Button>
+<Button
+	icon={Upload}
+	iconDescription={label + `${ref?.files.length ? ref?.files.length : ''}`}
+	{...button}
+	on:click={() => ref?.click()}
+	>{label}
+		{ref?.files.length ? ref?.files.length : ''}</Button
+>
 <input style="display: none;" {multiple} {name} on:change={change} type="file" bind:this={ref} />

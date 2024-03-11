@@ -3,7 +3,7 @@ import { message_id_prefix, message_index, top_level_messages_name } from '$lib/
 import type { V } from '$lib/types';
 import type { Message } from '$lib/types/message';
 import { message_channel } from '$lib/util/ably';
-import { embed, embed_to_buffer } from '$lib/util/embedding/embed';
+import { embed, embed_buffer } from '$lib/util/embedding/embed';
 // import { message_name } from '$lib/util/chat/message_name';
 import { handle_server_error } from '$lib/util/handle_server_error';
 import { client } from '$lib/util/redis';
@@ -19,7 +19,7 @@ export const GET: RequestHandler = async ({ url, request }) => {
 		const t = url.searchParams.get('t') || '';
 		console.debug('page, t', page, t)
 		const query_embedding = await embed(q);
-		const B = await embed_to_buffer(q);
+		const B = await embed_buffer(q);
 		const res = await search<Message & { s: string; v?: V }>({
 			index: message_index,
 			query: `@t: ${top_level_messages_name}`,

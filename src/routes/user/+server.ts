@@ -4,7 +4,7 @@ import { handle_server_error } from '$lib/util/handle_server_error';
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { search } from '$lib/util/redis/search';
-import { embed, embed_to_buffer } from '$lib/util/embedding/embed';
+import { embed, embed_buffer } from '$lib/util/embedding/embed';
 import type { V } from '$lib/types';
 
 export const GET: RequestHandler = async ({ url }) => {
@@ -13,7 +13,7 @@ export const GET: RequestHandler = async ({ url }) => {
 		if (isNaN(p)) p = 0;
 		const q = url.searchParams.get('q') || '';
 		const query_embedding = await embed(q);
-		const B = await embed_to_buffer(q);
+		const B = await embed_buffer(q);
 		const res = await search<{ u: string; s: string; v: V }>({
 			index: user_index,
 			page: p,

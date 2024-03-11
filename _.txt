@@ -24,6 +24,12 @@ _learn
     goto previous page in component
     javascript disabled
 todo
+    sidenav add product
+    show images in add page
+    edit page shows image
+    conditionally calculate embeddings if content is different on edit
+    show products on homepage - search component
+    currency selector
     tests
         send message to t
         send message to m
