@@ -12,7 +12,7 @@
 				<Link href="{$page.url.pathname}/edit">Edit this item</Link>
 			{/if}
 			<h3>{data.n}</h3>
-			<p>Owner: <Link href="/user/{data.u}">{data.uf}</Link></p>
+			<p>seller: <Link href="/user/{data.u}">{data.uf}</Link></p>
 			<Images alt="product" images={data.ii.map((src, id) => ({ id, src }))} />
 			<p>GH₵ {data.p}</p>
 			<div>{@html data.a}</div>

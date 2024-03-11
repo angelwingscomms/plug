@@ -5,22 +5,28 @@
 	// import { ShoppingCartPlus, StarFilled } from 'carbon-icons-svelte';
 </script>
 
-<div class="product-card">
-	<div class="product-image">
-		<img src={p.i} alt="product" />
-	</div>
-  <p>{p.n}</p>
-	<Link href="/product/{id}">product details</Link>
-	<Link href="/user/{p.u}">contact seller</Link>
-	<p>GH₵ {p.p}</p>
-	<div class="act">
-		<!-- <Button>Buy Now</Button>
-		<Button icon={ShoppingCartPlus} /> -->
-	</div>
-</div>
+<a class="card" href="/product/{id}">
+  <div class="product-card">
+    <div class="product-image">
+      <img src={p.i} alt="product" />
+    </div>
+    <p>{p.n}</p>
+    <!-- <Link href="/user/{p.u}">contact seller</Link> -->
+    <p>GH₵ {p.p}</p>
+    <div class="act">
+      <!-- <Button>Buy Now</Button>
+      <Button icon={ShoppingCartPlus} /> -->
+    </div>
+  </div>
+</a>
 
 <style lang="sass">
   @use '@carbon/layout'
+
+  .card
+    text-decoration: none
+    // color: white
+    all: inherit
 
   .product-card
       display: flex

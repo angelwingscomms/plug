@@ -51,7 +51,7 @@
 	<Column>
 		<h3>Plug. Connect with buyers and sellers with ease. Discover unique items</h3>
 		<div class="input">
-			<TextInput hideLabel placeholder="Search" bind:value labelText="Search" />
+			<TextInput hideLabel placeholder="Search all products" bind:value labelText="Search" />
 			<Button size="field" on:click={search} icon={loading ? InlineLoading : Search} />
 		</div>
 	</Column>
