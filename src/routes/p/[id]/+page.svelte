@@ -16,7 +16,7 @@
 			<Images alt="product" images={data.ii.map((src, id) => ({ id, src }))} />
 			<p>GH₵ {data.p}</p>
 			<div>{@html data.h}</div>
-			<Link href="{$page.url.pathname}/similar">Similar products</Link>
+			<Link href="{$page.url.pathname}/similar">similar products</Link>
 		</div>
 	</Column>
 </Row>

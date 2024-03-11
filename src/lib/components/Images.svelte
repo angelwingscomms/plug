@@ -11,7 +11,7 @@
 </script>
 
 <div class="images">
-	{#each images as { id, src }, index (id)}
+	{#each images as { id, src }, index}
 		<div class="image">
 			<img class="img" {src} {alt} />
 			{#if edit}

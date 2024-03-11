@@ -9,14 +9,16 @@
 <Row>
 	<Column>
 		<p>Similar products to <Link href="/p/{data.id}">{data.n}</Link></p>
+
+		<br />
+
+		<div class="products">
+			{#each data.d as d}
+				<Product id={d.id} p={d.value} />
+			{/each}
+		</div>
 	</Column>
 </Row>
-
-<div class="products">
-	{#each data.d as d}
-		<Product id={d.id} p={d.value} />
-	{/each}
-</div>
 
 <style lang="sass">
 	@use '@carbon/layout'

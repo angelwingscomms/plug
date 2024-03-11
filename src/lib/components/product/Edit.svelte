@@ -13,7 +13,7 @@
 	import { goto } from '$app/navigation';
 	// import { OnEnter } from 'sveltekit-carbon-utils';
 	import FileUpload from '$lib/components/FileUpload.svelte';
-	import { CenterSquare, Send } from 'carbon-icons-svelte';
+	import { CenterSquare, Close, Send } from 'carbon-icons-svelte';
 	import type { Product } from '$lib/types/product';
 	import { notify } from '$lib/util';
 	import Images from '../Images.svelte';
@@ -47,6 +47,7 @@
 
 	const update_images = async ({ detail }: { detail: File[] }) => {
 		images_loading = true;
+		images = []
 		for (let i = 0; i < detail.length; i++) {
 			try {
 				const base64 = await file_to_base64(detail[i]);
@@ -132,10 +133,18 @@
 				<Images alt="product" on:x-click={({ detail }) => remove_image(detail)} {images} let:index>
 					<Button
 						icon={CenterSquare}
-						iconDescription="Set as display image"
+						iconDescription="set as display image"
 						kind={index === display_image ? 'primary' : 'ghost'}
 						on:click={() => (display_image = index)}
 					/>
+					<!-- <Button
+						icon={Close}
+						iconDescription="remove this image"
+						kind="ghost"
+						on:click={() => {
+							images_ref.files?.splice(index, 1)
+						}}
+					/> -->
 				</Images>
 				<ButtonSet stacked>
 					<FileUpload
