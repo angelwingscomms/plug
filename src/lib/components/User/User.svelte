@@ -12,6 +12,7 @@
 		{#if $page.data.user === id}
 			<Button icon={Edit} href="/edit">edit your profile</Button>
 		{/if}
+		<Button href="{$page.url.pathname}/p">Products by {u}</Button>
 	</ButtonSet>
 
 	<h3 class="shift">{u}</h3>

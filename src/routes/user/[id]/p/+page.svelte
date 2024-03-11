@@ -32,8 +32,8 @@
 		documents: SearchDocument<ProductListing>[] = data.documents;
 
 	export const search = async () => {
-		if (loading) return
-		loading = true
+		if (loading) return;
+		loading = true;
 		try {
 			const { data } = await axios.get('/product', {
 				params: { q: value }
@@ -43,7 +43,7 @@
 		} catch (e) {
 			console.error(e);
 		}
-		loading = false
+		loading = false;
 	};
 </script>
 
@@ -51,14 +51,10 @@
 
 <Row>
 	<Column>
+		<h3>Products by {data.uf}</h3>
 		<div class="input">
-			<TextInput
-				hideLabel
-				placeholder="Search"
-				bind:value
-				labelText="Search"
-			/>
-			<Button size="field" on:click={search} icon={loading ? InlineLoading : Search } />
+			<TextInput hideLabel placeholder="Search" bind:value labelText="Search" />
+			<Button size="field" on:click={search} icon={loading ? InlineLoading : Search} />
 		</div>
 	</Column>
 </Row>
