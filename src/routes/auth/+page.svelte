@@ -49,29 +49,50 @@
 	};
 </script>
 
-{#if error}
-	<InlineNotification kind="error" title={error} />
-{/if}
-
-{#if n}
-	<TextInput
-		invalid={email_invalid}
-		on:input={() => {
-			email_invalid = false;
-			error = '';
-		}}
-		invalidText="Email required"
-		required
-		bind:value={email}
-		labelText="email"
-	/>
-{/if}
 <div class="all">
-	<TextInput on:input={() => (error = '')} bind:value={username} labelText="username" />
-	<PasswordInput on:input={() => (error = '')} bind:value={password} labelText="password" />
+	<h3>
+		{data.t
+			? n
+				? 'Create an account to continue'
+				: 'Sign in to continue'
+			: n
+				? 'Create an account'
+				: 'Sign in'}
+	</h3>
+	{#if error}
+		<InlineNotification kind="error" title={error} />
+	{/if}
+
+	{#if n}
+		<TextInput
+			invalid={email_invalid}
+			on:input={() => {
+				email_invalid = false;
+				error = '';
+			}}
+			invalidText="Email required"
+			required
+			bind:value={email}
+			labelText="email"
+		/>
+	{/if}
+	<TextInput
+		on:input={() => (error = '')}
+		bind:value={username}
+		labelText={n ? 'create a username' : 'username'}
+	/>
+	<PasswordInput
+		on:input={() => (error = '')}
+		bind:value={password}
+		labelText={n ? 'create a password' : 'password'}
+	/>
 	<ButtonSet stacked>
-		<Button icon={loading ? InlineLoading : Send} on:click={go}>go</Button>
-		<Button kind="ghost" on:click={() => (n = !n)}>{n ? 'existing user' : 'new User'}</Button>
+		<Button icon={loading ? InlineLoading : Send} on:click={go}
+			>{n ? 'create account' : 'sign in'}</Button
+		>
+		<Button kind="ghost" on:click={() => (n = !n)}
+			>{n ? 'sign in to an existing account' : 'create a new account'}</Button
+		>
 	</ButtonSet>
 </div>
 
