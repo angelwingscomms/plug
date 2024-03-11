@@ -5,4 +5,4 @@
 
 <h3>Edit this product</h3>
 
-<Edit p={data.p} button_text="Edit" />
+<Edit p={data.p} />

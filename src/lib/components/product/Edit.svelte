@@ -1,6 +1,7 @@
 <script lang="ts">
 	import {
 		Button,
+		ButtonSet,
 		Column,
 		InlineLoading,
 		Row,
@@ -19,8 +20,7 @@
 
 	export let p: Product | undefined = undefined,
 		images: Image[] = Array.isArray(p?.ii) ? p?.ii.map((src, id) => ({ src, id })) : [],
-		images_loading = false,
-		button_text: string;
+		images_loading = false;
 	let loading = false,
 		next_image_id = 0,
 		display_image = typeof p?.i === 'number' ? p?.i : 0,
@@ -100,51 +100,63 @@
 					}
 				};
 			}}
-		>
-			<TextInput maxlength={2160} name="n" value={p?.n ?? ''} labelText="Name" />
-			<TextInput maxlength={2160} name="p" value={p?.p ?? ''} labelText="Price" />
-			<TextArea maxlength={2160} name="a" value={p?.a ?? ''} labelText="About this product" />
-			<!-- <FileUpload
-				loading={image_loading}
-				name="i"
-				bind:ref={image_ref}
-				on:change={() => {
-					image_added = true
-				}}
-				label="{image_added ? 'Change' : 'Add'} display image"
-			/> -->
-			<!-- {#if images.length}
-				<div class="images">
-					{#each images as image}
-						<div class="image">
-							<img class="img" src={image.image_url.url} alt="to be sent as part of the message" />
-							<Button
-								on:click={() => remove_image(image.id)}
-								icon={Close}
-								iconDescription="Delete this image"
-							/>
-						</div>
-					{/each}
-				</div>
-			{/if} -->
-			<input type="number" style="display: none;" bind:value={display_image} name="i" />
-			<Images alt="product" on:x-click={({ detail }) => remove_image(detail)} {images} let:index>
-				<Button
-					icon={CenterSquare}
-					iconDescription="Set as display image"
-					kind={index === display_image ? 'primary' : 'ghost'}
-					on:click={() => (display_image = index)}
-				/>
-			</Images>
-			<FileUpload
-				loading={images_loading}
-				bind:ref={images_ref}
-				on:change={update_images}
-				name="ii"
-				multiple
-				label="Add images"
-			/>
-			<Button icon={loading ? InlineLoading : Send} type="submit">{button_text}</Button>
+		><div class="form">
+			
+				<TextInput maxlength={2160} name="n" value={p?.n ?? ''} labelText="Name" />
+				<TextInput maxlength={2160} name="p" value={p?.p ?? ''} labelText="Price" />
+				<TextArea maxlength={2160} name="a" value={p?.a ?? ''} labelText="About this product" />
+				<!-- <FileUpload
+					loading={image_loading}
+					name="i"
+					bind:ref={image_ref}
+					on:change={() => {
+						image_added = true
+					}}
+					label="{image_added ? 'Change' : 'Add'} display image"
+				/> -->
+				<!-- {#if images.length}
+					<div class="images">
+						{#each images as image}
+							<div class="image">
+								<img class="img" src={image.image_url.url} alt="to be sent as part of the message" />
+								<Button
+									on:click={() => remove_image(image.id)}
+									icon={Close}
+									iconDescription="Delete this image"
+								/>
+							</div>
+						{/each}
+					</div>
+				{/if} -->
+				<input type="number" style="display: none;" bind:value={display_image} name="i" />
+				<Images alt="product" on:x-click={({ detail }) => remove_image(detail)} {images} let:index>
+					<Button
+						icon={CenterSquare}
+						iconDescription="Set as display image"
+						kind={index === display_image ? 'primary' : 'ghost'}
+						on:click={() => (display_image = index)}
+					/>
+				</Images>
+				<ButtonSet stacked>
+					<FileUpload
+						loading={images_loading}
+						bind:ref={images_ref}
+						on:change={update_images}
+						name="ii"
+						multiple
+						label="set images"
+					/>
+					<Button icon={loading ? InlineLoading : Send} type="submit">submit</Button>
+				</ButtonSet>
+		</div>
 		</form>
 	</Column>
 </Row>
+
+<style>
+	.form {
+		display: flex;
+		flex-direction: column;
+		row-gap: 1rem;
+	}
+</style>

@@ -1,15 +1,9 @@
 <script lang="ts">
 	import Product from '$lib/components/ProductListing.svelte';
 	import axios from 'axios';
-	import {
-		Button,
-		Column,
-		InlineLoading,
-		Row,
-		TextInput,
-	} from 'carbon-components-svelte';
+	import { Button, Column, InlineLoading, Row, TextInput } from 'carbon-components-svelte';
 	import { Search } from 'carbon-icons-svelte';
-	import { ArrowRight } from "carbon-icons-svelte";
+	import { ArrowRight } from 'carbon-icons-svelte';
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 	import OnEnter from '$lib/components/OnEnter.svelte';
@@ -31,8 +25,8 @@
 		documents: SearchDocument<ProductListing>[] = data.documents;
 
 	export const search = async () => {
-		if (loading) return
-		loading = true
+		if (loading) return;
+		loading = true;
 		try {
 			const { data } = await axios.get('/product', {
 				params: { q: value }
@@ -42,38 +36,43 @@
 		} catch (e) {
 			console.error(e);
 		}
-		loading = false
+		loading = false;
 	};
 </script>
 
 <OnEnter on:enter={search} />
 
 <Row>
-	<Column>
-		<h3>Plug. Connect with buyers and sellers with ease. Discover unique items</h3>
-		<Button href="/product/add" icon={ArrowRight}>Add a product</Button>
-		<div class="input">
-			<TextInput hideLabel placeholder="Search all products" bind:value labelText="Search" />
-			<Button size="field" on:click={search} icon={loading ? InlineLoading : Search} />
+	<Column
+		><div class="all">
+			<h3>Plug. Connect with buyers and sellers with ease. Discover unique items</h3>
+			<Button href="/product/add" icon={ArrowRight}>Add a product</Button>
+			<div class="input">
+				<TextInput hideLabel placeholder="Search all products" bind:value labelText="Search" />
+				<Button size="field" on:click={search} icon={loading ? InlineLoading : Search} />
+			</div>
+			<div class="products">
+				{#each documents as d}
+					<Product id={d.id} p={d.value} />
+				{/each}
+			</div>
 		</div>
 	</Column>
 </Row>
-
-<div class="products">
-	{#each documents as d}
-		<Product id={d.id} p={d.value} />
-	{/each}
-</div>
 
 <style lang="sass">
 	@use '@carbon/layout'
 	h3
 		padding: 1rem 0
+	.all
+		display: flex
+		flex-direction: column
+		row-gap: layout.$spacing-03
 	.products
 		display: flex
 		flex-direction: row
 		flex-wrap: wrap
-		column-gap: layout.$spacing-06
+		column-gap: layout.$spacing-03
 	.input
 		display: flex
 		flex-direction: row

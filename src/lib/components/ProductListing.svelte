@@ -33,18 +33,20 @@
       flex-direction: column
       justify-content: space-between
       width: 144px
-      row-gap: layout.$spacing-03
+      row-gap: layout.$spacing-01
       overflow: hidden
   
   .product-image
     width: 100%
+    height: 144px
     display: flex
     justify-content: center
     align-items: center
   
   .product-image img
+    object-fit: contain
     width: 100%
-    height: auto
+    height: 100%
   
     .act
         display: flex

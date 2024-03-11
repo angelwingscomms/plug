@@ -27,9 +27,7 @@ export const actions: Actions = {
 			const p = String(data.get('p') || '');
 			// const c = String(data.get('c') || '');
 			const i = data.get('i') as unknown as number;
-			console.debug('--i', i);
 			const ii = data.getAll('ii') as File[];
-			console.debug('--ii', ii);
 
 			const cos = new IBM.S3({
 				endpoint: IBMCOS_ENDPOINT,
@@ -63,19 +61,14 @@ export const actions: Actions = {
 			// await tagflow(params.id, a);
 			const v = await embed(JSON.stringify({ name: n, about: a, price: `${p}` }));
 			await client.json.set(params.id, '$.n', n);
-			// console.debug('--u', uploaded_display_image);
 			// if (uploaded_display_image)
 			// 	await client.json.set(params.id, '$.i', uploaded_display_image.Location);
 			if (uploaded_images.length) {
-				await client.json.set(
-					params.id,
-					'$.ii',
-					uploaded_images
-				);
+				await client.json.set(params.id, '$.ii', uploaded_images);
 				await client.json.set(params.id, '$.i', uploaded_images[i]);
 			}
 			await client.json.set(params.id, '$.a', a);
-			await client.json.set(params.id, '$.h', sanitize_string(await to_html(a)))
+			await client.json.set(params.id, '$.h', sanitize_string(await to_html(a)));
 			await client.json.set(params.id, '$.p', p);
 			await client.json.set(params.id, '$.v', v);
 			throw redirect(302, `/product/${params.id}`);

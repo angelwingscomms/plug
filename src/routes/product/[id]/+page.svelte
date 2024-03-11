@@ -15,7 +15,7 @@
 			<p>seller: <Link href="/user/{data.u}">{data.uf}</Link></p>
 			<Images alt="product" images={data.ii.map((src, id) => ({ id, src }))} />
 			<p>GH₵ {data.p}</p>
-			<div>{@html data.a}</div>
+			<div>{@html data.h}</div>
 		</div>
 	</Column>
 </Row>

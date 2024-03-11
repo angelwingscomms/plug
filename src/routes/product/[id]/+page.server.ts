@@ -5,9 +5,9 @@ import { handle_server_error } from '$lib/util/handle_server_error';
 
 export const load: PageServerLoad = async ({ request, params }) => {
 	try {
-		const product = (await client.json.get(params.id, { path: ['n', 'a', 'i', 'ii', 'u', 'p'] })) as {
+		const product = (await client.json.get(params.id, { path: ['n', 'h', 'i', 'ii', 'u', 'p'] })) as {
 			n: string;
-			a: string;
+			h: string;
 			i: string;
 			ii: string[];
 			p: number;
