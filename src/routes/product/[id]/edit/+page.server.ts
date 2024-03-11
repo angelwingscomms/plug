@@ -4,8 +4,8 @@ import IBM from 'ibm-cos-sdk';
 import type { Actions, PageServerLoad } from './$types';
 import { IBMCOS_APIKEY, IBMCOS_ENDPOINT, IBMCOS_SERVICE_INSTANCE_ID } from '$env/static/private';
 import { handle_server_error } from '$lib/util/handle_server_error';
-import { remote } from '$lib/util/embedding/remote';
 import type { Product } from '$lib/types/product';
+import { embed } from '$lib/util/embedding/embed';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const p = (await client.json.get(params.id, { path: ['n', 'p', 'i', 'ii', 'a'] })) as Product;
@@ -55,7 +55,7 @@ export const actions: Actions = {
 				uploaded_images.push(res.Location);
 			}
 			await tagflow(params.id, a)
-			const v = await remote(JSON.stringify({ name: n, about: a, price: `${p}` }));
+			const v = await embed(JSON.stringify({ name: n, about: a, price: `${p}` }));
 			await client.json.set(params.id, '$.n', n);
 			if (uploaded_display_image)
 				await client.json.set(params.id, '$.i', uploaded_display_image.Location);

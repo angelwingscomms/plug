@@ -1,5 +1,5 @@
 import { feedback_id_prefix } from '$lib/constants';
-import { remote } from '$lib/util/embedding/remote';
+import { embed } from '$lib/util/embedding/embed';
 import { handle_server_error } from '$lib/util/handle_server_error';
 import { client } from '$lib/util/redis';
 import type { RequestHandler } from './$types';
@@ -12,7 +12,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			'$',
 			{
 				t,
-				v: await remote(t) as number[]
+				v: await embed(t) as number[]
 			}
 		);
 		return new Response(null, { status: 201 });

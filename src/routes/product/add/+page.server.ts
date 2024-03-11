@@ -4,9 +4,9 @@ import IBM from 'ibm-cos-sdk';
 import type { Actions } from './$types';
 import { IBMCOS_APIKEY, IBMCOS_ENDPOINT, IBMCOS_SERVICE_INSTANCE_ID } from '$env/static/private';
 import { message_id_prefix } from '$lib/constants';
-import { remote } from '$lib/util/embedding/remote';
 import { handle_server_error } from '$lib/util/handle_server_error';
 import { tagflow } from '$lib/util/product/tagflow';
+import { embed } from '$lib/util/embedding/embed';
 
 export const actions: Actions = {
 	default: async ({ request, locals }) => {
@@ -49,7 +49,7 @@ export const actions: Actions = {
 				uploaded_images.push(res);
 			}
 
-			const v = await remote(JSON.stringify({ name: n, about: a }));
+			const v = await embed(JSON.stringify({ name: n, about: a }));
 			console.info('--v.l', v.length)
 			await client.json.set(id, '$', {
 				u: locals.user,
