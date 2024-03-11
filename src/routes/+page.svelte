@@ -9,6 +9,7 @@
 		TextInput,
 	} from 'carbon-components-svelte';
 	import { Search } from 'carbon-icons-svelte';
+	import { ArrowRight } from "carbon-icons-svelte";
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 	import OnEnter from '$lib/components/OnEnter.svelte';
@@ -50,6 +51,7 @@
 <Row>
 	<Column>
 		<h3>Plug. Connect with buyers and sellers with ease. Discover unique items</h3>
+		<Button href="/product/add" icon={ArrowRight}>Add a product</Button>
 		<div class="input">
 			<TextInput hideLabel placeholder="Search all products" bind:value labelText="Search" />
 			<Button size="field" on:click={search} icon={loading ? InlineLoading : Search} />

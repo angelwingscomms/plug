@@ -1,4 +1,4 @@
-<script lang='ts'>
+<script lang="ts">
 	import { Content, Grid, Theme } from 'carbon-components-svelte';
 	import 'carbon-components-svelte/css/all.css';
 	import { browser } from '$app/environment';
@@ -11,30 +11,33 @@
 	import { navigating } from '$app/stores';
 	import { previous_page } from '$lib/store';
 
-	console.log('God bless Isa')
+	console.log('God bless Isa');
 
 	inject({ mode: dev ? 'development' : 'production' });
 
 	if (browser && navigator && navigator.serviceWorker)
-		navigator.serviceWorker.ready.then((registration) => registration.update());
+		navigator.serviceWorker.ready.then((registration) => {
+			registration.update();
+			console.info('hahaha')
+		});
 
-	onMount(async() => {
+	onMount(async () => {
 		if (window.navigator && window.navigator.serviceWorker) {
-			console.info('dlf', navigator.serviceWorker.controller)
-			await navigator.serviceWorker.ready
-			console.info('service worker ready')
+			console.info('dlf', navigator.serviceWorker.controller);
+			await navigator.serviceWorker.ready;
+			console.info('service worker ready');
 		} else {
-			console.debug('unavailable')
+			console.debug('unavailable');
 		}
 		if (window.matchMedia) {
 			window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-				e.matches ? $theme = 'g100' : $theme = 'white'
+				e.matches ? ($theme = 'g100') : ($theme = 'white');
 			});
 		}
 	});
 
 	$: if ($navigating) {
-		$previous_page = $navigating.from?.url.pathname ?? ''
+		$previous_page = $navigating.from?.url.pathname ?? '';
 	}
 </script>
 

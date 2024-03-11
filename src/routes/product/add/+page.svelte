@@ -3,4 +3,6 @@
 
 </script>
 
+<h3>Add a product</h3>
+
 <Edit button_text="Add" />
