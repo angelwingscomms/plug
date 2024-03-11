@@ -45,7 +45,7 @@
 <Row>
 	<Column
 		><div class="all">
-			<h3>Plug. Connect with buyers and sellers with ease. Discover unique items</h3>
+			<h3>Simple Shopping. Connect with buyers and sellers with ease. Discover unique items</h3>
 			<Button href="/product/add" icon={ArrowRight}>Add a product</Button>
 			<div class="input">
 				<TextInput hideLabel placeholder="Search all products" bind:value labelText="Search" />
