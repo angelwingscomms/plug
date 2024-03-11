@@ -35,6 +35,9 @@
       width: 144px
       row-gap: layout.$spacing-01
       overflow: hidden
+
+  .product-card p
+      font-weight: 500
   
   .product-image
     width: 100%
