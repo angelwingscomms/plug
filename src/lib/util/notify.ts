@@ -1,10 +1,19 @@
 import { browser } from '$app/environment';
 import { arrayStore } from '$lib/util/store';
-import type { ToastNotification as ToastNotificationProps } from 'carbon-components-svelte/types';
+// import type { ToastNotification as ToastNotificationProps } from 'carbon-components-svelte/types';
 
-export const notify = (message: string | ToastNotificationProps) => {
+export interface ToastNotification {
+	caption?: string,
+	title: string,
+	kind?: string,
+	timeout?: number,
+	subtitle?: string,
+	lowContrast?: boolean
+}
+
+export const notify = (message: string | ToastNotification) => {
 	if (browser) {
-		const n: ToastNotificationProps = typeof message === 'string' ? { title: message } : message;
+		const n: ToastNotification = typeof message === 'string' ? { title: message } : message;
 		n.caption = new Date().toLocaleString();
 		if (!n.kind) n.kind = 'success'
 		if (!n.timeout) n.timeout = n.kind === 'success' ? 432 : 4320
@@ -13,4 +22,4 @@ export const notify = (message: string | ToastNotificationProps) => {
 	}
 };
 
-export const notifications = arrayStore<ToastNotificationProps>('notifications');
+export const notifications = arrayStore<object>('notifications');

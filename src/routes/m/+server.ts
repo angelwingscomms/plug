@@ -45,7 +45,7 @@ export const GET: RequestHandler = async ({ url, request }) => {
 		);
 		return json(res);
 	} catch (e) {
-		throw handle_server_error(`${e}`, request);
+		throw handle_server_error(request, e);
 	}
 };
 
@@ -73,6 +73,6 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 		// message_channel.publish(message_name(locals.user, locals.user), { id, value: { ...message } });
 		return new Response();
 	} catch (e) {
-		throw handle_server_error(`POST /m error: ${e}`, request);
+		throw handle_server_error(request, e);
 	}
 };

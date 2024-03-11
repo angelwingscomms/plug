@@ -42,7 +42,7 @@ export const GET: RequestHandler = async ({ url, params, request }) => {
 		);
 		return json(res);
 	} catch (e) {
-		throw handle_server_error(`${e}`, request);
+		throw handle_server_error(request, e);
 	}
 };
 
@@ -71,6 +71,6 @@ export const POST: RequestHandler = async ({ request, params, locals }) => {
 		message_channel.publish(message_name(params.id, locals.user), event);
 		return new Response();
 	} catch (e) {
-		throw handle_server_error(`/m/${params.id} error: ${e}`, request);
+		throw handle_server_error(request, e);
 	}
 };

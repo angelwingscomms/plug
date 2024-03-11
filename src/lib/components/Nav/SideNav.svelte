@@ -12,7 +12,7 @@
 	<SideNavItems>
 		{#if $page.data.user}
 			<SideNavLink text="your products" href="/user/{$page.data.user}/p" />
-			<SideNavLink text="add product" href="/product/add" />
+			<SideNavLink text="add product" href="/p/add" />
 			<SideNavLink text="users similar to you" href="/user/{$page.data.user}/similar" />
 		{/if}
 		

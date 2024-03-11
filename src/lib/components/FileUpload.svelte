@@ -2,13 +2,13 @@
 	export let multiple = false,
 		name: string = '',
 		loading: boolean,
-		ref: HTMLInputElement,
+		ref: HTMLInputElement | undefined = undefined,
 		label = `Upload file${multiple ? 's' : ''}`,
-		button: ButtonProps = {},
+		button: object = {},
 		dispatch_empty = false;
 
 	import { Button, InlineLoading } from 'carbon-components-svelte';
-	import type { Button as ButtonProps } from 'carbon-components-svelte/types';
+	// import type { Button as ButtonProps } from 'carbon-components-svelte/types';
 	import Upload from 'carbon-icons-svelte/lib/Upload.svelte';
 	import { createEventDispatcher } from 'svelte';
 
@@ -23,10 +23,9 @@
 
 <Button
 	icon={loading ? InlineLoading : Upload}
-	iconDescription={label + `${ref?.files.length ? ref?.files.length : ''}`}
+	iconDescription={label}
 	{...button}
 	on:click={() => ref?.click()}
-	>{label}
-	{ref?.files.length ? ref?.files.length : ''}</Button
+	>{label}</Button
 >
 <input style="display: none;" {multiple} {name} on:change={change} type="file" bind:this={ref} />

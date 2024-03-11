@@ -11,7 +11,6 @@
 		Tile
 	} from 'carbon-components-svelte';
 	import { Search } from 'carbon-icons-svelte';
-	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 	import OnEnter from '$lib/components/OnEnter.svelte';
 	import type { SearchDocument } from '$lib/types';
@@ -21,15 +20,8 @@
 
 	let loading = false;
 
-	onMount(async () => {
-		if (data.q) {
-			value = data.q;
-			await search();
-		}
-	});
-
 	let value = '',
-		documents: SearchDocument<ProductListing>[] = data.documents;
+		documents: SearchDocument<ProductListing>[] = data.d;
 
 	export const search = async () => {
 		if (loading) return;
@@ -51,7 +43,7 @@
 
 <Row>
 	<Column>
-		<h3>Products by {data.uf}</h3>
+		<h3>Products similar to <Link href="/p" >{data.n}</Link></h3>
 		<div class="input">
 			<TextInput hideLabel placeholder="Search" bind:value labelText="Search" />
 			<Button size="field" on:click={search} icon={loading ? InlineLoading : Search} />

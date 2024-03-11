@@ -12,7 +12,7 @@
 	} from '$env/static/public';
 	import axios from 'axios';
 	import { Button } from 'carbon-components-svelte';
-	import type { Button as ButtonProps } from 'carbon-components-svelte/types';
+	// import type { Button as ButtonProps } from 'carbon-components-svelte/types';
 	import { createEventDispatcher } from 'svelte';
 	import { v4 } from 'uuid';
 
@@ -20,7 +20,7 @@
 	const dispatch = createEventDispatcher();
 
 	export let amount: number,
-		button_props: ButtonProps,
+		button_props: object,
 		metadata: unknown,
 		currency: 'NGN' | 'GHS' | 'ZAR' | 'USD';
 

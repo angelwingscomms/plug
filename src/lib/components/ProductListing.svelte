@@ -5,7 +5,7 @@
 	// import { ShoppingCartPlus, StarFilled } from 'carbon-icons-svelte';
 </script>
 
-<a class="card" href="/product/{id}">
+<a class="card" href="/p/{id}">
 	<div class="product-card">
 		<div class="product-image">
 			<img src={p.i} alt="product" />
@@ -50,8 +50,4 @@
     object-fit: contain
     width: 100%
     height: 100%
-  
-    .act
-        display: flex
-        flex-direction: row
 </style>

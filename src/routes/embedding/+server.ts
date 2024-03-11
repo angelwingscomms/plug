@@ -6,7 +6,7 @@ import { handle_server_error } from '$lib/util/handle_server_error';
 export const POST: RequestHandler = async ({ request }) => {
 	try {
 		return json(await oai(await request.text()));
-	} catch {
-		throw handle_server_error('An error occured', request);
+	} catch (e) {
+		throw handle_server_error(request, e);
 	}
 };

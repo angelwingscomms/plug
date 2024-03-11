@@ -25,6 +25,6 @@ export const POST: RequestHandler = async ({ request, params, locals }) => {
 		});
 		return new Response();
 	} catch (e) {
-		throw handle_server_error(`/chat/${params.id} error: ${e}`, request);
+		throw handle_server_error(request, e);
 	}
 };

@@ -7,7 +7,7 @@ import { search } from '$lib/util/redis/search';
 import { embed, embed_buffer } from '$lib/util/embedding/embed';
 import type { V } from '$lib/types';
 
-export const GET: RequestHandler = async ({ url }) => {
+export const GET: RequestHandler = async ({ url, request }) => {
 	try {
 		let p = Number(url.searchParams.get('p'));
 		if (isNaN(p)) p = 0;
@@ -29,6 +29,6 @@ export const GET: RequestHandler = async ({ url }) => {
 		});
 		return json(res);
 	} catch (e) {
-		throw handle_server_error(url.pathname, e);
+		throw handle_server_error(request, e);
 	}
 };

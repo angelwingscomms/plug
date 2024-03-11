@@ -14,7 +14,7 @@ export const handle_server_error = (
 	message?: string,
 	error_message?: string
 ) => {
-	if (!(e.status && String(e.status).startsWith('3'))) {
+	if (!e.status) {
 		console.error('--server-error');
 		console.error(message ?? '', e ?? '', request.url);
 	}

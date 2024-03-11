@@ -66,7 +66,7 @@ export const actions: Actions = {
 			});
 
 			// await tagflow(id, a)
-			throw redirect(302, `/product/${id}`);
+			throw redirect(302, `/p/${id}`);
 		} catch (e) {
 			throw handle_server_error(request, e)
 		}

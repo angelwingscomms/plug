@@ -26,8 +26,4 @@
         display: flex
         flex-direction: column
         row-gap: layout.$spacing-06
-    .display_image
-        width: 144px
-    img
-        width: 100%
 </style>

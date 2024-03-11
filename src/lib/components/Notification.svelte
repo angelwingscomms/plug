@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { ToastNotification } from "carbon-components-svelte";
-	import type { ToastNotification as ToastNotificationProps } from "carbon-components-svelte/types";
-    export let level: number, props: ToastNotificationProps
+	// import type { ToastNotification as ToastNotificationProps } from "carbon-components-svelte/types";
+    export let level: number, props: object
 
 </script>
 

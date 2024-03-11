@@ -1,37 +1,25 @@
 import { handle_server_error } from '$lib/util/handle_server_error';
 import { client } from '$lib/util/redis';
-import { redirect } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { embed_user } from '$lib/util/user/embed_user';
 import { sanitize_string } from '$lib/util/sanitize';
 
 export const DELETE: RequestHandler = async ({ request, locals }) => {
 	try {
-		const user = locals.user;
-		if (!user) throw redirect(303, '/auth');
-		if (!(await client.exists(user))) {
-			handle_server_error(request.url, {
-				message: `did not - but expected to - find user with id: ${user}`,
-				status: 404
-			});
-		}
-		await client.del(user);
+		if (!locals.user) throw redirect(303, '/auth');
+		if (!(await client.exists(locals.user)))
+			throw error(404, `user with id "${locals.user}" was not found`);
+		await client.del(locals.user);
 		return new Response();
 	} catch (e) {
-		throw handle_server_error(`${request.method} ${request.url}`, e);
+		throw handle_server_error(request, e);
 	}
 };
 
 export const PUT: RequestHandler = async ({ request, locals }) => {
 	try {
-		const user = locals.user;
-		if (!user) throw redirect(303, '/auth');
-		if (!(await client.exists(user))) {
-			handle_server_error(request.url, {
-				message: `did not find user with id: ${user}`,
-				status: 404
-			});
-		}
+		if (!(await client.exists(locals.user))) throw error(400, `user with id "${locals.user}" was not found`)
 		let { c, t, h, u, e, x, ch, cl } = await request.json();
 		const v = await embed_user({
 			...(u && { username: u }),
@@ -46,17 +34,17 @@ export const PUT: RequestHandler = async ({ request, locals }) => {
 		x = sanitize_string(x);
 		t = sanitize_string(t);
 		h = sanitize_string(h);
-		client.json.set(user, '$.u', u);
-		client.json.set(user, '$.e', e);
-		client.json.set(user, '$.x', x);
-		client.json.set(user, '$.c', c);
-		client.json.set(user, '$.t', t);
-		client.json.set(user, '$.ch', ch);
-		client.json.set(user, '$.cl', cl);
-		client.json.set(user, '$.h', h);
-		client.json.set(user, '$.v', v);
+		client.json.set(locals.user, '$.u', u);
+		client.json.set(locals.user, '$.e', e);
+		client.json.set(locals.user, '$.x', x);
+		client.json.set(locals.user, '$.c', c);
+		client.json.set(locals.user, '$.t', t);
+		client.json.set(locals.user, '$.ch', ch);
+		client.json.set(locals.user, '$.cl', cl);
+		client.json.set(locals.user, '$.h', h);
+		client.json.set(locals.user, '$.v', v);
 		return new Response();
 	} catch (e) {
-		throw handle_server_error(request.url, e);
+		throw handle_server_error(request, e);
 	}
 };

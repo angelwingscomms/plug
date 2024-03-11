@@ -10,9 +10,9 @@
 	// import type { Message } from '$lib/types/message';
 
 	export let // run: (m: ChatCompletionUserMessageParam) => void,
-	
+
 		success: boolean,
-		// more_open: boolean,
+		more_open: boolean,
 		can_send: boolean,
 		search_open = false,
 		send_on_enter: boolean,
@@ -22,6 +22,7 @@
 		message_input_ref: HTMLTextAreaElement,
 		text: string;
 
+	let file_loading: true;
 	type Image = { url: string } & { id: number };
 	// type Image = ChatCompletionContentPartImage & { id: number };
 	const dispatch = createEventDispatcher<{ send: { c: string; d: number } }>();
@@ -125,7 +126,7 @@
 		<Button
 			disabled={!can_send}
 			size="field"
-			on:click={() => search_open = true}
+			on:click={() => (search_open = true)}
 			iconDescription="Search"
 			icon={SearchIcon}
 		/>
@@ -149,7 +150,8 @@
 			iconDescription={'Send'}
 			icon={loading ? InlineLoading : Send}
 		/>
-		<!-- <FileUpload
+		<FileUpload
+			loading={file_loading}
 			label={String(images.length)}
 			on:change={update_images}
 			button={{
@@ -158,7 +160,7 @@
 			}}
 			multiple
 		/>
-		<Button size="field" on:click={() => (more_open = true)} iconDescription="More" icon={Menu} /> -->
+		<Button size="field" on:click={() => (more_open = true)} iconDescription="More" icon={Menu} />
 	</div>
 </div>
 

@@ -75,8 +75,8 @@
 	// const send = async () => {
 	// try {
 	// 	const form = new FormData();
-	// 	const { data } = await axios.post('/product', { name, about });
-	// 	goto(`/product/id/${data}`);
+	// 	const { data } = await axios.post('/p', { name, about });
+	// 	goto(`/p/id/${data}`);
 	// } catch (e) {
 	// 	console.error(e);
 	// }

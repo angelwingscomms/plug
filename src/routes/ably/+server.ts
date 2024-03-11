@@ -36,6 +36,6 @@ export const GET: RequestHandler = async ({ locals, request, url }) => {
 		// 	}
 		// );
 	} catch (e) {
-		throw handle_server_error(`/ably for ${locals.user}`, request);
+		throw handle_server_error(request, e);
 	}
 };
