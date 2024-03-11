@@ -74,10 +74,10 @@
 <OnEnter ctrl on:enter={save} />
 
 <div class="input">
-	<TextInput labelText="username" bind:value={username} />
-	<TextInput labelText="email" bind:value={email} />
-	<TextArea labelText="Contact details" helperText="You can paste links to your socials here" bind:value={contact} rows={3} />
-	<TextArea
+	<TextInput maxlength={2160}  labelText="username" bind:value={username} />
+	<TextInput maxlength={2160}  labelText="email" bind:value={email} />
+	<TextArea  maxlength={2160} labelText="Contact details" helperText="You can paste links to your socials here" bind:value={contact} rows={3} />
+	<TextArea maxlength={2160} 
 		rows={15}
 		labelText="Bio"
 		helperText="you can create a description of yourself with a lot of detail to allow people find you easily"

@@ -6,6 +6,9 @@ import { IBMCOS_APIKEY, IBMCOS_ENDPOINT, IBMCOS_SERVICE_INSTANCE_ID } from '$env
 import { handle_server_error } from '$lib/util/handle_server_error';
 import type { Product } from '$lib/types/product';
 import { embed } from '$lib/util/embedding/embed';
+import { sanitize_string } from '$lib/util/sanitize';
+import { parse } from '$lib/util/markdown/parse/node';
+import { to_html } from '$lib/util/markdown/parse';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const p = (await client.json.get(params.id, { path: ['n', 'p', 'i', 'ii', 'a'] })) as Product;
@@ -72,6 +75,7 @@ export const actions: Actions = {
 				await client.json.set(params.id, '$.i', uploaded_images[i]);
 			}
 			await client.json.set(params.id, '$.a', a);
+			await client.json.set(params.id, '$.h', sanitize_string(await to_html(a)))
 			await client.json.set(params.id, '$.p', p);
 			await client.json.set(params.id, '$.v', v);
 			throw redirect(302, `/product/${params.id}`);

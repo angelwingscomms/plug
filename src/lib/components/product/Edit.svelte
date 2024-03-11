@@ -101,9 +101,9 @@
 				};
 			}}
 		>
-			<TextInput name="n" value={p?.n ?? ''} labelText="Name" />
-			<TextInput name="p" value={p?.p ?? ''} labelText="Price" />
-			<TextArea name="a" value={p?.a ?? ''} labelText="About this product" />
+			<TextInput maxlength={2160} name="n" value={p?.n ?? ''} labelText="Name" />
+			<TextInput maxlength={2160} name="p" value={p?.p ?? ''} labelText="Price" />
+			<TextArea maxlength={2160} name="a" value={p?.a ?? ''} labelText="About this product" />
 			<!-- <FileUpload
 				loading={image_loading}
 				name="i"
@@ -127,7 +127,7 @@
 					{/each}
 				</div>
 			{/if} -->
-			<input type="number" style="display: none;" value={display_image} name="i" />
+			<input type="number" style="display: none;" bind:value={display_image} name="i" />
 			<Images alt="product" on:x-click={({ detail }) => remove_image(detail)} {images} let:index>
 				<Button
 					icon={CenterSquare}
@@ -142,7 +142,7 @@
 				on:change={update_images}
 				name="ii"
 				multiple
-				label="Add images {images_ref?.files?.length || 0}"
+				label="Add images"
 			/>
 			<Button icon={loading ? InlineLoading : Send} type="submit">{button_text}</Button>
 		</form>

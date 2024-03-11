@@ -14,7 +14,8 @@
 			<h3>{data.n}</h3>
 			<p>Owner: <Link href="/user/{data.u}">{data.uf}</Link></p>
 			<Images alt="product" images={data.ii.map((src, id) => ({ id, src }))} />
-			<pre>{data.a}</pre>
+			<p>GH₵ {data.p}</p>
+			<div>{@html data.a}</div>
 		</div>
 	</Column>
 </Row>

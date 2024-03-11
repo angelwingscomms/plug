@@ -5,11 +5,12 @@ import { handle_server_error } from '$lib/util/handle_server_error';
 
 export const load: PageServerLoad = async ({ request, params }) => {
 	try {
-		const product = (await client.json.get(params.id, { path: ['n', 'a', 'i', 'ii', 'u'] })) as {
+		const product = (await client.json.get(params.id, { path: ['n', 'a', 'i', 'ii', 'u', 'p'] })) as {
 			n: string;
 			a: string;
 			i: string;
 			ii: string[];
+			p: number;
 			u: string;
 		};
 		if (!product) throw error(400, `product with id "${params.id}" not found`)

@@ -7,15 +7,18 @@ import { message_id_prefix } from '$lib/constants';
 import { handle_server_error } from '$lib/util/handle_server_error';
 // import { tagflow } from '$lib/util/product/tagflow';
 import { embed } from '$lib/util/embedding/embed';
+import { sanitize_string } from '$lib/util/sanitize';
+import { parse } from '$lib/util/markdown/parse/node';
+import { to_html } from '$lib/util/markdown/parse';
 
 export const actions: Actions = {
 	default: async ({ request, locals }) => {
 		try {
 			const data = await request.formData();
-			const n = String(data.get('n') || '');
-			const a = String(data.get('a') || '');
+			const n = sanitize_string(String(data.get('n') || ''));
+			const a = sanitize_string(String(data.get('a') || ''));
 			// const c = String(data.get('c') || '');
-			const p = String(data.get('p') || '');
+			const p = sanitize_string( String(data.get('p') || ''));
 			const i = data.get('i') as unknown as number;
 			const ii = data.getAll('ii');
 
@@ -54,6 +57,7 @@ export const actions: Actions = {
 				u: locals.user,
 				n,
 				a,
+				h: sanitize_string(await to_html(a)),
 				v,
 				ii: uploaded_images,
 				i: uploaded_images[i],
