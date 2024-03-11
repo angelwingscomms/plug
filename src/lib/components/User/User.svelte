@@ -38,7 +38,7 @@
 	{/if}
 
 	<ButtonSet stacked>
-		<Button icon={ArrowRight} href="{$page.url.pathname}/similar"
+		<Button size="small" icon={ArrowRight} href="{$page.url.pathname}/similar"
 			>users similar to {$page.data.user === id ? 'you' : u}</Button
 		>
 	</ButtonSet>

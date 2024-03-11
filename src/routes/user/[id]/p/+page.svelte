@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Product from '$lib/components/Product.svelte';
+	import Product from '$lib/components/ProductListing.svelte';
 	import axios from 'axios';
 	import {
 		Button,
@@ -29,7 +29,7 @@
 	});
 
 	let value = '',
-		documents: SearchDocument<ProductListing>[] = data.p;
+		documents: SearchDocument<ProductListing>[] = data.documents;
 
 	export const search = async () => {
 		if (loading) return

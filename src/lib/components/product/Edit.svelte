@@ -15,13 +15,63 @@
 	import { Send } from 'carbon-icons-svelte';
 	import type { Product } from '$lib/types/product';
 	import { onMount } from 'svelte';
+	import { notify } from '$lib/util';
 
-	export let p: Product | undefined = undefined, button_text: string;
+	export let p: Product | undefined = undefined,
+		image_loading = false,
+		images: Image[] = [],
+		images_loading = false,
+		button_text: string;
 	let loading = false,
+		next_image_id = 0,
+		image_added = false, //TODO-check
 		images_ref: HTMLInputElement,
-		display_images_ref: HTMLInputElement;
+		image_ref: HTMLInputElement;
 
-	onMount(() => {console.debug(images_ref.files, display_images_ref.files)})
+	type Image = { id: number; url: string };
+
+	onMount(() => {
+		console.debug(images_ref.files, image_ref.files);
+	});
+
+	$: console.debug(image_ref?.files)
+
+	const file_to_base64 = (file: File) => {
+		return new Promise((resolve, reject) => {
+			const reader = new FileReader();
+
+			reader.onloadend = () => {
+				resolve(reader.result);
+			};
+
+			reader.onerror = reject;
+
+			reader.readAsDataURL(file);
+		});
+	};
+
+	const update_images = async ({ detail }: { detail: File[] }) => {
+		images_loading = true;
+		for (let i = 0; i < detail.length; i++) {
+			try {
+				const base64 = await file_to_base64(detail[i]);
+				images = [
+					...images,
+					{
+						id: next_image_id,
+						url: base64 as string
+					}
+				];
+				next_image_id++;
+			} catch (err) {
+				notify({
+					kind: 'error',
+					title: 'Error occurred while trying to read uploaded file'
+				});
+			}
+		}
+		images_loading = false;
+	};
 
 	// const send = async () => {
 	// try {
@@ -56,12 +106,32 @@
 			<TextInput name="p" value={p?.p ?? ''} labelText="Price" />
 			<TextArea name="a" value={p?.a ?? ''} labelText="About this product" />
 			<FileUpload
+				loading={image_loading}
 				name="i"
-				bind:ref={display_images_ref}
-				label="{display_images_ref?.files?.length ? 'Change' : 'Add'} display image"
+				bind:ref={image_ref}
+				on:change={() => {
+					image_added = true
+				}}
+				label="{image_added ? 'Change' : 'Add'} display image"
 			/>
+			<!-- {#if images.length}
+				<div class="images">
+					{#each images as image}
+						<div class="image">
+							<img class="img" src={image.image_url.url} alt="to be sent as part of the message" />
+							<Button
+								on:click={() => remove_image(image.id)}
+								icon={Close}
+								iconDescription="Delete this image"
+							/>
+						</div>
+					{/each}
+				</div>
+			{/if} -->
 			<FileUpload
+				loading={images_loading}
 				bind:ref={images_ref}
+				on:change={update_images}
 				name="ii"
 				multiple
 				label="Add images {images_ref?.files?.length || 0}"

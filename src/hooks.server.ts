@@ -13,7 +13,7 @@ import { redirect, type Handle } from '@sveltejs/kit';
 import { protected_routes } from '$lib/constants';
 // import type { Provider } from '@auth/core/providers';
 // import { client } from '$lib/util/redis';
-// import { escape_email } from '$lib/util/escape_email';
+// import { escape } from '$lib/util/escape';
 // import { google } from '$lib/util/user/create/google';
 import { check } from '$lib/util/user/auth/check';
 
@@ -64,7 +64,7 @@ export const handle: Handle = sequence(
 	// 			if (!arg.session) return arg.session;
 	// 			const res = await client.ft.search(
 	// 				user_index,
-	// 				`@email:${escape_email(arg.session?.user?.email as string)}`
+	// 				`@email:${escape(arg.session?.user?.email as string)}`
 	// 			);
 	// 			if (!res.total) return arg.session;
 	// 			const user_res = res.documents[0];

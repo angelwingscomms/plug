@@ -11,7 +11,7 @@ export const GET: RequestHandler = async ({ request, url }) => {
 		// const tags = await resolve_tags(q)
 		const B = await embed_buffer(q);
 		const res = await search({
-			// query: `@k:"p" @tags: { ${tags.map((t) => t.replaceAll('|', '\\|')).join(' | ')}}`,
+			query: `@k:"p"`, // @tags: { ${tags.map((t) => t.replaceAll('|', '\\|')).join(' | ')}}`,
 			index: message_index,
 			options: { RETURN: ['n', 'i', 'p'] },
 			B

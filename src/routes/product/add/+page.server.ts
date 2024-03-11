@@ -50,7 +50,6 @@ export const actions: Actions = {
 			}
 
 			const v = await embed(JSON.stringify({ name: n, about: a }));
-			console.info('--v.l', v.length)
 			await client.json.set(id, '$', {
 				u: locals.user,
 				n,
@@ -62,7 +61,7 @@ export const actions: Actions = {
 				k: 'p'
 			});
 
-			await tagflow(id, a)
+			// await tagflow(id, a)
 			throw redirect(302, `/product/${id}`);
 		} catch (e) {
 			throw handle_server_error(request, e)

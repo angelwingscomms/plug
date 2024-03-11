@@ -1,4 +1,4 @@
-import { escape_email } from '$lib/util/escape_email';
+import { escape } from '$lib/util/escape';
 import type { RedisJSON } from '@redis/json/dist//commands';
 
 type Outcome = 'accepted' | 'dismissed';
@@ -23,7 +23,7 @@ export type Email = string;
 export class EscapedEmail {
 	value: string;
 	constructor(email: string) {
-		this.value = escape_email(email);
+		this.value = escape(email);
 	}
 }
 

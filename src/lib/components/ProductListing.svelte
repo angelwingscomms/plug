@@ -7,12 +7,12 @@
 
 <div class="product-card">
 	<div class="product-image">
-		<img src={p.i} alt="example" />
+		<img src={p.i} alt="product" />
 	</div>
   <p>{p.n}</p>
-	<Link href="/product/id/{id}">product details</Link>
-	<Link href="/user/id/{p.u}">seller details</Link>
-	<!-- <p>{p.up}{p.p}</p> -->
+	<Link href="/product/{id}">product details</Link>
+	<Link href="/user/{p.u}">contact seller</Link>
+	<p>GH₵ {p.p}</p>
 	<div class="act">
 		<!-- <Button>Buy Now</Button>
 		<Button icon={ShoppingCartPlus} /> -->
@@ -26,7 +26,7 @@
       display: flex
       flex-direction: column
       justify-content: space-between
-      width: 300px
+      width: 144px
       row-gap: layout.$spacing-03
       overflow: hidden
   

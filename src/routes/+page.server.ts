@@ -9,12 +9,10 @@ export const load: PageServerLoad = async ({ url }) => {
 	const q = url.searchParams.get('q') || '';
 	// const B = await embed_buffer(q);
 	// const tags: string[] = [];
-	console.debug(await client.keys(`${message_id_prefix}*`));
 	const res = await search<ProductListing>({
-		// query: `@k:"p"`,// @tags: { ${tags.map((t) => t.replaceAll('|', '\\|')).join(' | ')}}`,
+		query: `@k:"p"`,// @tags: { ${tags.map((t) => t.replaceAll('|', '\\|')).join(' | ')}}`,
 		index: message_index,
-		count: true
-		// options: { RETURN: ['n', 'i', 'p'] },
+		options: { RETURN: ['n', 'i', 'p', 'u'] },
 		// B
 	});
 	console.debug('--rt', res.total);

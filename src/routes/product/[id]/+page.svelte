@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Column, Link, Row } from 'carbon-components-svelte';
-	import {page} from "$app/stores"
+	import Images from '$lib/components/Images.svelte';
+	import { page } from '$app/stores';
 	export let data;
 </script>
 
@@ -11,8 +12,8 @@
 				<Link href="{$page.url.pathname}/edit">Edit this item</Link>
 			{/if}
 			<h3>{data.n}</h3>
-			<p>Owner: <Link href="/user/{data.u}/p">{data.uf}</Link></p>
-			<img src={data.i} alt="hmm" />
+			<p>Owner: <Link href="/user/{data.u}">{data.uf}</Link></p>
+			<Images images={data.ii} />
 			<pre>{data.a}</pre>
 		</div>
 	</Column>
@@ -24,6 +25,8 @@
         display: flex
         flex-direction: column
         row-gap: layout.$spacing-06
+    .display_image
+        width: 144px
     img
         width: 100%
 </style>

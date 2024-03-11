@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Product from '$lib/components/Product.svelte';
+	import Product from '$lib/components/ProductListing.svelte';
 	import axios from 'axios';
 	import {
 		Button,
@@ -49,7 +49,7 @@
 
 <Row>
 	<Column>
-		<h1>Simple Shopping</h1>
+		<h3>Plug. Connect with buyers and sellers with ease. Discover unique items</h3>
 		<div class="input">
 			<TextInput hideLabel placeholder="Search" bind:value labelText="Search" />
 			<Button size="field" on:click={search} icon={loading ? InlineLoading : Search} />
@@ -65,7 +65,7 @@
 
 <style lang="sass">
 	@use '@carbon/layout'
-	h1
+	h3
 		padding: 1rem 0
 	.products
 		display: flex

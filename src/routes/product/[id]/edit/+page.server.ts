@@ -25,9 +25,9 @@ export const actions: Actions = {
 			const p = String(data.get('p') || '');
 			// const c = String(data.get('c') || '');
 			const i = data.get('i') as File;
-			console.debug('--i', i)
+			console.debug('--i', i);
 			const ii = data.getAll('ii') as File[];
-			console.debug('--ii', ii)
+			console.debug('--ii', ii);
 
 			const cos = new IBM.S3({
 				endpoint: IBMCOS_ENDPOINT,
@@ -48,7 +48,7 @@ export const actions: Actions = {
 				: undefined;
 
 			for (let i = ii.length - 1; i > -1; i--) {
-				if (!ii[i].size) continue
+				if (!ii[i].size) continue;
 				const res = await cos
 					.upload({
 						Bucket: 'unimart',
@@ -58,12 +58,18 @@ export const actions: Actions = {
 					.promise();
 				uploaded_images.push(res.Location);
 			}
-			await tagflow(params.id, a)
+			// await tagflow(params.id, a);
 			const v = await embed(JSON.stringify({ name: n, about: a, price: `${p}` }));
 			await client.json.set(params.id, '$.n', n);
+			console.debug('--u', uploaded_display_image);
 			if (uploaded_display_image)
 				await client.json.set(params.id, '$.i', uploaded_display_image.Location);
-			if (uploaded_images.length) await client.json.set(params.id, '$.i', uploaded_images);
+			if (uploaded_images.length)
+				await client.json.set(
+					params.id,
+					'$.i',
+					uploaded_images.map((i) => i.Location)
+				);
 			await client.json.set(params.id, '$.a', a);
 			await client.json.set(params.id, '$.p', p);
 			await client.json.set(params.id, '$.v', v);
