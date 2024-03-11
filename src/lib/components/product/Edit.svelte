@@ -18,12 +18,12 @@
 	import Images from '../Images.svelte';
 
 	export let p: Product | undefined = undefined,
-		images: Image[] = [],
+		images: Image[] = Array.isArray(p?.ii) ? p?.ii.map((src, id) => ({ src, id })) : [],
 		images_loading = false,
 		button_text: string;
 	let loading = false,
 		next_image_id = 0,
-		display_image = 0,
+		display_image = typeof p?.i === 'number' ? p?.i : 0,
 		images_ref: HTMLInputElement,
 		image_ref: HTMLInputElement;
 

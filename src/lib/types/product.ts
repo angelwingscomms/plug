@@ -1,6 +1,7 @@
 export type Product = {
     n: string, //name
-    i: string, //display_image
+    i: number, //display_image
+    ii: string[], //images
     a: string, //about
     p: string, //price
     u: string, //user id
