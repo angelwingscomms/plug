@@ -9,11 +9,12 @@
 	<div class="product-image">
 		<img src={p.i} alt="example" />
 	</div>
-	<Link href="/product/id/{id}">{name}</Link>
-	<p>{p.up}{p.p}</p>
+	<Link href="/product/id/{id}">{p.n}</Link>
+	<Link href="/user/id/{p.u}">Seller details</Link>
+	<!-- <p>{p.up}{p.p}</p> -->
 	<div class="act">
-		<Button>Buy Now</Button>
-		<Button icon={ShoppingCartPlus} />
+		<!-- <Button>Buy Now</Button>
+		<Button icon={ShoppingCartPlus} /> -->
 	</div>
 </div>
 
