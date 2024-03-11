@@ -1,58 +1,19 @@
 <script lang="ts">
 	import Product from '$lib/components/ProductListing.svelte';
-	import axios from 'axios';
-	import {
-		Button,
-		Column,
-		InlineLoading,
-		Link,
-		Row,
-		TextInput,
-		Tile
-	} from 'carbon-components-svelte';
-	import { Search } from 'carbon-icons-svelte';
+	import { Column, Link, Row } from 'carbon-components-svelte';
 	import type { PageData } from './$types';
-	import OnEnter from '$lib/components/OnEnter.svelte';
-	import type { SearchDocument } from '$lib/types';
-	import type { ProductListing } from '$lib/types/product';
 
 	export let data: PageData;
-
-	let loading = false;
-
-	let value = '',
-		documents: SearchDocument<ProductListing>[] = data.d;
-
-	export const search = async () => {
-		if (loading) return;
-		loading = true;
-		try {
-			const { data } = await axios.get('/p', {
-				params: { q: value }
-			});
-			console.info(data);
-			({ documents } = data);
-		} catch (e) {
-			console.error(e);
-		}
-		loading = false;
-	};
 </script>
-
-<OnEnter on:enter={search} />
 
 <Row>
 	<Column>
-		<h3>Products similar to <Link href="/p" >{data.n}</Link></h3>
-		<div class="input">
-			<TextInput hideLabel placeholder="Search" bind:value labelText="Search" />
-			<Button size="field" on:click={search} icon={loading ? InlineLoading : Search} />
-		</div>
+		<p>Similar products to <Link href="/p/{data.id}">{data.n}</Link></p>
 	</Column>
 </Row>
 
 <div class="products">
-	{#each documents as d}
+	{#each data.d as d}
 		<Product id={d.id} p={d.value} />
 	{/each}
 </div>
@@ -64,8 +25,4 @@
 		flex-direction: row
 		flex-wrap: wrap
 		column-gap: layout.$spacing-06
-	.input
-		display: flex
-		flex-direction: row
-		align-items: center
 </style>
