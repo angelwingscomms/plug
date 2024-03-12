@@ -8,6 +8,7 @@ import { client } from '$lib/util/redis';
 import type { RequestHandler } from './$types';
 
 export const PUT: RequestHandler = async ({ request }) => {
+	console.log('--same-path')
 	const { u, t } = await request.json();
 	await unset(u, t);
 	return new Response();
