@@ -61,6 +61,7 @@
 		"bufferutil": "^4.0.7",
 		"dompurify": "^3.0.9",
 		"eventsource": "^2.0.2",
+		"groq-sdk": "^0.3.2",
 		"heic-convert": "^2.1.0",
 		"highlight.js": "^11.9.0",
 		"ibm-cos-sdk": "^1.13.3",

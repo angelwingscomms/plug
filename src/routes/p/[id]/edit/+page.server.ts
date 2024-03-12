@@ -10,6 +10,7 @@ import { sanitize_string } from '$lib/util/sanitize';
 import sharp from 'sharp';
 import { parse } from '$lib/util/markdown/parse/node';
 import { to_html } from '$lib/util/markdown/parse';
+import { tagflow } from '$lib/util/product/tagflow';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const p = (await client.json.get(params.id, { path: ['n', 'p', 'i', 'ii', 'a'] })) as Product;
@@ -61,7 +62,7 @@ export const actions: Actions = {
 					.promise();
 				uploaded_images.push(res.Location);
 			}
-			// await tagflow(params.id, a);
+			await tagflow(params.id, a);
 			const v = await embed(JSON.stringify({ name: n, about: a, price: `${p}` }));
 			await client.json.set(params.id, '$.n', n);
 			// if (uploaded_display_image)

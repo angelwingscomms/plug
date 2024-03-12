@@ -10,6 +10,7 @@ import { embed } from '$lib/util/embedding/embed';
 import { sanitize_string } from '$lib/util/sanitize';
 import sharp from 'sharp';
 import { to_html } from '$lib/util/markdown/parse';
+import { tagflow } from '$lib/util/product/tagflow';
 
 export const actions: Actions = {
 	default: async ({ request, locals }) => {
@@ -67,7 +68,7 @@ export const actions: Actions = {
 				k: 'p'
 			});
 
-			// await tagflow(id, a)
+			await tagflow(id, a)
 			throw redirect(302, `/p/${id}`);
 		} catch (e) {
 			throw handle_server_error(request, e);
