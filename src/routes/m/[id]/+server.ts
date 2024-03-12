@@ -25,7 +25,7 @@ export const GET: RequestHandler = async ({ url, params, request }) => {
 			B,
 			page,
 			options: {
-				RETURN: ['f', 'd', 'h', 'v']
+				RETURN: ['u', 'd', 'h', 'v']
 			}
 		});
 		res.documents = await Promise.all(
@@ -34,8 +34,8 @@ export const GET: RequestHandler = async ({ url, params, request }) => {
 					(1 - tf.losses.cosineDistance(query_embedding, m.value.v || [], 0).dataSync()[0]) * //hacked v to be or empty array to satisfy type
 					100
 				).toPrecision(2);
-				m.value.uf = ((await client.json.get(m.value.f, { path: 'u' })) as string) || '';
-				m.value.cl = ((await client.json.get(m.value.f, { path: 'cl' })) as string) || '';
+				m.value.uf = ((await client.json.get(m.value.u, { path: 'u' })) as string) || '';
+				// m.value.cl = ((await client.json.get(m.value.u, { path: 'cl' })) as string) || '';
 				delete m.value.v;
 				return m;
 			})
@@ -52,7 +52,7 @@ export const POST: RequestHandler = async ({ request, params, locals }) => {
 		const message = {
 			...m,
 			v: await embed(m.c),
-			f: locals.user,
+			u: locals.user,
 			t: params.id
 		};
 		const id = `${message_id_prefix}${await client.incr('last_free_message_id')}`;

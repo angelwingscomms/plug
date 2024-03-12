@@ -9,7 +9,7 @@ export const load: PageServerLoad = async () => {
 		index: message_index,
 		query: `@t: ${top_level_messages_name}`,
 		options: {
-			RETURN: ['f', 'd', 'h'],
+			RETURN: ['u', 'd', 'h'],
 			SORTBY: { BY: 'd', DIRECTION: 'DESC' }
 		}
 	});
@@ -17,8 +17,8 @@ export const load: PageServerLoad = async () => {
 		res.documents
 			.sort((a, b) => b.value.d - a.value.d)
 			.map(async (m) => {
-				m.value.uf = ((await client.json.get(m.value.f, { path: 'u' })) as string) || '';
-				m.value.cl = ((await client.json.get(m.value.f, { path: 'cl' })) as string) || '';
+				m.value.uf = ((await client.json.get(m.value.u, { path: 'u' })) as string) || '';
+				// m.value.cl = ((await client.json.get(m.value.u, { path: 'cl' })) as string) || '';
 				return m;
 			})
 	);

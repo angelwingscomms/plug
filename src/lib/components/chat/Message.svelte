@@ -46,6 +46,7 @@
 
 <!-- {#if show && message.value.c != null} -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- <p>{message.value.t}: {u}</p> -->
 <a href="/m/{message.id}" class="a">
 	<div
 		bind:this={target}
@@ -53,10 +54,9 @@
 		on:keydown={() => (menu_open = true)}
 		style="background-color: {message.value.cl}"
 		class="message"
-		class:user={message.value.f === u}
-		class:r={message.value.t !== u}
+		class:r={message.value.u !== u}
 	>
-		<p class="username">{message.value.uf}</p>
+		<!-- <p class="username">{message.value.uf}</p> -->
 		<p use:truncate class="content">
 			{@html message.value.h}
 		</p>
@@ -80,8 +80,8 @@
 		text-decoration: none
 		// max-width: 100%
 
-	.username
-		@include type.type-style('label-01')
+	// .username
+	// 	@include type.type-style('label-01')
 
 	.message
 		white-space: pre-wrap
@@ -89,10 +89,7 @@
 		word-break: normal
 		width: 74%
 		padding: 1rem
-
-	.user
-		align-self: flex-end
-		background-color: themes.$field-01
+		background-color: black
 
 	.r
 		background-color: colors.$blue-60

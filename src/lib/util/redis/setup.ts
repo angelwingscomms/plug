@@ -16,7 +16,7 @@ export const setup = async () => {
 
 	// pre-setup
 	try {
-		await client.ft.dropIndex(message_index)
+		// await client.ft.dropIndex(message_index)
 		// await client.ft.dropIndex(user_index)
 		// const res = await search({ index: message_index, query: `@t:"all"` });
 		// console.info('rrsd', res.total)
@@ -56,10 +56,6 @@ export const setup = async () => {
 					DIM: embedding_dimension,
 					DISTANCE_METRIC: 'COSINE'
 				},
-				'$.f': {
-					AS: 'f',
-					type: SchemaFieldTypes.TEXT
-				},
 				'$.t': {
 					AS: 't',
 					type: SchemaFieldTypes.TEXT
@@ -94,6 +90,12 @@ export const setup = async () => {
 				'$.h': {
 					AS: 'h',
 					type: SchemaFieldTypes.TEXT,
+					NOINDEX: true
+				},
+				'$s': {
+					AS: 's',
+					type: SchemaFieldTypes.NUMERIC,
+					SORTABLE: true,
 					NOINDEX: true
 				},
 				'$.u': {

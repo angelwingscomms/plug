@@ -22,7 +22,7 @@
 	</div>
 </Modal>
 
-<p class="f">replies to</p>
+<p class="u">replies to</p>
 <div class="t">
 	<p use:truncate>{@html data.h}</p>
 	<Button
@@ -48,6 +48,6 @@
 		width: fit-content
 		margin-bottom: 1rem
 
-	.f
+	.u
 		@include type.type-style('label-01')
 </style>

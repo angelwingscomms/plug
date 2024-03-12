@@ -7,11 +7,13 @@ import { handle_server_error } from '$lib/util/handle_server_error';
 
 export const load: PageServerLoad = async ({ request, locals }) => {
 	try {
-		if (!(await client.exists(locals.id)))
-			throw error(404, `user with id "${locals.id}" not found`);
+		if (!(await client.exists(locals.user)))
+			throw error(404, `user with id "${locals.user}" not found`);
 
-		const res = await client.ft.aggregate(message_index, `@t:"${locals.id}"`, {
+		const res = await client.ft.aggregate(message_index, `@t:"${locals.user}"`, {
 			STEPS: [
+				// { type: AggregateSteps.FILTER, expression: 'exists(@u)' },
+				// { type: AggregateSteps.FILTER, expression: 'exists(@d)' },
 				{
 					type: AggregateSteps.GROUPBY,
 					properties: '@u',
@@ -24,7 +26,7 @@ export const load: PageServerLoad = async ({ request, locals }) => {
 				}
 			]
 		});
-		console.info('--a-res', res);
+		return res
 	} catch (e) {
 		throw handle_server_error(request, e);
 	}

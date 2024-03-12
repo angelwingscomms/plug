@@ -10,7 +10,7 @@ export const POST: RequestHandler = async ({ request, params, locals }) => {
 		const m = await request.json();
 		const message = {
 			...m,
-			f: locals.user,
+			u: locals.user,
 			t: params.id
 		};
 		const id = `${message_id_prefix}${await client.incr('last_free_message_id')}`;
@@ -20,7 +20,7 @@ export const POST: RequestHandler = async ({ request, params, locals }) => {
 			value: {
 				...message,
 				uf: (await client.json.get(locals.user, { path: 'u' })) as string,
-				cl: (await client.json.get(locals.user, { path: 'cl' })) as string
+				// cl: (await client.json.get(locals.user, { path: 'cl' })) as string
 			}
 		});
 		return new Response();

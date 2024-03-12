@@ -1,5 +1,6 @@
 import { escape } from '$lib/util/escape';
 import type { RedisJSON } from '@redis/json/dist//commands';
+import type { SearchReply } from 'redis';
 
 type Outcome = 'accepted' | 'dismissed';
 
@@ -13,9 +14,7 @@ export interface BeforeInstallPromptEvent extends Event {
 }
 
 export type KeyedObject = { [index: string]: RedisJSON };
-export interface SearchDocumentValue {
-	[key: string]: string | number | null | Array<SearchDocumentValue> | SearchDocumentValue;
-}
+export type SearchDocumentValue =SearchReply['documents'][number]['value']
 export type RedisKey = string;
 export type NumberDate = number;
 

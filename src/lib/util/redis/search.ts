@@ -3,7 +3,7 @@ import type { SearchOptions } from 'redis';
 import { client } from '.';
 import type { Filters } from '$lib/types/filter';
 import { slim } from '$lib/util/redis/shape/slim';
-import type { SearchDocument, SearchResponse } from '$lib/types';
+import type { SearchDocument, SearchDocumentValue, SearchResponse } from '$lib/types';
 export interface SearchParams {
 	index: string;
 	page?: number;
@@ -14,7 +14,9 @@ export interface SearchParams {
 	B?: Buffer;
 }
 
-export const search = async <T>({
+export const search = async <
+	T extends { [K in keyof SearchDocumentValue]: SearchDocumentValue[K] }
+>({
 	index,
 	page = 0,
 	filters,

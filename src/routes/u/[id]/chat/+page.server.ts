@@ -9,9 +9,9 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 	if (!(await client.exists(params.id))) throw error(404, 'User not found');
 	const res = await search<Message>({
 		index: message_index,
-		query: `@f:"${locals.user}" @t:"${params.id}"  | @f:"${params.id}" @t:"${locals.user}"`,
+		query: `@u:"${locals.user}" @t:"${params.id}"  | @u:"${params.id}" @t:"${locals.user}"`,
 		options: {
-			RETURN: ['f', 't', 'd', 'h'],
+			RETURN: ['u', 't', 'd', 'h'],
 			SORTBY: { BY: 'd', DIRECTION: 'DESC' }
 		}
 	});
@@ -20,8 +20,8 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 		m: await Promise.all(
 			res.documents.sort((a, b) => b.value.d - a.value.d)
 			// .map(async (m) => {
-			// m.value.uf = ((await client.json.get(m.value.f, { path: 'u' })) as string) || '';
-			// m.value.cl = ((await client.json.get(m.value.f, { path: 'cl' })) as string) || '';
+			// m.value.uf = ((await client.json.get(m.value.u, { path: 'u' })) as string) || '';
+			// m.value.cl = ((await client.json.get(m.value.u, { path: 'cl' })) as string) || '';
 			// return m;
 			// })
 		)

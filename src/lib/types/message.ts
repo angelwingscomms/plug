@@ -4,6 +4,6 @@ export type Message = {
     uf: string,
     c: string, //content
     d: number, //date
-    f: string, //from
+    u: string, //user
     t: string //to
 }

@@ -8,6 +8,8 @@
 	import { page } from '$app/stores';
 	import { v4 } from 'uuid';
 
+	console.debug('--user', $page.data.user)
+
 	export let route: string,
 		loading = false,
 		name: string,

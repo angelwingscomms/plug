@@ -9,29 +9,29 @@ import { handle_server_error } from '$lib/util/handle_server_error';
 export const load: PageServerLoad = async ({ params, request }) => {
 	try {
 		if (!(await client.exists(params.id))) throw error(404, 'Message not found');
-		const { h, f } = (await client.json.get(params.id, { path: ['f', 'h'] })) as {
+		const { h, u } = (await client.json.get(params.id, { path: ['u', 'h'] })) as {
 			h: string;
-			f: string;
+			u: string;
 		};
 		const res = await search<Message>({
 			index: message_index,
 			query: `@t:"${params.id}"`,
 			options: {
-				RETURN: ['f', 'd', 'h'],
+				RETURN: ['u', 'd', 'h'],
 				SORTBY: { BY: 'd', DIRECTION: 'DESC' }
 			}
 		});
 		return {
-			f,
+			u,
 			h,
 			id: params.id,
-			username: (await client.json.get(f, { path: 'u' })) as string,
+			username: (await client.json.get(u, { path: 'u' })) as string,
 			m: await Promise.all(
 				res.documents
 					.sort((a, b) => b.value.d - a.value.d)
 					.map(async (m) => {
-						m.value.uf = ((await client.json.get(m.value.f, { path: 'u' })) as string) || '';
-						m.value.cl = ((await client.json.get(m.value.f, { path: 'cl' })) as string) || '';
+						m.value.uf = ((await client.json.get(m.value.u, { path: 'u' })) as string) || '';
+						m.value.cl = ((await client.json.get(m.value.u, { path: 'cl' })) as string) || '';
 						return m;
 					})
 			)
