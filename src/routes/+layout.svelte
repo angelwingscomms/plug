@@ -45,7 +45,7 @@
 <Notifications />
 <Theme persist persistKey={theme_key} theme={$theme} />
 <Header />
-<Content style="background: none; padding: 1rem 1rem 0 1rem; height: 100%">
+<Content style="background: none; padding: 1rem 0 0 2rem; height: 100%">
 	<SideNav />
 	<Grid>
 		<slot />

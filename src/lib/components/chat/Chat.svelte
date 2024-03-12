@@ -8,8 +8,6 @@
 	import { page } from '$app/stores';
 	import { v4 } from 'uuid';
 
-	console.debug('--user', $page.data.user)
-
 	export let route: string,
 		loading = false,
 		name: string,
@@ -27,7 +25,7 @@
 		// })
 
 		channel.subscribe(name, (m) => {
-			console.debug('got --', m)
+			console.debug('got --', m);
 			messages = [m.data, ...messages];
 		});
 	});

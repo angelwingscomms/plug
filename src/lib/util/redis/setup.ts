@@ -1,4 +1,5 @@
 import { client } from '.';
+import fs from 'fs';
 import {
 	embedding_dimension,
 	message_id_prefix,
@@ -16,29 +17,7 @@ export const setup = async () => {
 
 	// pre-setup
 	try {
-		// await client.ft.dropIndex(message_index)
-		// await client.ft.dropIndex(user_index)
-		// const res = await search({ index: message_index, query: `@t:"all"` });
-		// console.info('rrsd', res.total)
-		// res.documents.forEach((d) => {
-		// 	client.json.set(d.id, '$.t', 't');
-		// });
-				// for (const i of await client.keys(`${user_id_prefix}*`)) {
-		// 	const v = await client.json.get(i, { path: 'v' });
-		// 	await client.json.set(i, '$.v3072', v);
-		// // }
-		// for (const i of await client.keys(`a_*`)) {
-		// 	// console.info('-i', i)
-		// 	await client.json.del(i);
-		// 	// const m = await client.json.get(i);
-		// 	// await client.json.set(`${message_id_prefix}${i.split('free_message_')[1]}`, '$', m);
-		// 	// // await client.json.set(i, '$.v', await );
-		// }
-		// await client.ft.dropIndex(message_index)
-		// await client.ft.dropIndex(user_index)
-		// console.info('done');
-		// console.log('update done, indices dropped');
-		console.info('after pre-setup')
+		console.info('after pre-setup');
 	} catch (e) {
 		console.error('pre-setup error', e);
 	}
@@ -92,7 +71,7 @@ export const setup = async () => {
 					type: SchemaFieldTypes.TEXT,
 					NOINDEX: true
 				},
-				'$s': {
+				$s: {
 					AS: 's',
 					type: SchemaFieldTypes.NUMERIC,
 					SORTABLE: true,
@@ -101,7 +80,7 @@ export const setup = async () => {
 				'$.u': {
 					AS: 'u',
 					type: SchemaFieldTypes.TEXT
-				},
+				}
 			},
 			{
 				ON: 'JSON',
@@ -138,7 +117,7 @@ export const setup = async () => {
 			}
 		);
 	} catch (e) {
-		console.error(`redis create ${message_index} error:`, e);
+		console.error(`redis create ${tag_index} error:`, e);
 	}
 
 	// create user_index
