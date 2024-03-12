@@ -1,14 +1,14 @@
 <script lang="ts">
-	import type { ProductListing } from '$lib/types/product';
+	import type { ProductListing } from '$lib/types/item';
 	import { Button, Link, truncate } from 'carbon-components-svelte';
 	export let p: ProductListing, id: string;
 	// import { ShoppingCartPlus, StarFilled } from 'carbon-icons-svelte';
 </script>
 
 <a class="card" href="/p/{id}">
-	<div class="product-card">
-		<div class="product-image">
-			<img src={p.i} alt="product" />
+	<div class="item-card">
+		<div class="item-image">
+			<img src={p.i} alt="item" />
 		</div>
 		<p use:truncate>{p.n}</p>
 		<!-- <Link href="/user/{p.u}">contact seller</Link> -->
@@ -28,7 +28,7 @@
     // color: white
     all: inherit
 
-  .product-card
+  .item-card
       display: flex
       flex-direction: column
       justify-content: space-between
@@ -36,17 +36,17 @@
       row-gap: layout.$spacing-01
       overflow: hidden
 
-  .product-card p
+  .item-card p
       font-weight: 500
   
-  .product-image
+  .item-image
     width: 100%
     height: 144px
     display: flex
     justify-content: center
     align-items: center
   
-  .product-image img
+  .item-image img
     object-fit: contain
     width: 100%
     height: 100%

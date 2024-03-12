@@ -1,5 +1,5 @@
 import { message_id_prefix, message_index } from '$lib/constants';
-import type { ProductListing } from '$lib/types/product';
+import type { ProductListing } from '$lib/types/item';
 // import { embed_buffer } from '$lib/util/embedding/embed';
 import { client } from '$lib/util/redis';
 import { search } from '$lib/util/redis/search';

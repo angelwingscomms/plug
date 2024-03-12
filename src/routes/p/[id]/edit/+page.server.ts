@@ -4,17 +4,17 @@ import IBM from 'ibm-cos-sdk';
 import type { Actions, PageServerLoad } from './$types';
 import { IBMCOS_APIKEY, IBMCOS_ENDPOINT, IBMCOS_SERVICE_INSTANCE_ID } from '$env/static/private';
 import { handle_server_error } from '$lib/util/handle_server_error';
-import type { Product } from '$lib/types/product';
+import type { Product } from '$lib/types/item';
 import { embed } from '$lib/util/embedding/embed';
 import { sanitize_string } from '$lib/util/sanitize';
 import sharp from 'sharp';
 import { parse } from '$lib/util/markdown/parse/node';
 import { to_html } from '$lib/util/markdown/parse';
-import { tagflow } from '$lib/util/product/tagflow';
+import { tagflow } from '$lib/util/item/tagflow';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const p = (await client.json.get(params.id, { path: ['n', 'p', 'i', 'ii', 'a'] })) as Product;
-	if (!p) throw error(404, `product with id "${params.id}" not found`);
+	if (!p) throw error(404, `item with id "${params.id}" not found`);
 	return { p };
 };
 
@@ -22,7 +22,7 @@ export const actions: Actions = {
 	default: async ({ request, params }) => {
 		try {
 			if (!(await client.exists(params.id)))
-				throw error(404, `product with id "${params.id}" not found`);
+				throw error(404, `item with id "${params.id}" not found`);
 			const data = await request.formData();
 			const n = String(data.get('n') || '');
 			const a = String(data.get('a') || '');

@@ -5,12 +5,12 @@ import type { Actions } from './$types';
 import { IBMCOS_APIKEY, IBMCOS_ENDPOINT, IBMCOS_SERVICE_INSTANCE_ID } from '$env/static/private';
 import { message_id_prefix } from '$lib/constants';
 import { handle_server_error } from '$lib/util/handle_server_error';
-// import { tagflow } from '$lib/util/product/tagflow';
+// import { tagflow } from '$lib/util/item/tagflow';
 import { embed } from '$lib/util/embedding/embed';
 import { sanitize_string } from '$lib/util/sanitize';
 import sharp from 'sharp';
 import { to_html } from '$lib/util/markdown/parse';
-import { tagflow } from '$lib/util/product/tagflow';
+import { tagflow } from '$lib/util/item/tagflow';
 
 export const actions: Actions = {
 	default: async ({ request, locals }) => {

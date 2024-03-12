@@ -8,7 +8,7 @@
 	import type { PageData } from './$types';
 	import OnEnter from '$lib/components/OnEnter.svelte';
 	import type { SearchDocument } from '$lib/types';
-	import type { ProductListing } from '$lib/types/product';
+	import type { ProductListing } from '$lib/types/item';
 
 	export let data: PageData;
 
@@ -46,12 +46,12 @@
 	<Column
 		><div class="all">
 			<h3>Simple Shopping. Connect with buyers and sellers with ease. Discover unique items</h3>
-			<Button href="/p/add" icon={ArrowRight}>Add a product</Button>
+			<Button href="/p/add" icon={ArrowRight}>Add a item</Button>
 			<div class="input">
-				<TextInput hideLabel placeholder="Search all products" bind:value labelText="Search" />
+				<TextInput hideLabel placeholder="Search all items" bind:value labelText="Search" />
 				<Button size="field" on:click={search} icon={loading ? InlineLoading : Search} />
 			</div>
-			<div class="products">
+			<div class="items">
 				{#each documents as d}
 					<Product id={d.id} p={d.value} />
 				{/each}
@@ -68,7 +68,7 @@
 		display: flex
 		flex-direction: column
 		row-gap: layout.$spacing-03
-	.products
+	.items
 		display: flex
 		flex-direction: row
 		flex-wrap: wrap

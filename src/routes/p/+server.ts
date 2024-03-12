@@ -1,17 +1,22 @@
 import { message_index } from '$lib/constants';
 import { embed_buffer } from '$lib/util/embedding/embed';
 import { handle_server_error } from '$lib/util/handle_server_error';
-// import { resolve_tags } from '$lib/util/product/resolve_tags';
+import { resolve_tags } from '$lib/util/item/resolve_tags';
 import { search } from '$lib/util/redis/search';
 import { json, type RequestHandler } from '@sveltejs/kit';
 
 export const GET: RequestHandler = async ({ request, url }) => {
 	try {
 		const q = url.searchParams.get('q') || '';
-		// const tags = await resolve_tags(q)
+		const e = url.searchParams.get('e');
 		const B = await embed_buffer(q);
+		let query = '@k:"p"';
+		console.log('--e', e);
+		if (e) {
+			query += `@tags: { ${(await resolve_tags(q)).map((t) => t.replaceAll('|', '\\|')).join(' | ')}}`;
+		}
 		const res = await search({
-			query: `@k:"p"`, // @tags: { ${tags.map((t) => t.replaceAll('|', '\\|')).join(' | ')}}`,
+			query,
 			index: message_index,
 			options: { RETURN: ['n', 'i', 'p'] },
 			B

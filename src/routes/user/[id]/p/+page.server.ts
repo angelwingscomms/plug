@@ -4,7 +4,7 @@ import { search } from '$lib/util/redis/search';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { handle_server_error } from '$lib/util/handle_server_error';
-import type { ProductListing } from '$lib/types/product';
+import type { ProductListing } from '$lib/types/item';
 import { embed_buffer } from '$lib/util/embedding/embed';
 
 export const load: PageServerLoad = async ({ params, request, url }) => {

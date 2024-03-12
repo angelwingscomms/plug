@@ -5,11 +5,11 @@ import type { V } from '$lib/types';
 import { search } from '$lib/util/redis/search';
 import { message_index } from '$lib/constants';
 import { float32_buffer } from '$lib/util/float32_buffer';
-import type { ProductListing } from '$lib/types/product';
+import type { ProductListing } from '$lib/types/item';
 
 export const load: PageServerLoad = async ({ params }) => {
 	if (!(await client.exists(params.id)))
-		throw error(404, `product with id "${params.id}" not found`);
+		throw error(404, `item with id "${params.id}" not found`);
 	const { v, n } = (await client.json.get(params.id, {
 		path: ['v', 'n']
 	})) as {

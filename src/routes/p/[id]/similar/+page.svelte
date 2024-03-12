@@ -8,11 +8,11 @@
 
 <Row>
 	<Column>
-		<p>Similar products to <Link href="/p/{data.id}">{data.n}</Link></p>
+		<p>Similar items to <Link href="/p/{data.id}">{data.n}</Link></p>
 
 		<br />
 
-		<div class="products">
+		<div class="items">
 			{#each data.d as d}
 				<Product id={d.id} p={d.value} />
 			{/each}
@@ -24,7 +24,7 @@
 	@use '@carbon/layout'
 	p
 		word-break: break-all
-	.products
+	.items
 		display: flex
 		flex-direction: row
 		flex-wrap: wrap

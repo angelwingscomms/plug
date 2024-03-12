@@ -14,7 +14,7 @@
 	// import { OnEnter } from 'sveltekit-carbon-utils';
 	import FileUpload from '$lib/components/FileUpload.svelte';
 	import { CenterSquare, Close, Send } from 'carbon-icons-svelte';
-	import type { Product } from '$lib/types/product';
+	import type { Product } from '$lib/types/item';
 	import { notify } from '$lib/util';
 	import Images from '../Images.svelte';
 
@@ -105,7 +105,7 @@
 			
 				<TextInput maxlength={2160} name="n" value={p?.n ?? ''} labelText="Name" />
 				<TextInput maxlength={2160} name="p" value={p?.p ?? ''} labelText="Price" />
-				<TextArea helperText="Describe the product in detail, so users can easily find it" maxlength={2160} name="a" value={p?.a ?? ''} labelText="About this product" />
+				<TextArea helperText="Describe the item in detail, so users can easily find it" maxlength={2160} name="a" value={p?.a ?? ''} labelText="About this item" />
 				<!-- <FileUpload
 					loading={image_loading}
 					name="i"
@@ -130,7 +130,7 @@
 					</div>
 				{/if} -->
 				<input type="number" style="display: none;" bind:value={display_image} name="i" />
-				<Images alt="product" on:x-click={({ detail }) => remove_image(detail)} {images} let:index>
+				<Images alt="item" on:x-click={({ detail }) => remove_image(detail)} {images} let:index>
 					<Button
 						icon={CenterSquare}
 						iconDescription="set as display image"

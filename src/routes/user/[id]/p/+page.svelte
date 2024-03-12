@@ -15,7 +15,7 @@
 	import type { PageData } from './$types';
 	import OnEnter from '$lib/components/OnEnter.svelte';
 	import type { SearchDocument } from '$lib/types';
-	import type { ProductListing } from '$lib/types/product';
+	import type { ProductListing } from '$lib/types/item';
 
 	export let data: PageData;
 
@@ -59,7 +59,7 @@
 	</Column>
 </Row>
 
-<div class="products">
+<div class="items">
 	{#each documents as d}
 		<Product id={d.id} p={d.value} />
 	{/each}
@@ -67,7 +67,7 @@
 
 <style lang="sass">
 	@use '@carbon/layout'
-	.products
+	.items
 		display: flex
 		flex-direction: row
 		flex-wrap: wrap

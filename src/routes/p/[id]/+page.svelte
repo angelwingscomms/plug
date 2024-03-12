@@ -15,13 +15,13 @@
 					>
 					<Button size="small" kind="tertiary" href="/user/{data.u}">goto seller's page</Button>
 					<Button size="small" kind="tertiary" href="{$page.url.pathname}/similar"
-						>see similar products</Button
+						>see similar items</Button
 					>
 				{/if}
 			</ButtonSet>
 			<h3>{data.n}</h3>
 			<p class="price">GH₵ {data.p}</p>
-			<Images alt="product" images={data.ii.map((src, id) => ({ id, src }))} />
+			<Images alt="item" images={data.ii.map((src, id) => ({ id, src }))} />
 			<div>{@html data.h}</div>
 		</div>
 	</Column>

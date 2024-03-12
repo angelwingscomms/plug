@@ -24,12 +24,12 @@ _learn
     goto previous page in component
     javascript disabled
 todo
-    edit product preserves image
-    sidenav add product
+    edit item preserves image
+    sidenav add item
     show images in add page
     edit page shows image
     conditionally calculate embeddings if content is different on edit
-    show products on homepage - search component
+    show items on homepage - search component
     currency selector
     tests
         send message to t
