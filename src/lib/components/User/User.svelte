@@ -22,7 +22,7 @@
 		</div>
 	{/if}
 
-	<Button href="/u/{id}/chat">Chat with {u}</Button>
+	<Button href="/u/{id}/c">Chat with {u}</Button>
 
 	{#if ch}
 		<div class="section">
