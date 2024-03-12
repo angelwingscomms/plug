@@ -4,7 +4,7 @@ import IBM from 'ibm-cos-sdk';
 import type { Actions, PageServerLoad } from './$types';
 import { IBMCOS_APIKEY, IBMCOS_ENDPOINT, IBMCOS_SERVICE_INSTANCE_ID } from '$env/static/private';
 import { handle_server_error } from '$lib/util/handle_server_error';
-import type { Product } from '$lib/types/item';
+import type { Item } from '$lib/types/item';
 import { embed } from '$lib/util/embedding/embed';
 import { sanitize_string } from '$lib/util/sanitize';
 import sharp from 'sharp';
@@ -13,7 +13,7 @@ import { to_html } from '$lib/util/markdown/parse';
 import { tagflow } from '$lib/util/item/tagflow';
 
 export const load: PageServerLoad = async ({ params }) => {
-	const p = (await client.json.get(params.id, { path: ['n', 'p', 'i', 'ii', 'a'] })) as Product;
+	const p = (await client.json.get(params.id, { path: ['n', 'p', 'i', 'ii', 'a'] })) as Item;
 	if (!p) throw error(404, `item with id "${params.id}" not found`);
 	return { p };
 };

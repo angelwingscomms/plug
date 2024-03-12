@@ -1,4 +1,4 @@
-export type Product = {
+export type Item = {
 	n: string; //name
 	i: string; //display_image
 	ii: string[]; //images
@@ -7,4 +7,4 @@ export type Product = {
 	u: string; //user id
 };
 
-export type ProductListing = Pick<Product, 'n' | 'i' | 'p'>;
+export type ItemListing = Pick<Item, 'n' | 'i' | 'p'>;

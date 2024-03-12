@@ -14,11 +14,11 @@
 	// import { OnEnter } from 'sveltekit-carbon-utils';
 	import FileUpload from '$lib/components/FileUpload.svelte';
 	import { CenterSquare, Close, Send } from 'carbon-icons-svelte';
-	import type { Product } from '$lib/types/item';
+	import type { Item } from '$lib/types/item';
 	import { notify } from '$lib/util';
 	import Images from '../Images.svelte';
 
-	export let p: Product | undefined = undefined,
+	export let p: Item | undefined = undefined,
 		images: Image[] = Array.isArray(p?.ii) ? p?.ii.map((src, id) => ({ src, id })) : [],
 		images_loading = false;
 	let loading = false,
