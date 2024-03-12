@@ -8,7 +8,6 @@ import type { Item } from '$lib/types/item';
 import { embed } from '$lib/util/embedding/embed';
 import { sanitize_string } from '$lib/util/sanitize';
 import sharp from 'sharp';
-import { parse } from '$lib/util/markdown/parse/node';
 import { to_html } from '$lib/util/markdown/parse';
 import { tagflow } from '$lib/util/item/tagflow';
 
@@ -63,7 +62,6 @@ export const actions: Actions = {
 				uploaded_images.push(res.Location);
 			}
 			await tagflow(params.id, a);
-			const v = await embed(JSON.stringify({ name: n, about: a, price: `${p}` }));
 			await client.json.set(params.id, '$.n', n);
 			// if (uploaded_display_image)
 			// 	await client.json.set(params.id, '$.i', uploaded_display_image.Location);
@@ -74,7 +72,11 @@ export const actions: Actions = {
 			await client.json.set(params.id, '$.a', a);
 			await client.json.set(params.id, '$.h', sanitize_string(await to_html(a)));
 			await client.json.set(params.id, '$.p', p);
-			await client.json.set(params.id, '$.v', v);
+			await client.json.set(
+				params.id,
+				'$.v',
+				await embed(JSON.stringify({ name: n, about: a, price: `${p}` }))
+			);
 			throw redirect(302, `/i/${params.id}`);
 		} catch (e) {
 			throw handle_server_error(request, e);

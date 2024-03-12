@@ -5,7 +5,6 @@ import type { Actions } from './$types';
 import { IBMCOS_APIKEY, IBMCOS_ENDPOINT, IBMCOS_SERVICE_INSTANCE_ID } from '$env/static/private';
 import { message_id_prefix } from '$lib/constants';
 import { handle_server_error } from '$lib/util/handle_server_error';
-// import { tagflow } from '$lib/util/item/tagflow';
 import { embed } from '$lib/util/embedding/embed';
 import { sanitize_string } from '$lib/util/sanitize';
 import sharp from 'sharp';
@@ -55,13 +54,12 @@ export const actions: Actions = {
 				uploaded_images.push(res.Location);
 			}
 
-			const v = await embed(JSON.stringify({ name: n, about: a }));
 			await client.json.set(id, '$', {
 				u: locals.user,
 				n,
 				a,
 				h: sanitize_string(await to_html(a)),
-				v,
+				v: await embed(JSON.stringify({ name: n, about: a })),
 				ii: uploaded_images,
 				i: uploaded_images[i],
 				p,

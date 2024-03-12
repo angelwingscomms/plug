@@ -27,6 +27,7 @@
     text-decoration: none
     // color: white
     all: inherit
+    margin-bottom: layout.$spacing-04
 
   .item-card
       display: flex

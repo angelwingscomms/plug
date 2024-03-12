@@ -12,7 +12,7 @@
 		e = false;
 
 	export let search=true, params: Record<string, string> = {},
-		q: string | null = "",
+		q: string | null = "", p: number = 0,
 		documents: SearchDocument<ItemListing>[] = [];
 
 	export const get = async () => {
@@ -22,6 +22,7 @@
 			const { data } = await axios.get('/i', {
 				params: {
 					q,
+                    p,
 					e: e ? '.' : '	',
 					...params
 				}
@@ -77,7 +78,7 @@
 		display: flex
 		flex-direction: row
 		flex-wrap: wrap
-		column-gap: layout.$spacing-03
+		column-gap: layout.$spacing-04
 	.input
 		display: flex
 		flex-direction: row
