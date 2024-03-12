@@ -12,4 +12,4 @@
 	};
 </script>
 
-<Chat bind:text name={message_name(data.id, data.user)} route="/user/${data.id}/chat" />
+<Chat bind:text name={message_name(data.id, data.user)} route="/u/${data.id}/chat" />

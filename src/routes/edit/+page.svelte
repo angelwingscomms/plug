@@ -4,4 +4,4 @@
 	import Edit from '$lib/components/User/Edit.svelte';
 </script>
 
-<Edit on:save={()=> goto(`/user/${$page.data.user}`)} />
+<Edit on:save={()=> goto(`/u/${$page.data.user}`)} />

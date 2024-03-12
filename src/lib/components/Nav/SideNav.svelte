@@ -11,9 +11,9 @@
 <SideNav bind:isOpen={$isSideNavOpen}>
 	<SideNavItems>
 		{#if $page.data.user}
-			<SideNavLink text="your items" href="/user/{$page.data.user}/p" />
-			<SideNavLink text="add item" href="/p/add" />
-			<SideNavLink text="users similar to you" href="/user/{$page.data.user}/similar" />
+			<SideNavLink text="your items" href="/u/{$page.data.user}/i" />
+			<SideNavLink text="add item" href="/i/add" />
+			<SideNavLink text="users similar to you" href="/u/{$page.data.user}/similar" />
 		{/if}
 		
 		 <SideNavLink text="messages" href="/m" />

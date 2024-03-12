@@ -8,13 +8,14 @@ import { json, type RequestHandler } from '@sveltejs/kit';
 export const GET: RequestHandler = async ({ request, url }) => {
 	try {
 		const q = url.searchParams.get('q') || '';
+		console.log('--q', q)
 		const e = url.searchParams.get('e');
+		const u = url.searchParams.get('u');
 		const B = await embed_buffer(q);
 		let query = '@k:"p"';
-		console.log('--e', e);
-		if (e) {
+		if (u) query += ` @u:"${u}"`;
+		if (e)
 			query += `@tags: { ${(await resolve_tags(q)).map((t) => t.replaceAll('|', '\\|')).join(' | ')}}`;
-		}
 		const res = await search({
 			query,
 			index: message_index,

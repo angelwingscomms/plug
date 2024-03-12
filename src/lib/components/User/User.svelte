@@ -12,7 +12,7 @@
 		{#if $page.data.user === id}
 			<Button icon={Edit} href="/edit">edit your profile</Button>
 		{/if}
-		<Button href="{$page.url.pathname}/p">Products by {u}</Button>
+		<Button href="{$page.url.pathname}/p">Items by {u}</Button>
 	</ButtonSet>
 
 	<h3 class="shift">{u}</h3>
@@ -22,7 +22,7 @@
 		</div>
 	{/if}
 
-	<Button href="/user/{id}/chat">Chat with {u}</Button>
+	<Button href="/u/{id}/chat">Chat with {u}</Button>
 
 	{#if ch}
 		<div class="section">

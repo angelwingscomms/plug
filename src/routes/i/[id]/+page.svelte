@@ -13,7 +13,7 @@
 					<Button size="small" kind="tertiary" href="{$page.url.pathname}/edit"
 						>edit this item</Button
 					>
-					<Button size="small" kind="tertiary" href="/user/{data.u}">goto seller's page</Button>
+					<Button size="small" kind="tertiary" href="/u/{data.u}">goto seller's page</Button>
 					<Button size="small" kind="tertiary" href="{$page.url.pathname}/similar"
 						>see similar items</Button
 					>

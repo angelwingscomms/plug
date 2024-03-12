@@ -5,7 +5,7 @@ import type { V } from '$lib/types';
 import { search } from '$lib/util/redis/search';
 import { message_index } from '$lib/constants';
 import { float32_buffer } from '$lib/util/float32_buffer';
-import type { ProductListing } from '$lib/types/item';
+import type { ItemListing } from '$lib/types/item';
 
 export const load: PageServerLoad = async ({ params }) => {
 	if (!(await client.exists(params.id)))
@@ -20,7 +20,7 @@ export const load: PageServerLoad = async ({ params }) => {
 	return {
 		n,
 		id: params.id,
-		d: (await search<ProductListing>({
+		d: (await search<ItemListing>({
 			//TODO - actually add similarity
 			index: message_index,
 			page: 1,

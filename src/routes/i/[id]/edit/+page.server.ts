@@ -75,7 +75,7 @@ export const actions: Actions = {
 			await client.json.set(params.id, '$.h', sanitize_string(await to_html(a)));
 			await client.json.set(params.id, '$.p', p);
 			await client.json.set(params.id, '$.v', v);
-			throw redirect(302, `/p/${params.id}`);
+			throw redirect(302, `/i/${params.id}`);
 		} catch (e) {
 			throw handle_server_error(request, e);
 		}

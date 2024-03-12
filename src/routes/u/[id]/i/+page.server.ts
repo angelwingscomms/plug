@@ -4,7 +4,7 @@ import { search } from '$lib/util/redis/search';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { handle_server_error } from '$lib/util/handle_server_error';
-import type { ProductListing } from '$lib/types/item';
+import type { ItemListing } from '$lib/types/item';
 import { embed_buffer } from '$lib/util/embedding/embed';
 
 export const load: PageServerLoad = async ({ params, request, url }) => {
@@ -12,10 +12,10 @@ export const load: PageServerLoad = async ({ params, request, url }) => {
 		if (!(await client.exists(params.id)))
 			throw error(404, `User with id "${params.id}" not found`);
 		const q = url.searchParams.get('q');
-		const res = await search<ProductListing>({
+		const res = await search<ItemListing>({
 			index: message_index,
 			query: `@u:"${params.id}"`,
-			// ...(q && { B: await embed_buffer(q) }),
+			...(q && { B: await embed_buffer(q) }),
 			options: {
 				RETURN: ['n', 'i', 'p', 'u'],
 				SORTBY: { BY: 'd', DIRECTION: 'DESC' }
@@ -24,8 +24,8 @@ export const load: PageServerLoad = async ({ params, request, url }) => {
 		return {
 			q,
 			uf: await client.json.get(params.id, { path: 'u' }),
-			id: params.id,
-			...res
+			u: params.id,
+			d: res.documents
 		};
 	} catch (e) {
 		throw handle_server_error(request, e);

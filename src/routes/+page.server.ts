@@ -1,5 +1,5 @@
 import { message_id_prefix, message_index } from '$lib/constants';
-import type { ProductListing } from '$lib/types/item';
+import type { ItemListing } from '$lib/types/item';
 // import { embed_buffer } from '$lib/util/embedding/embed';
 import { client } from '$lib/util/redis';
 import { search } from '$lib/util/redis/search';
@@ -9,12 +9,12 @@ export const load: PageServerLoad = async ({ url }) => {
 	const q = url.searchParams.get('q') || '';
 	// const B = await embed_buffer(q);
 	// const tags: string[] = [];
-	const res = await search<ProductListing>({
+	const res = await search<ItemListing>({
 		query: `@k:"p"`,// @tags: { ${tags.map((t) => t.replaceAll('|', '\\|')).join(' | ')}}`,
 		index: message_index,
 		options: { RETURN: ['n', 'i', 'p', 'u'] },
 		// B
 	});
 	console.debug('--rt', res.total);
-	return { q, ...res };
+	return { q, d: res.documents };
 };

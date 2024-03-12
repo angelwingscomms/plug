@@ -1,17 +1,17 @@
 <script lang="ts">
-	import type { ProductListing } from '$lib/types/item';
+	import type { ItemListing } from '$lib/types/item';
 	import { Button, Link, truncate } from 'carbon-components-svelte';
-	export let p: ProductListing, id: string;
+	export let p: ItemListing, id: string;
 	// import { ShoppingCartPlus, StarFilled } from 'carbon-icons-svelte';
 </script>
 
-<a class="card" href="/p/{id}">
+<a class="card" href="/i/{id}">
 	<div class="item-card">
 		<div class="item-image">
 			<img src={p.i} alt="item" />
 		</div>
 		<p use:truncate>{p.n}</p>
-		<!-- <Link href="/user/{p.u}">contact seller</Link> -->
+		<!-- <Link href="/u/{p.u}">contact seller</Link> -->
 		<p>GH₵ {p.p}</p>
 		<div class="act">
 			<!-- <Button>Buy Now</Button>
