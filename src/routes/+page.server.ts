@@ -15,6 +15,5 @@ export const load: PageServerLoad = async ({ url }) => {
 		options: { RETURN: ['n', 'i', 'p', 'u'] },
 		// B
 	});
-	console.debug('--rt', res.total);
 	return { q, d: res.documents };
 };

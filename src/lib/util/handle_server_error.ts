@@ -15,8 +15,7 @@ export const handle_server_error = (
 	error_message?: string
 ) => {
 	if (!e.status) {
-		console.error('--server-error');
-		console.error(message ?? '', e ?? '', request.url);
+		console.error('server-error:', request.method, request.url, message ?? '', e ?? '');
 	}
 	return e.status ? e : error(500, error_message);
 };

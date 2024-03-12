@@ -45,14 +45,5 @@
 			{icon}
 			closeIcon={icon}
 		/>
-		<HeaderAction icon={UserAvatarFilledAlt} closeIcon={UserAvatarFilledAlt}>
-			<HeaderPanelLinks>
-				{#if $page.data.user}
-					<HeaderPanelLink on:click={() => sign_out()}>sign out</HeaderPanelLink>
-				{:else}
-					<HeaderPanelLink on:click={() => goto('/auth')}>sign in</HeaderPanelLink>
-				{/if}
-			</HeaderPanelLinks>
-		</HeaderAction>
 	</HeaderUtilities>
 </Header>

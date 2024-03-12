@@ -3,10 +3,11 @@
 	import axios from 'axios';
 	import ably from 'ably';
 	import { message_index } from '$lib/constants';
-	import { onMount } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import { to_html } from '$lib/util/markdown/parse';
 	import { page } from '$app/stores';
 	import { v4 } from 'uuid';
+	import type { Message } from '$lib/types/message';
 
 	export let route: string,
 		loading = false,
@@ -15,6 +16,8 @@
 		messages = $page.data.m,
 		success = true;
 	let message_input_ref: HTMLTextAreaElement;
+
+	const dispatch = createEventDispatcher<{ got: Message }>();
 	onMount(async () => {
 		const realtime = new ably.Realtime({ authUrl: `/ably?i=${$page.data.id}` });
 		// realtime.auth.requestToken((await axios.get(`/ably?i=${$page.data.id}`)).data);
@@ -26,6 +29,7 @@
 
 		channel.subscribe(name, (m) => {
 			console.debug('got --', m);
+			dispatch('got', m.data);
 			messages = [m.data, ...messages];
 		});
 	});
