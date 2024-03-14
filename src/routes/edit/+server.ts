@@ -20,7 +20,7 @@ export const DELETE: RequestHandler = async ({ request, locals }) => {
 export const PUT: RequestHandler = async ({ request, locals }) => {
 	try {
 		if (!(await client.exists(locals.user))) throw error(400, `user with id "${locals.user}" was not found`)
-		let { c, t, h, u, e, x, ch, cl } = await request.json();
+		let { c, t, h, u, e, x, ch, cl, l } = await request.json();
 		const v = await embed_user({
 			...(u && { username: u }),
 			...(t && { user_description: t }),
@@ -32,6 +32,7 @@ export const PUT: RequestHandler = async ({ request, locals }) => {
 		ch = sanitize_string(ch);
 		cl = sanitize_string(cl);
 		x = sanitize_string(x);
+		l = sanitize_string(l);
 		t = sanitize_string(t);
 		h = sanitize_string(h);
 		client.json.set(locals.user, '$.u', u);
@@ -39,6 +40,7 @@ export const PUT: RequestHandler = async ({ request, locals }) => {
 		client.json.set(locals.user, '$.x', x);
 		client.json.set(locals.user, '$.c', c);
 		client.json.set(locals.user, '$.t', t);
+		client.json.set(locals.user, '$.l', l);
 		client.json.set(locals.user, '$.ch', ch);
 		client.json.set(locals.user, '$.cl', cl);
 		client.json.set(locals.user, '$.h', h);

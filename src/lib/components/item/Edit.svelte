@@ -6,7 +6,8 @@
 		InlineLoading,
 		Row,
 		TextArea,
-		TextInput
+		TextInput,
+		Toggle
 	} from 'carbon-components-svelte';
 	import { applyAction, enhance } from '$app/forms';
 	// import axios from 'axios';
@@ -23,6 +24,7 @@
 		images_loading = false;
 	let loading = false,
 		next_image_id = 0,
+		// update_location = false,
 		display_image = typeof p?.i === 'number' ? p?.i : 0,
 		images_ref: HTMLInputElement,
 		image_ref: HTMLInputElement;
@@ -47,7 +49,7 @@
 
 	const update_images = async ({ detail }: { detail: File[] }) => {
 		images_loading = true;
-		images = []
+		images = [];
 		for (let i = 0; i < detail.length; i++) {
 			try {
 				const base64 = await file_to_base64(detail[i]);
@@ -101,11 +103,17 @@
 					}
 				};
 			}}
-		><div class="form">
-			
+		>
+			<div class="form">
 				<TextInput maxlength={2160} name="n" value={p?.n ?? ''} labelText="Name" />
 				<TextInput maxlength={2160} name="p" value={p?.p ?? ''} labelText="Price" />
-				<TextArea helperText="Describe the item in detail, so users can easily find it" maxlength={2160} name="a" value={p?.a ?? ''} labelText="About this item" />
+				<TextArea
+					helperText="Describe the item in detail, so users can easily find it"
+					maxlength={2160}
+					name="a"
+					value={p?.a ?? ''}
+					labelText="About this item"
+				/>
 				<!-- <FileUpload
 					loading={image_loading}
 					name="i"
@@ -130,6 +138,10 @@
 					</div>
 				{/if} -->
 				<input type="number" style="display: none;" bind:value={display_image} name="i" />
+				<!-- <Toggle
+					bind:toggled={update_location}
+					labelText="Update this items's geolocation to your current location"
+				/> -->
 				<Images alt="item" on:x-click={({ detail }) => remove_image(detail)} {images} let:index>
 					<Button
 						icon={CenterSquare}
@@ -157,7 +169,7 @@
 					/>
 					<Button icon={loading ? InlineLoading : Send} type="submit">submit</Button>
 				</ButtonSet>
-		</div>
+			</div>
 		</form>
 	</Column>
 </Row>

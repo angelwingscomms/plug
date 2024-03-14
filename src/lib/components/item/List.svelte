@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Item from '$lib/components/ItemListing.svelte';
+	import Item from '$lib/components/item/Entry.svelte';
 	import axios from 'axios';
 	import { Button, Column, InlineLoading, Row, TextInput, Toggle } from 'carbon-components-svelte';
 	import { Search } from 'carbon-icons-svelte';

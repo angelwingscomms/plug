@@ -14,6 +14,7 @@
 		<!-- <Link href="/u/{p.u}">contact seller</Link> -->
 		<p>GH₵ {p.p}</p>
 		<div class="act">
+      <slot name="buttons" />
 			<!-- <Button>Buy Now</Button>
       <Button icon={ShoppingCartPlus} /> -->
 		</div>

@@ -3,4 +3,6 @@ export type User = {
     u: string,
     c: string,
     x: string,
+    ch: string, //contact html
+    l: string, //location
 }

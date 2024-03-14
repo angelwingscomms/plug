@@ -22,7 +22,7 @@ export const GET: RequestHandler = async ({ url, request }) => {
 		const B = await embed_buffer(q);
 		const res = await search<Message & { s: string; v?: V }>({
 			index: message_index,
-			query: `@t: ${top_level_messages_name}`,
+			query: `@t: ${top_level_messages_name} @k:"c"`,
 			// ...(t && { query: `@t:${top_level_messages_name}` }),
 			B,
 			page,
@@ -55,6 +55,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 		const message = {
 			...m,
 			u: locals.user,
+			k: "c",
 			t: 't'
 		};
 		const id = `${message_id_prefix}${await client.incr('last_free_message_id')}`;

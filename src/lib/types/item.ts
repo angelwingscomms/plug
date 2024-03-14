@@ -4,6 +4,7 @@ export type Item = {
 	ii: string[]; //images
 	a: string; //about
 	p: string; //price
+	l: string;
 	u: string; //user id
 };
 

@@ -14,7 +14,7 @@ export const GET: RequestHandler = async ({ request, url }) => {
 		const e = url.searchParams.get('e');
 		const u = url.searchParams.get('u');
 
-		let query = '@k:"p"';
+		let query = '@k:"i"';
 		if (u) query += ` @u:"${u}"`;
 
 		const options: SearchOptions = { RETURN: ['n', 'i', 'p'] };

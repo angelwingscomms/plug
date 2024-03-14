@@ -63,10 +63,10 @@ export const actions: Actions = {
 				ii: uploaded_images,
 				i: uploaded_images[i],
 				p,
-				k: 'p'
+				k: 'i'
 			});
 
-			await tagflow(id, a)
+			await tagflow(id, a);
 			throw redirect(302, `/i/${id}`);
 		} catch (e) {
 			throw handle_server_error(request, e);

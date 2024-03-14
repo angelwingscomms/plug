@@ -17,3 +17,7 @@ export const user_id_prefix = 'u_';
 export const user_index = 'u';
 export const feedback_index = 'f';
 export const feedback_id_prefix = 'f_';
+
+export const bid_index = 'b';
+export const bid_id_prefix = 'b_'
+export const bid_last_id = 'bid_last_id'

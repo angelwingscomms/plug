@@ -1,6 +1,5 @@
 .DS_Store
 node_modules
-ignore
 /build
 /.svelte-kit
 /package
