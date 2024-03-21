@@ -17,7 +17,6 @@
 	"devDependencies": {
 		"@gradio/client": "^0.12.1",
 		"@playwright/test": "^1.41.2",
-		"@sveltejs/adapter-vercel": "^5.1.0",
 		"@sveltejs/kit": "^2.5.1",
 		"@types/dompurify": "^3.0.5",
 		"@types/eventsource": "^1.1.15",

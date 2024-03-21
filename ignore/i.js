@@ -1,3 +1,5 @@
+// import { writeFileSync } from "fs";
+
 const alphabet = [
 	'a',
 	'b',
@@ -58,9 +60,17 @@ const alphabet_mapping = {
 alphabet.forEach((a, i) => {
 	alphabet_mapping[a] = i + 1;
 });
-const word = process.argv[2]
+
+const word = (process.argv[2] || '').toLowerCase()
 let sum = 0;
+let product = 1;
 for (let a of word) {
 	sum += alphabet_mapping[a];
+    product *= alphabet_mapping[a]
 }
-console.log(sum);
+let product_sum = 0
+for (let a of product.toString()) {
+    product_sum += Number(a)
+}
+console.log(`"${word}":`, 'sum:', sum, 'product:', product, 'product-sum:', product_sum);
+// writeFileSync('a', `${sum} ${product} ${product_sum}`)
