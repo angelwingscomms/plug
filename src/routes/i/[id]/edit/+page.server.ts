@@ -11,10 +11,10 @@ import sharp from 'sharp';
 import { to_html } from '$lib/util/markdown/parse';
 import { tagflow } from '$lib/util/item/tagflow';
 
-export const load: PageServerLoad = async ({ params, locals.user }) => {
+export const load: PageServerLoad = async ({ params, locals }) => {
 	const p = (await client.json.get(params.id, { path: ['n', 'p', 'i', 'ii', 'a', 'u'] })) as Item;
 	if (!p) throw error(404, `item with id "${params.id}" not found`);
-	if (!(p.u === locals.user)) throw error(400, `authenticated user "${local.user}" does not own item "${params.id}"`)
+	if (!(p.u === locals.user)) throw error(400, `authenticated user "${locals.user}" does not own item "${params.id}"`)
 	return { p };
 };
 
