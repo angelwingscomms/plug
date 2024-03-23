@@ -3,7 +3,6 @@
 	import axios from 'axios';
 	import { Button, Column, InlineLoading, Row, TextInput, Toggle } from 'carbon-components-svelte';
 	import { Search } from 'carbon-icons-svelte';
-	import { ArrowRight } from 'carbon-icons-svelte';
 	import OnEnter from '$lib/components/OnEnter.svelte';
 	import type { SearchDocument } from '$lib/types';
 	import type { ItemListing } from '$lib/types/item';

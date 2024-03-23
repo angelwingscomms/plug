@@ -65,8 +65,8 @@ const word = (process.argv[2] || '').toLowerCase()
 let sum = 0;
 let product = 1;
 for (let a of word) {
-	sum += alphabet_mapping[a];
-    product *= alphabet_mapping[a]
+	sum += alphabet_mapping[a] ? alphabet_mapping[a] : isNaN(+a) ? 0 : +a;
+    product *= alphabet_mapping[a] ? alphabet_mapping[a] : isNaN(+a) ? 1 : +a
 }
 let product_sum = 0
 for (let a of product.toString()) {

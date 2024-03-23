@@ -13,3 +13,5 @@
 
 <p class="say">Connect in communities</p>
 <Button href="/m" icon={Add}>see communities</Button>
+
+<List />
